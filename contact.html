@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Gold Calculator</title>
+    <meta name="description" content="Get in touch with our team for questions, feedback, or support regarding our gold calculator and precious metals tools.">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DHFJF4DKPM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-DHFJF4DKPM');
+    </script>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-calculator gold-icon"></i> Gold Calculator
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="calculator.html">Gold Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="metals.html">Other Metals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="market.html">Market Charts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="multi-calculator.html">Batch Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="faq.html">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contact Hero Section -->
+    <section class="bg-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4">Contact Us</h1>
+                    <p class="lead">Have questions or feedback? We'd love to hear from you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Contact Form -->
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4 p-md-5">
+                            <h2 class="mb-4">Send Us a Message</h2>
+                            <form id="contactForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="name" class="form-label">Your Name</label>
+                                        <input type="text" class="form-control" id="name" placeholder="John Doe" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="email" class="form-label">Email Address</label>
+                                        <input type="email" class="form-control" id="email" placeholder="john@example.com" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="subject" class="form-label">Subject</label>
+                                    <input type="text" class="form-control" id="subject" placeholder="How can we help you?">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Message</label>
+                                    <textarea class="form-control" id="message" rows="5" placeholder="Your message here..." required></textarea>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="newsletter">
+                                    <label class="form-check-label" for="newsletter">
+                                        Subscribe to our newsletter for precious metal price updates
+                                    </label>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary btn-lg" id="submitButton">Send Message</button>
+                                </div>
+                            </form>
+                            
+                            <!-- Success Message (hidden by default) -->
+                            <div class="alert alert-success mt-4 d-none" id="successMessage">
+                                <i class="fas fa-check-circle me-2"></i> Thank you for your message! We'll get back to you soon.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Information -->
+                <div class="col-lg-4 mt-4 mt-lg-0">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body p-4">
+                            <h3>Contact Information</h3>
+                            <hr>
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-envelope gold-icon fa-fw fa-lg"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h5>Email</h5>
+                                    <p class="mb-0">support@goldcalculator.click</p>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-clock gold-icon fa-fw fa-lg"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h5>Response Time</h5>
+                                    <p class="mb-0">Within 24-48 hours</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Card -->
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <h3>Frequently Asked Questions</h3>
+                            <hr>
+                            <p>Before contacting us, you might find answers to your questions in our FAQ section.</p>
+                            <a href="faq.html" class="btn btn-outline-primary">View FAQs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>Gold Calculator</h5>
+                    <p class="text-muted">Accurate precious metal calculations for everyone.</p>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-muted">Home</a></li>
+                        <li><a href="calculator.html" class="text-muted">Gold Calculator</a></li>
+                        <li><a href="metals.html" class="text-muted">Other Metals</a></li>
+                        <li><a href="market.html" class="text-muted">Market Charts</a></li>
+                        <li><a href="about.html" class="text-muted">About</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Legal</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="privacy.html" class="text-muted">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-muted">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <p class="text-muted small">
+                        <span id="current-year"></span> &copy; Gold Calculator. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main JS -->
+    <script src="js/main.js"></script>
+    <!-- Contact Form JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
+            const successMessage = document.getElementById('successMessage');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    
+                    // In a real implementation, you would send the form data to your server here
+                    // For now, we'll just show the success message
+                    
+                    // Hide the form
+                    contactForm.style.display = 'none';
+                    
+                    // Show success message
+                    successMessage.classList.remove('d-none');
+                    
+                    // Reset form (if you want to show it again later)
+                    contactForm.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html> 
