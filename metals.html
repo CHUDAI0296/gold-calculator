@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precious Metals Calculator - Silver, Platinum, Gold</title>
+    <meta name="description" content="Calculate the value of your precious metals including silver and platinum with our easy-to-use calculator. Get real-time prices and accurate estimations.">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="bg-dark text-white">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <i class="fas fa-coins gold-icon"></i> Gold Calculator
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="calculator.html">Gold Calculator</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="metals.html">Other Metals</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Metals Calculator Section -->
+    <section class="calculator-section py-5">
+        <div class="container">
+            <h1 class="text-center mb-4">Precious Metals Calculator</h1>
+            <p class="text-center mb-5">Calculate the value of silver, platinum, and other precious metals</p>
+            
+            <!-- Metal Selection Tabs -->
+            <ul class="nav nav-tabs mb-4" id="metalsTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="silver-tab" data-bs-toggle="tab" data-bs-target="#silver" type="button" role="tab" aria-controls="silver" aria-selected="true">
+                        <i class="fas fa-coins silver-icon"></i> Silver
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="platinum-tab" data-bs-toggle="tab" data-bs-target="#platinum" type="button" role="tab" aria-controls="platinum" aria-selected="false">
+                        <i class="fas fa-coins platinum-icon"></i> Platinum
+                    </button>
+                </li>
+            </ul>
+            
+            <!-- Metals Price Display -->
+            <div class="metals-price-container text-center mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5>Silver Price</h5>
+                                <div class="price-box silver-price">
+                                    <span id="current-silver-price">Loading...</span> USD/oz
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>Gold Price</h5>
+                                <div class="price-box gold-price">
+                                    <span id="current-gold-price">Loading...</span> USD/oz
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>Platinum Price</h5>
+                                <div class="price-box platinum-price">
+                                    <span id="current-platinum-price">Loading...</span> USD/oz
+                                </div>
+                            </div>
+                        </div>
+                        <p class="small text-muted mt-2">Last updated: <span id="last-updated">Loading...</span></p>
+                        <p class="small">You can adjust these prices for your calculations</p>
+                        <div class="input-group mb-3 w-50 mx-auto">
+                            <select class="form-select" id="metal-price-select">
+                                <option value="silver">Silver</option>
+                                <option value="gold">Gold</option>
+                                <option value="platinum">Platinum</option>
+                            </select>
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="custom-metal-price" placeholder="Custom price">
+                            <button class="btn btn-outline-secondary" type="button" id="apply-custom-metal-price">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab Content -->
+            <div class="tab-content" id="metalsTabContent">
+                <!-- Silver Calculator Tab -->
+                <div class="tab-pane fade show active" id="silver" role="tabpanel" aria-labelledby="silver-tab">
+                    <div class="calculator-form">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="mb-0">Sterling Silver Calculator</h3>
+                            </div>
+                            <div class="card-body">
+                                <form id="silver-calculator-form">
+                                    <div class="row mb-4">
+                                        <div class="col-md-4">
+                                            <label for="silver-weight" class="form-label">Weight</label>
+                                            <input type="number" class="form-control" id="silver-weight" step="0.001" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="silver-purity" class="form-label">Purity</label>
+                                            <select class="form-select" id="silver-purity" required>
+                                                <option value="0.925" selected>Sterling Silver (92.5%)</option>
+                                                <option value="0.999">Fine Silver (99.9%)</option>
+                                                <option value="0.800">Coin Silver (80.0%)</option>
+                                                <option value="0.500">Silver Plate (50.0%)</option>
+                                                <option value="custom">Custom Purity</option>
+                                            </select>
+                                            <div id="silver-custom-purity-container" class="mt-2" style="display: none;">
+                                                <label for="silver-custom-purity" class="form-label">Custom Purity (%)</label>
+                                                <input type="number" class="form-control" id="silver-custom-purity" min="1" max="99.9" step="0.1" value="90">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="silver-weight-unit" class="form-label">Unit of Measurement</label>
+                                            <select class="form-select" id="silver-weight-unit" required>
+                                                <option value="g" selected>Gram(s)</option>
+                                                <option value="oz">Troy Ounce(s)</option>
+                                                <option value="dwt">Pennyweight(s)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Refining Options -->
+                                    <div class="row mb-4">
+                                        <div class="col-md-12">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="silver-include-refining">
+                                                <label class="form-check-label" for="silver-include-refining">Include refining charges and payable content calculation</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="silver-refining-options" class="row mb-4" style="display: none;">
+                                        <div class="col-md-4">
+                                            <label for="silver-refining-fee" class="form-label">Refining Fee (%)</label>
+                                            <input type="number" class="form-control" id="silver-refining-fee" value="5" min="0" max="100" step="0.1">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="silver-treatment-charge" class="form-label">Treatment Charge ($)</label>
+                                            <input type="number" class="form-control" id="silver-treatment-charge" value="15" min="0" step="0.01">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="silver-accountability" class="form-label">Accountability (%)</label>
+                                            <input type="number" class="form-control" id="silver-accountability" value="98" min="0" max="100" step="0.1">
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-primary btn-lg">Calculate Silver Value</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Platinum Calculator Tab -->
+                <div class="tab-pane fade" id="platinum" role="tabpanel" aria-labelledby="platinum-tab">
+                    <div class="calculator-form">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="mb-0">Platinum Calculator</h3>
+                            </div>
+                            <div class="card-body">
+                                <form id="platinum-calculator-form">
+                                    <div class="row mb-4">
+                                        <div class="col-md-4">
+                                            <label for="platinum-weight" class="form-label">Weight</label>
+                                            <input type="number" class="form-control" id="platinum-weight" step="0.001" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="platinum-purity" class="form-label">Purity</label>
+                                            <select class="form-select" id="platinum-purity" required>
+                                                <option value="0.950" selected>950 Platinum (95.0%)</option>
+                                                <option value="0.900">900 Platinum (90.0%)</option>
+                                                <option value="0.850">850 Platinum (85.0%)</option>
+                                                <option value="0.999">Pure Platinum (99.9%)</option>
+                                                <option value="custom">Custom Purity</option>
+                                            </select>
+                                            <div id="platinum-custom-purity-container" class="mt-2" style="display: none;">
+                                                <label for="platinum-custom-purity" class="form-label">Custom Purity (%)</label>
+                                                <input type="number" class="form-control" id="platinum-custom-purity" min="1" max="99.9" step="0.1" value="90">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="platinum-weight-unit" class="form-label">Unit of Measurement</label>
+                                            <select class="form-select" id="platinum-weight-unit" required>
+                                                <option value="g" selected>Gram(s)</option>
+                                                <option value="oz">Troy Ounce(s)</option>
+                                                <option value="dwt">Pennyweight(s)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Refining Options -->
+                                    <div class="row mb-4">
+                                        <div class="col-md-12">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="platinum-include-refining">
+                                                <label class="form-check-label" for="platinum-include-refining">Include refining charges and payable content calculation</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="platinum-refining-options" class="row mb-4" style="display: none;">
+                                        <div class="col-md-4">
+                                            <label for="platinum-refining-fee" class="form-label">Refining Fee (%)</label>
+                                            <input type="number" class="form-control" id="platinum-refining-fee" value="6" min="0" max="100" step="0.1">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="platinum-treatment-charge" class="form-label">Treatment Charge ($)</label>
+                                            <input type="number" class="form-control" id="platinum-treatment-charge" value="30" min="0" step="0.01">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label for="platinum-accountability" class="form-label">Accountability (%)</label>
+                                            <input type="number" class="form-control" id="platinum-accountability" value="98.5" min="0" max="100" step="0.1">
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-primary btn-lg">Calculate Platinum Value</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Results Section -->
+            <div class="results-section mt-4" id="metals-results-section" style="display: none;">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h3 class="mb-0">Calculation Results</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Input Details</h4>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th>Metal Type</th>
+                                            <td id="result-metal-type"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Weight</th>
+                                            <td id="result-metal-weight"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Purity</th>
+                                            <td id="result-metal-purity"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Metal Price</th>
+                                            <td id="result-metal-price"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Metal Value</h4>
+                                <div class="value-display text-center p-3 border rounded">
+                                    <h2 id="metal-value">$0.00</h2>
+                                    <p class="mb-0" id="metal-value-description">Raw Metal Value</p>
+                                </div>
+                                <div class="mt-3">
+                                    <h5>Additional Information</h5>
+                                    <table class="table table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <th>Pure Metal Content</th>
+                                                <td id="pure-metal-content"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Refining Details Section -->
+                        <div id="metal-refining-results" class="mt-4" style="display: none;">
+                            <h4>Refining Details</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th>Refining Fee</th>
+                                                <td id="result-metal-refining-fee"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Treatment Charge</th>
+                                                <td id="result-metal-treatment-charge"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Accountability</th>
+                                                <td id="result-metal-accountability"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <th>Raw Metal Value</th>
+                                                <td id="raw-metal-value"></td>
+                                            </tr>
+                                            <tr>
+                                                <th>Payable Metal Content</th>
+                                                <td id="payable-metal-content"></td>
+                                            </tr>
+                                            <tr class="table-warning">
+                                                <th>Final Estimated Value</th>
+                                                <td id="final-metal-value"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <button class="btn btn-outline-primary" id="recalculate-metal-btn">Recalculate</button>
+                            <button class="btn btn-outline-secondary" id="print-metal-results-btn">Print Results</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Tips Section -->
+    <section class="tips-section py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Precious Metals Tips</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4 h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Sterling Silver</h5>
+                            <p class="card-text">Sterling silver is an alloy containing 92.5% silver and 7.5% other metals, usually copper.</p>
+                            <ul>
+                                <li>Look for "925" or "Sterling" markings</li>
+                                <li>Sterling silver has a bright white luster</li>
+                                <li>It's commonly used in jewelry and tableware</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Platinum</h5>
+                            <p class="card-text">Platinum is a dense, malleable, and valuable precious metal:</p>
+                            <ul>
+                                <li>Typically 95% pure in jewelry (950 platinum)</li>
+                                <li>Heavier than gold of the same volume</li>
+                                <li>Naturally white metal that doesn't tarnish</li>
+                                <li>Look for "Pt", "950", or "Plat" markings</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Market Fluctuations</h5>
+                            <p class="card-text">Precious metal prices can fluctuate significantly:</p>
+                            <ul>
+                                <li>Silver is typically more volatile than gold</li>
+                                <li>Platinum historically trades at a premium to gold</li>
+                                <li>Economic uncertainty often increases precious metal prices</li>
+                                <li>Industrial demand affects silver and platinum prices</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Gold Calculator</h5>
+                    <p>Calculate the value of your precious metals with our easy-to-use calculators.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">Home</a></li>
+                        <li><a href="calculator.html" class="text-white">Gold Calculator</a></li>
+                        <li><a href="metals.html" class="text-white">Other Metals</a></li>
+                        <li><a href="about.html" class="text-white">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope"></i> info@goldcalculator.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p>&copy; 2023 Gold Calculator. All rights reserved.</p>
+                <p class="small">Disclaimer: All calculations are estimates and may vary from actual market values.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/gold-api.js"></script>
+    <script src="js/metals-calculator.js"></script>
+</body>
+</html> 

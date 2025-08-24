@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precious Metal Market Prices - Historical Charts</title>
+    <meta name="description" content="View historical price charts for gold, silver, and platinum. Track market trends and make informed decisions.">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Chart.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="bg-dark text-white">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">
+                    <i class="fas fa-coins gold-icon"></i> Gold Calculator
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="calculator.html">Gold Calculator</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="metals.html">Other Metals</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="market.html">Market Charts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">About Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Market Hero Section -->
+    <section class="market-hero py-5 bg-light">
+        <div class="container text-center">
+            <h1 class="display-4">Precious Metal Market Charts</h1>
+            <p class="lead">Track historical prices and market trends</p>
+            
+            <!-- Current Prices Display -->
+            <div class="row mt-4">
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3>Gold <i class="fas fa-coins gold-icon"></i></h3>
+                            <div class="price-box gold-price">
+                                <span id="current-gold-price">Loading...</span> USD/oz
+                            </div>
+                            <div class="price-change" id="gold-price-change">
+                                <span class="change-value">--</span>
+                                <span class="change-percent">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3>Silver <i class="fas fa-coins silver-icon"></i></h3>
+                            <div class="price-box silver-price">
+                                <span id="current-silver-price">Loading...</span> USD/oz
+                            </div>
+                            <div class="price-change" id="silver-price-change">
+                                <span class="change-value">--</span>
+                                <span class="change-percent">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3>Platinum <i class="fas fa-coins platinum-icon"></i></h3>
+                            <div class="price-box platinum-price">
+                                <span id="current-platinum-price">Loading...</span> USD/oz
+                            </div>
+                            <div class="price-change" id="platinum-price-change">
+                                <span class="change-value">--</span>
+                                <span class="change-percent">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="small text-muted mt-2">Last updated: <span id="last-updated">Loading...</span></p>
+        </div>
+    </section>
+
+    <!-- Chart Section -->
+    <section class="chart-section py-5">
+        <div class="container">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h2 class="mb-0">Price History Chart</h2>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <!-- Time Range Selector -->
+                            <div class="btn-group" role="group" aria-label="Time range selector">
+                                <button type="button" class="btn btn-outline-primary time-range-btn active" data-range="7">7 Days</button>
+                                <button type="button" class="btn btn-outline-primary time-range-btn" data-range="30">30 Days</button>
+                                <button type="button" class="btn btn-outline-primary time-range-btn" data-range="90">90 Days</button>
+                                <button type="button" class="btn btn-outline-primary time-range-btn" data-range="365">1 Year</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container" style="position: relative; height:60vh; width:100%">
+                        <canvas id="priceHistoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Metal Selection -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="mb-0">Select Metals to Display</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="showGold" checked>
+                                <label class="form-check-label" for="showGold">
+                                    <i class="fas fa-circle gold-icon"></i> Gold
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="showSilver" checked>
+                                <label class="form-check-label" for="showSilver">
+                                    <i class="fas fa-circle silver-icon"></i> Silver
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="showPlatinum" checked>
+                                <label class="form-check-label" for="showPlatinum">
+                                    <i class="fas fa-circle platinum-icon"></i> Platinum
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Market Analysis -->
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h3 class="mb-0">Market Analysis</h3>
+                        </div>
+                        <div class="card-body">
+                            <h4>Current Trends</h4>
+                            <p>The precious metals market has shown significant volatility in recent months. Gold prices have been influenced by global economic uncertainty, inflation concerns, and central bank policies.</p>
+                            
+                            <h4>Key Factors Affecting Prices</h4>
+                            <ul>
+                                <li>Global economic conditions</li>
+                                <li>Inflation rates and expectations</li>
+                                <li>Interest rate policies</li>
+                                <li>Currency fluctuations</li>
+                                <li>Geopolitical tensions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h3 class="mb-0">Metal Comparison</h3>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Metal</th>
+                                        <th>YTD Change</th>
+                                        <th>1-Year High</th>
+                                        <th>1-Year Low</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><i class="fas fa-circle gold-icon"></i> Gold</td>
+                                        <td id="gold-ytd">+5.2%</td>
+                                        <td id="gold-high">$2,074.88</td>
+                                        <td id="gold-low">$1,810.20</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-circle silver-icon"></i> Silver</td>
+                                        <td id="silver-ytd">+3.8%</td>
+                                        <td id="silver-high">$27.50</td>
+                                        <td id="silver-low">$22.10</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-circle platinum-icon"></i> Platinum</td>
+                                        <td id="platinum-ytd">-2.1%</td>
+                                        <td id="platinum-high">$1,150.00</td>
+                                        <td id="platinum-low">$890.30</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <div class="alert alert-info mt-3">
+                                <i class="fas fa-info-circle"></i> These figures are for demonstration purposes. In a production environment, they would be updated with real market data.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Price Alert Section -->
+    <section class="alert-section py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 text-center">
+                    <h2 class="mb-4">Get Price Alerts</h2>
+                    <p>Sign up to receive email notifications when precious metal prices reach your target levels.</p>
+                    <a href="#" class="btn btn-primary">Coming Soon</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Gold Calculator</h5>
+                    <p>Calculate the value of your precious metals with our easy-to-use calculators.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">Home</a></li>
+                        <li><a href="calculator.html" class="text-white">Gold Calculator</a></li>
+                        <li><a href="metals.html" class="text-white">Other Metals</a></li>
+                        <li><a href="market.html" class="text-white">Market Charts</a></li>
+                        <li><a href="about.html" class="text-white">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-envelope"></i> info@goldcalculator.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p>&copy; 2023 Gold Calculator. All rights reserved.</p>
+                <p class="small">Disclaimer: All calculations and charts are estimates and may vary from actual market values. Historical data is for informational purposes only and should not be considered financial advice.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/gold-api.js"></script>
+    <script src="js/market-charts.js"></script>
+</body>
+</html> 
