@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
 <users>
-    <user><!-- 在此处添加您的Bing网站验证ID --></user>
+    <user><!-- 请在Bing Webmaster Tools获取验证ID并替换此注释 --></user>
 </users> 

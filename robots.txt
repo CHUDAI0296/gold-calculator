@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gold-calculator.vercel.app/sitemap.xml 
+Sitemap: https://goldcalculator.click/sitemap.xml 
