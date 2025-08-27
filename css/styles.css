@@ -19,8 +19,9 @@ body {
 
 /* Header Styles */
 .navbar-brand {
-    font-weight: 600;
-    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
 }
 
 .gold-icon {
@@ -300,4 +301,10 @@ footer a:hover {
         padding: 0.2rem 0.4rem;
         font-size: 0.75rem;
     }
+} 
+
+/* 添加logo样式 */
+.logo-img {
+    height: 40px;
+    margin-right: 10px;
 } 
