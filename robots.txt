@@ -1,6 +1,10 @@
 User-agent: *
 Allow: /
 
+# HTML Sitemap for users
+# https://goldcalculator.click/sitemap.html
+
+# XML Sitemaps for search engines
 Sitemap: https://goldcalculator.click/sitemap.xml
 Sitemap: https://goldcalculator.click/sitemap_index.xml
 Sitemap: https://goldcalculator.click/simple-sitemap.xml
