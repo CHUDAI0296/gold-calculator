@@ -232,39 +232,58 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
+    <footer class="bg-dark text-white py-5">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 mb-3">
-                    <h5>Gold Calculator</h5>
-                    <p>Your trusted tool for calculating precious metal values and learning about investments.</p>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5 class="mb-3"><i class="fas fa-coins gold-icon"></i> Gold Calculator</h5>
+                    <p>Professional gold and silver calculator for jewelry valuation and precious metal investments. Get accurate estimates based on real-time market prices.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <h5>Quick Links</h5>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="mb-3">Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="index.html" class="text-white">Home</a></li>
-                        <li><a href="calculator.html" class="text-white">Gold Calculator</a></li>
-                        <li><a href="metals.html" class="text-white">Other Metals</a></li>
-                        <li><a href="market.html" class="text-white">Market Charts</a></li>
-                        <li><a href="about.html" class="text-white">About Us</a></li>
+                        <li class="mb-2"><a href="index.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Home</a></li>
+                        <li class="mb-2"><a href="calculator.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Gold Calculator</a></li>
+                        <li class="mb-2"><a href="metals.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Other Metals</a></li>
+                        <li class="mb-2"><a href="market.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Market Charts</a></li>
+                        <li class="mb-2"><a href="multi-calculator.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Batch Calculator</a></li>
                     </ul>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <h5>Legal</h5>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="mb-3">Resources</h5>
                     <ul class="list-unstyled">
-                        <li><a href="privacy.html" class="text-white">Privacy Policy</a></li>
-                        <li><a href="terms.html" class="text-white">Terms of Use</a></li>
-                        <li><a href="contact.html" class="text-white">Contact Us</a></li>
+                        <li class="mb-2"><a href="gold-education.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Gold Education</a></li>
+                        <li class="mb-2"><a href="silver-guide.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Silver Market Analysis</a></li>
+                        <li class="mb-2"><a href="investment-guide.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Investment Guide</a></li>
+                        <li class="mb-2"><a href="gold-history.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Gold Price History</a></li>
+                        <li class="mb-2"><a href="blog.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Blog</a></li>
+                        <li class="mb-2"><a href="faq.html" class="text-white"><i class="fas fa-angle-right me-2"></i>FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="mb-3">Contact & Legal</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> chudai1024@gmail.com</li>
+                        <li class="mb-2"><a href="contact.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Contact Us</a></li>
+                        <li class="mb-2"><a href="about.html" class="text-white"><i class="fas fa-angle-right me-2"></i>About Us</a></li>
+                        <li class="mb-2"><a href="privacy.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Privacy Policy</a></li>
+                        <li class="mb-2"><a href="terms.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Terms of Service</a></li>
                     </ul>
                 </div>
             </div>
-            <hr class="mt-2 mb-3">
-            <div class="row">
-                <div class="col-md-6 small">
-                    <p>&copy; <span id="current-year">2023</span> Gold Calculator. All Rights Reserved.</p>
+            <hr class="my-4 bg-secondary">
+            <div class="row align-items-center">
+                <div class="col-md-7">
+                    <p class="mb-md-0">&copy; <span id="copyright-year">2023</span> Gold Calculator. All rights reserved.</p>
                 </div>
-                <div class="col-md-6 text-md-end small">
-                    <p>Disclaimer: Information provided is for educational purposes only.</p>
+                <div class="col-md-5 text-md-end">
+                    <p class="small mb-0">Disclaimer: Gold and silver prices are indicative and for reference purposes only. Actual market prices may vary.</p>
                 </div>
             </div>
         </div>
@@ -297,7 +316,7 @@
             updateSidebarPrices();
             
             // Update copyright year
-            document.getElementById('current-year').textContent = new Date().getFullYear();
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
         });
     </script>
 </body>
