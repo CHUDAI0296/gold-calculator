@@ -1,1 +1,12 @@
- 
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512">
+  <circle cx="256" cy="256" r="240" fill="#1E1E1E"/>
+  <g>
+    <!-- Gold coin stack -->
+    <ellipse cx="256" cy="190" rx="140" ry="60" fill="#FFD700" stroke="#E6C200" stroke-width="8"/>
+    <ellipse cx="256" cy="250" rx="140" ry="60" fill="#FFD700" stroke="#E6C200" stroke-width="8"/>
+    <ellipse cx="256" cy="310" rx="140" ry="60" fill="#FFD700" stroke="#E6C200" stroke-width="8"/>
+    <!-- Shine effect -->
+    <ellipse cx="210" cy="170" rx="30" ry="15" fill="#FFEB80" opacity="0.7"/>
+  </g>
+</svg> 
