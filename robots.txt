@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://goldcalculator.click/sitemap.xml 
+Sitemap: https://goldcalculator.click/sitemap.xml
+Sitemap: https://goldcalculator.click/sitemap_index.xml 
