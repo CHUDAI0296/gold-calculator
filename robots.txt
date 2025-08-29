@@ -2,4 +2,7 @@ User-agent: *
 Allow: /
 
 Sitemap: https://goldcalculator.click/sitemap.xml
-Sitemap: https://goldcalculator.click/sitemap_index.xml 
+Sitemap: https://goldcalculator.click/sitemap_index.xml
+Sitemap: https://goldcalculator.click/simple-sitemap.xml
+Sitemap: https://goldcalculator.click/sitemap.txt
+Sitemap: https://goldcalculator.click/sitemap-current.xml 
