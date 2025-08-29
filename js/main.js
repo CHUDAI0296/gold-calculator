@@ -48,8 +48,16 @@ function updateGoldPrice() {
  */
 function updateCopyrightYear() {
     const currentYear = new Date().getFullYear();
-    const copyrightElements = document.querySelectorAll('footer .mt-4 p:first-child');
     
+    // Try the new footer structure first (with id)
+    const copyrightYearElement = document.getElementById('copyright-year');
+    if (copyrightYearElement) {
+        copyrightYearElement.textContent = currentYear;
+        return;
+    }
+    
+    // Fallback to the old footer structure
+    const copyrightElements = document.querySelectorAll('footer .mt-4 p:first-child');
     copyrightElements.forEach(element => {
         element.textContent = `© ${currentYear} Gold Calculator. All rights reserved.`;
     });
