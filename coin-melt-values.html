@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Melt Values - Gold Calculator</title>
+    <meta name="description" content="Find coin and bullion melt values using spot prices. Learn how to estimate intrinsic metal value for gold, silver, platinum, and more.">
+    <link rel="canonical" href="https://goldcalculator.click/coin-melt-values.html" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/favicon.svg">
+    <link rel="manifest" href="site.webmanifest">
+    <!-- GA & Ads -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DHFJF4DKPM"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-DHFJF4DKPM');</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3389504348016979" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <header class="bg-dark text-white">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="index.html"><i class="fas fa-coins gold-icon"></i> Gold Calculator</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="calculator.html">Gold Calculator</a></li>
+                        <li class="nav-item"><a class="nav-link" href="metals.html">Other Metals</a></li>
+                        <li class="nav-item"><a class="nav-link" href="market.html">Market Charts</a></li>
+                        <li class="nav-item"><a class="nav-link" href="multi-calculator.html">Batch Calculator</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="educationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Education</a>
+                            <ul class="dropdown-menu" aria-labelledby="educationDropdown">
+                                <li><a class="dropdown-item" href="gold-education.html">Gold Education</a></li>
+                                <li><a class="dropdown-item" href="silver-guide.html">Silver Guide</a></li>
+                                <li><a class="dropdown-item" href="gold-history.html">Gold History</a></li>
+                                <li><a class="dropdown-item" href="investment-guide.html">Investment Guide</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
+                            <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                                <li><a class="dropdown-item" href="refining-services.html">Refining Services</a></li>
+                                <li><a class="dropdown-item" href="dealer-program.html">Dealer Program</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="pricingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pricing</a>
+                            <ul class="dropdown-menu" aria-labelledby="pricingDropdown">
+                                <li><a class="dropdown-item" href="coin-melt-values.html">Coin Melt Values</a></li>
+                                <li><a class="dropdown-item" href="live-karat-prices.html">Live Karat Prices</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="sitemap.html">Sitemap</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h1 class="display-5 mb-3">Coin Melt Values</h1>
+            <p class="lead">Estimate the intrinsic value of coins and bullion using current spot prices. This helps you understand the metal value before premiums or collector value.</p>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="h6">Common Metal Content</h2>
+                            <ul class="mb-0">
+                                <li><strong>90% U.S. Silver Coins</strong>: 0.715 troy oz silver per $1 face</li>
+                                <li><strong>40% U.S. Half Dollars</strong> (1965–1970): 0.1479 troy oz silver each</li>
+                                <li><strong>U.S. Gold Coins</strong> (common types): purity varies (90% / .9167 / .9999)</li>
+                                <li><strong>Sterling Silver</strong>: 92.5% pure silver</li>
+                            </ul>
+                            <p class="small text-muted mt-2">Data is indicative; always confirm specific series, mint, and year details.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h2 class="h6">Calculate Melt Value</h2>
+                            <ol class="mb-0">
+                                <li>Find the coin's metal content and purity</li>
+                                <li>Convert weight to troy ounces</li>
+                                <li>Multiply by current spot price</li>
+                                <li>Optionally deduct refining fees for scrap scenarios</li>
+                            </ol>
+                            <div class="mt-3">
+                                <a href="calculator.html" class="btn btn-primary btn-sm me-2">Gold Calculator</a>
+                                <a href="metals.html" class="btn btn-outline-primary btn-sm">Silver & Platinum Calculator</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info mt-4" role="alert">
+                For multiple items, try our <a href="multi-calculator.html" class="alert-link">Batch Calculator</a>.
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5 class="mb-3"><i class="fas fa-coins gold-icon"></i> Gold Calculator</h5>
+                    <p>Professional gold and silver calculator for jewelry valuation and precious metal investments. Get accurate estimates based on real-time market prices.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Home</a></li>
+                        <li class="mb-2"><a href="calculator.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Gold Calculator</a></li>
+                        <li class="mb-2"><a href="metals.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Other Metals</a></li>
+                        <li class="mb-2"><a href="market.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Market Charts</a></li>
+                        <li class="mb-2"><a href="multi-calculator.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Batch Calculator</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="mb-3">Resources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="gold-education.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Gold Education</a></li>
+                        <li class="mb-2"><a href="silver-guide.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Silver Market Analysis</a></li>
+                        <li class="mb-2"><a href="investment-guide.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Investment Guide</a></li>
+                        <li class="mb-2"><a href="gold-history.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Gold Price History</a></li>
+                        <li class="mb-2"><a href="blog.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Blog</a></li>
+                        <li class="mb-2"><a href="faq.html" class="text-white"><i class="fas fa-angle-right me-2"></i>FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="mb-3">Contact & Legal</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> chudai1024@gmail.com</li>
+                        <li class="mb-2"><a href="contact.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Contact Us</a></li>
+                        <li class="mb-2"><a href="about.html" class="text-white"><i class="fas fa-angle-right me-2"></i>About Us</a></li>
+                        <li class="mb-2"><a href="privacy.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Privacy Policy</a></li>
+                        <li class="mb-2"><a href="terms.html" class="text-white"><i class="fas fa-angle-right me-2"></i>Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="row align-items-center">
+                <div class="col-md-7">
+                    <p class="mb-md-0">&copy; <span id="copyright-year">2023</span> Gold Calculator. All rights reserved.</p>
+                </div>
+                <div class="col-md-5 text-md-end">
+                    <p class="small mb-0">Disclaimer: Gold and silver prices are indicative and for reference purposes only. Actual market prices may vary.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>document.getElementById('copyright-year').textContent=new Date().getFullYear();</script>
+</body>
+</html> 
