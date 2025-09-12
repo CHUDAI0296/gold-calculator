@@ -1,0 +1,312 @@
+/* Gold Calculator - Main Stylesheet */
+
+:root {
+    --gold-primary: #D4AF37;
+    --gold-secondary: #FFD700;
+    --gold-dark: #B8860B;
+    --gold-light: #FFF8DC;
+    --silver-primary: #C0C0C0;
+    --silver-dark: #A9A9A9;
+    --platinum-primary: #E5E4E2;
+    --platinum-dark: #9F9F9D;
+}
+
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* Header Styles */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.gold-icon {
+    color: #FFD700;
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+.silver-icon {
+    color: var(--silver-primary);
+    margin-right: 8px;
+}
+
+.platinum-icon {
+    color: var(--platinum-primary);
+    margin-right: 8px;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('../images/gold-background.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 5rem 0;
+}
+
+/* Gold Price Display */
+.gold-price-display {
+    background-color: var(--gold-light);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.price-box {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--gold-dark);
+    margin: 1rem 0;
+}
+
+.gold-price {
+    color: var(--gold-dark);
+}
+
+.silver-price {
+    color: var(--silver-dark);
+}
+
+.platinum-price {
+    color: var(--platinum-dark);
+}
+
+.price-change {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+/* Feature Boxes */
+.feature-box {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.feature-box:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: var(--gold-primary);
+}
+
+/* How It Works */
+.step-box {
+    position: relative;
+    padding: 1rem;
+}
+
+.step-number {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background-color: var(--gold-primary);
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+/* Calculator Specific Styles */
+.calculator-section {
+    background-color: #f9f9f9;
+}
+
+.calculator-form .card {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.value-display {
+    background-color: var(--gold-light);
+    border-color: var(--gold-primary) !important;
+}
+
+#gold-value {
+    color: var(--gold-dark);
+    font-weight: 700;
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--gold-primary);
+    border-color: var(--gold-dark);
+}
+
+.btn-primary:hover {
+    background-color: var(--gold-dark);
+    border-color: var(--gold-dark);
+}
+
+.btn-outline-primary {
+    color: var(--gold-primary);
+    border-color: var(--gold-primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--gold-primary);
+    border-color: var(--gold-primary);
+}
+
+/* Tips Section */
+.tips-section .card {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    height: 100%;
+}
+
+.tips-section .card-title {
+    color: var(--gold-dark);
+    border-bottom: 2px solid var(--gold-light);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* About Page */
+.about-hero {
+    background-color: var(--gold-light);
+    padding: 4rem 0;
+}
+
+.about-content .card {
+    margin-bottom: 2rem;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.about-content .card-title {
+    color: var(--gold-dark);
+    border-bottom: 2px solid var(--gold-light);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Market Charts Page */
+.market-hero {
+    background-color: var(--gold-light);
+    padding: 3rem 0;
+}
+
+.chart-section .card {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.chart-section .card-header {
+    background-color: #fff;
+    border-bottom: 2px solid var(--gold-light);
+    padding: 1rem 1.5rem;
+}
+
+.chart-container {
+    padding: 1rem;
+}
+
+.time-range-btn.active {
+    background-color: var(--gold-primary);
+    border-color: var(--gold-primary);
+    color: white;
+}
+
+.form-check-input:checked {
+    background-color: var(--gold-primary);
+    border-color: var(--gold-primary);
+}
+
+/* Metal Icons in Chart Legend */
+.form-check-label .gold-icon {
+    color: var(--gold-primary);
+}
+
+.form-check-label .silver-icon {
+    color: var(--silver-primary);
+}
+
+.form-check-label .platinum-icon {
+    color: var(--platinum-primary);
+}
+
+/* Alert Section */
+.alert-section {
+    background-color: #f9f9f9;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .price-box {
+        font-size: 2rem;
+    }
+    
+    .hero-section {
+        padding: 3rem 0;
+    }
+    
+    .feature-box {
+        margin-bottom: 1.5rem;
+    }
+    
+    .chart-section .card-header {
+        padding: 1rem;
+    }
+    
+    .time-range-btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .gold-price-display {
+        padding: 1rem;
+    }
+    
+    .price-box {
+        font-size: 1.8rem;
+    }
+    
+    .step-box {
+        margin-bottom: 2rem;
+    }
+    
+    .chart-container {
+        height: 50vh !important;
+    }
+    
+    .time-range-btn {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.75rem;
+    }
+} 
+
+/* 添加logo样式 */
+.logo-img {
+    height: 40px;
+    margin-right: 10px;
+} 
