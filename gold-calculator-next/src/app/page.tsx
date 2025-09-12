@@ -1,5 +1,5 @@
 import Image from "next/image";
-
+import React from 'react';
 import { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
 
@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Gold Calculator - Calculate Gold Value Instantly',
   description: 'Calculate the value of your gold with our easy-to-use gold calculator. Get real-time gold prices and accurate estimations.',
   alternates: {
-    canonical: 'https://www.goldcalculator.click/'
+    canonical: 'https://www.goldcalculator.click'
   }
 };
 
@@ -29,7 +29,7 @@ export default async function Home() {
   const goldPrice = await getGoldPrice();
 
   return (
-    <>
+    <React.Fragment>
       <JsonLd type="website" />
       {/* Hero Section */}
       <section className="hero-section">
@@ -183,6 +183,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-    </>
+    </React.Fragment>
   );
 }

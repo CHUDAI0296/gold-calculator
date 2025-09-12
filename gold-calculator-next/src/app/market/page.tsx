@@ -1,5 +1,8 @@
 import { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
+import TradingView from '@/components/TradingView';
+import MarketStats from '@/components/MarketStats';
+import MarketAnalysis from '@/components/MarketAnalysis';
 
 export const metadata: Metadata = {
   title: 'Gold Market Charts - Live Gold Price Charts and Analysis',
@@ -9,134 +12,40 @@ export const metadata: Metadata = {
   }
 };
 
-export default async function Market() {
-  // 获取历史金价数据
-  const getHistoricalData = async () => {
-    try {
-      const response = await fetch('http://localhost:3000/api/historical-price?period=1m', {
-        next: { revalidate: 3600 } // 1小时缓存
-      });
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching historical data:', error);
-      return null;
-    }
-  };
-
-  const historicalData = await getHistoricalData();
-
+export default function Market() {
   return (
-    <>
+    <div className="market-page">
       <JsonLd type="market" />
-      <div className="container py-5">
+      <div className="container py-5 relative">
       <h1 className="text-center mb-4">Gold Market Charts</h1>
 
-      <div className="row">
-        <div className="col-12 mb-4">
-          <div className="card">
-            <div className="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
-              <h2 className="h5 mb-0">Live Gold Price Chart</h2>
-              <div className="btn-group">
-                <button className="btn btn-sm btn-outline-dark" data-period="1d">1D</button>
-                <button className="btn btn-sm btn-outline-dark" data-period="1w">1W</button>
-                <button className="btn btn-sm btn-outline-dark active" data-period="1m">1M</button>
-                <button className="btn btn-sm btn-outline-dark" data-period="1y">1Y</button>
-              </div>
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+        <div className="md:col-span-8">
+          <div className="bg-white rounded-lg shadow-md h-full">
+            <div className="bg-warning text-dark p-4 rounded-t-lg">
+              <h2 className="text-lg font-semibold m-0">Gold Price Chart</h2>
             </div>
-            <div className="card-body">
-              <div id="priceChart" style={{ height: '400px' }}>
-                {/* TradingView Widget will be inserted here */}
-              </div>
+            <div className="p-4">
+              <TradingView containerId="priceChart" height={400} />
             </div>
           </div>
+        </div>
+        <div className="md:col-span-4">
+          <MarketStats />
         </div>
       </div>
-
-      <div className="row">
-        <div className="col-md-6 mb-4">
-          <div className="card h-100">
-            <div className="card-header bg-warning text-dark">
-              <h2 className="h5 mb-0">Market Statistics</h2>
-            </div>
-            <div className="card-body">
-              <table className="table">
-                <tbody>
-                  <tr>
-                    <th>24h High</th>
-                    <td id="24hHigh">Loading...</td>
-                  </tr>
-                  <tr>
-                    <th>24h Low</th>
-                    <td id="24hLow">Loading...</td>
-                  </tr>
-                  <tr>
-                    <th>24h Change</th>
-                    <td id="24hChange">Loading...</td>
-                  </tr>
-                  <tr>
-                    <th>Volume</th>
-                    <td id="volume">Loading...</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-md-6 mb-4">
-          <div className="card h-100">
-            <div className="card-header bg-warning text-dark">
-              <h2 className="h5 mb-0">Market Analysis</h2>
-            </div>
-            <div className="card-body">
-              <div className="mb-3">
-                <h3 className="h6">Technical Indicators</h3>
-                <div id="technicalIndicators">
-                  <div className="d-flex justify-content-between mb-2">
-                    <span>RSI (14)</span>
-                    <span id="rsiValue">Loading...</span>
-                  </div>
-                  <div className="d-flex justify-content-between mb-2">
-                    <span>MACD</span>
-                    <span id="macdValue">Loading...</span>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <span>Moving Average (20)</span>
-                    <span id="maValue">Loading...</span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <h3 className="h6">Market Sentiment</h3>
-                <div id="marketSentiment">
-                  <div className="progress mb-2">
-                    <div className="progress-bar bg-success" role="progressbar" style={{ width: '60%' }}>
-                      Bullish 60%
-                    </div>
-                  </div>
-                  <div className="progress">
-                    <div className="progress-bar bg-danger" role="progressbar" style={{ width: '40%' }}>
-                      Bearish 40%
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="mt-4">
+        <MarketAnalysis />
       </div>
 
-      <div className="row">
-        <div className="col-12">
-          <div className="card">
-            <div className="card-header bg-warning text-dark">
-              <h2 className="h5 mb-0">Market News</h2>
-            </div>
-            <div className="card-body">
-              <div id="marketNews" className="list-group list-group-flush">
-                {/* News items will be dynamically inserted here */}
-              </div>
+      <div className="mt-4">
+        <div className="bg-white rounded-lg shadow-md">
+          <div className="bg-warning text-dark p-4 rounded-t-lg">
+            <h2 className="text-lg font-semibold m-0">Market News</h2>
+          </div>
+          <div className="p-4">
+            <div id="marketNews" className="divide-y divide-gray-200">
+              {/* News items will be dynamically inserted here */}
             </div>
           </div>
         </div>

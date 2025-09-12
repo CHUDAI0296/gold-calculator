@@ -1,8 +1,53 @@
 import Script from 'next/script';
 
+interface BaseStructuredData {
+  "@context": "https://schema.org";
+}
+
+interface WebsiteData extends BaseStructuredData {
+  "@type": "WebSite";
+  name: string;
+  description: string;
+  url: string;
+  potentialAction: {
+    "@type": "SearchAction";
+    target: string;
+    "query-input": string;
+  };
+}
+
+interface CalculatorData extends BaseStructuredData {
+  "@type": "SoftwareApplication";
+  name: string;
+  applicationCategory: string;
+  operatingSystem: string;
+  offers: {
+    "@type": "Offer";
+    price: string;
+    priceCurrency: string;
+  };
+}
+
+interface MarketData extends BaseStructuredData {
+  "@type": "Dataset";
+  name: string;
+  description: string;
+  keywords: string[];
+  temporalCoverage: string;
+  spatialCoverage: string;
+  license: string;
+  creator: {
+    "@type": "Organization";
+    name: string;
+    url: string;
+  };
+}
+
+type StructuredData = WebsiteData | CalculatorData | MarketData;
+
 interface JsonLdProps {
   type: 'website' | 'calculator' | 'market';
-  data?: any;
+  data?: Partial<StructuredData>;
 }
 
 export default function JsonLd({ type, data }: JsonLdProps) {

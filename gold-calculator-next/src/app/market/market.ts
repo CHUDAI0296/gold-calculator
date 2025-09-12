@@ -3,14 +3,16 @@
 interface MarketData {
   price: number;
   timestamp: number;
+  high: number;
+  low: number;
+  open: number;
+  volume: number;
 }
 
 class MarketChart {
-  private tradingViewWidget: any;
-  private historicalData: MarketData[];
+  private tradingViewWidget: TradingView.widget;
 
   constructor() {
-    this.historicalData = [];
     this.initializeTradingView();
     this.initializeEventListeners();
     this.loadMarketData();
@@ -18,28 +20,37 @@ class MarketChart {
   }
 
   private initializeTradingView(): void {
-    const script = document.createElement('script');
-    script.src = 'https://s3.tradingview.com/tv.js';
-    script.async = true;
-    script.onload = () => {
-      if (typeof TradingView !== 'undefined') {
-        new TradingView.widget({
-          "width": "100%",
-          "height": 400,
-          "symbol": "GOLD",
-          "interval": "D",
-          "timezone": "Etc/UTC",
-          "theme": "light",
-          "style": "1",
-          "locale": "en",
-          "toolbar_bg": "#f1f3f6",
-          "enable_publishing": false,
-          "allow_symbol_change": false,
-          "container_id": "priceChart"
+    try {
+      const script = document.createElement('script');
+      script.src = 'https://s3.tradingview.com/tv.js';
+      script.async = true;
+      script.onload = () => {
+        if (typeof window.TradingView === 'undefined') {
+          console.error('TradingView is not loaded');
+          return;
+        }
+        this.tradingViewWidget = new window.TradingView.widget({
+          autosize: true,
+          symbol: "GOLD",
+          interval: "D",
+          timezone: "Etc/UTC",
+          theme: "light",
+          style: "1",
+          locale: "en",
+          toolbar_bg: "#f1f3f6",
+          enable_publishing: false,
+          allow_symbol_change: false,
+          container_id: "priceChart",
+          save_image: false
         });
-      }
-    };
-    document.head.appendChild(script);
+      };
+      script.onerror = () => {
+        console.error('Failed to load TradingView script');
+      };
+      document.head.appendChild(script);
+    } catch (error) {
+      console.error('Error initializing TradingView:', error);
+    }
   }
 
   private initializeEventListeners(): void {
@@ -111,11 +122,10 @@ class MarketChart {
   }
 
   private updateChartPeriod(period: string | null): void {
-    if (!period) return;
+    if (!period || !this.tradingViewWidget) return;
     
     // 更新TradingView图表的时间周期
-    if (this.tradingViewWidget) {
-      const intervals: { [key: string]: string } = {
+    const intervals: Record<string, string> = {
         '1d': '60',
         '1w': 'D',
         '1m': 'W',

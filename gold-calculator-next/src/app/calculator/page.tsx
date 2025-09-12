@@ -9,13 +9,19 @@ export const metadata: Metadata = {
   }
 };
 
-export default async function Calculator() {
+'use client';
+
+import { useState, useEffect } from 'react';
+import React from 'react';
+
+export default function Calculator() {
+  const [goldPrice, setGoldPrice] = useState<number | null>(null);
+  const [calculatedValue, setCalculatedValue] = useState<number>(0);
+
   // 从本地API获取实时金价
   const getGoldPrice = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/gold-price', {
-        next: { revalidate: 300 } // 5分钟缓存
-      });
+      const response = await fetch('/api/gold-price');
       const data = await response.json();
       return data[0].price;
     } catch (error) {
@@ -24,10 +30,45 @@ export default async function Calculator() {
     }
   };
 
-  const goldPrice = await getGoldPrice();
+  useEffect(() => {
+    getGoldPrice().then(price => setGoldPrice(price));
+  }, []);
+
+  // 计算黄金价值
+  const calculateValue = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const weight = parseFloat((form.querySelector('#weight') as HTMLInputElement).value);
+    const weightUnit = (form.querySelector('#weightUnit') as HTMLSelectElement).value;
+    const karat = parseInt((form.querySelector('#karat') as HTMLSelectElement).value);
+    const premium = parseFloat((form.querySelector('#premium') as HTMLInputElement).value);
+
+    if (!goldPrice || isNaN(weight)) return;
+
+    // 转换重量到盎司
+    let weightInOz = weight;
+    if (weightUnit === 'g') {
+      weightInOz = weight * 0.03215;
+    } else if (weightUnit === 'dwt') {
+      weightInOz = weight * 0.05;
+    }
+
+    // 计算纯度
+    const purity = karat / 24;
+
+    // 计算基础价值
+    let value = weightInOz * goldPrice * purity;
+
+    // 应用溢价/折扣
+    if (!isNaN(premium)) {
+      value = value * (1 + premium / 100);
+    }
+
+    setCalculatedValue(value);
+  };
 
   return (
-    <>
+    <React.Fragment>
       <JsonLd type="calculator" />
       <div className="container py-5">
       <h1 className="text-center mb-4">Gold Value Calculator</h1>
@@ -55,7 +96,7 @@ export default async function Calculator() {
               <h2 className="h5 mb-0">Calculator Settings</h2>
             </div>
             <div className="card-body">
-              <form id="goldCalculator">
+              <form id="goldCalculator" onSubmit={calculateValue}>
                 <div className="mb-3">
                   <label htmlFor="weight" className="form-label">Weight</label>
                   <div className="input-group">
@@ -70,7 +111,7 @@ export default async function Calculator() {
 
                 <div className="mb-3">
                   <label htmlFor="karat" className="form-label">Karat</label>
-                  <select className="form-select" id="karat">
+                  <select className="form-select" id="karat" defaultValue="24">
                     <option value="24">24K (99.9%)</option>
                     <option value="22">22K (91.6%)</option>
                     <option value="18">18K (75.0%)</option>
@@ -105,7 +146,7 @@ export default async function Calculator() {
             <div className="card-body">
               <div className="result-display text-center">
                 <h3>Estimated Value</h3>
-                <div id="calculatedValue" className="display-4">$0.00</div>
+                <div className="display-4">${calculatedValue.toFixed(2)}</div>
                 <p className="text-muted mt-2">Based on current market price</p>
               </div>
             </div>
@@ -202,5 +243,6 @@ export default async function Calculator() {
         </div>
       </div>
     </div>
+    </React.Fragment>
   );
 }

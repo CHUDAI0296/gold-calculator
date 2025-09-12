@@ -34,15 +34,6 @@ export default function RootLayout({
         <GoogleAnalytics />
         <Navigation />
         <main>{children}</main>
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-DHFJF4DKPM" strategy="afterInteractive" />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-DHFJF4DKPM');
-          `}
-        </Script>
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3389504348016979"
           crossOrigin="anonymous"
