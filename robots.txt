@@ -6,3 +6,4 @@ Allow: /
 
 # XML Sitemaps for search engines
 Sitemap: https://goldcalculator.click/sitemap.xml
+Sitemap: https://goldcalculator.click/bing_sitemap.xml
