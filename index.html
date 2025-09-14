@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-T2DHJ252QM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-T2DHJ252QM');
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gold Calculator - Real-Time Price Calculator & Scrap Value</title>
@@ -38,6 +29,47 @@
     <meta name="keywords" content="precious metal calculator, metal price, scrap value, karat calculator, precious metals, jewelry valuation">
     
     <link rel="canonical" href="https://www.goldcalculator.click/" />
+    <link rel="preload" href="css/styles.css" as="style">
+    <link rel="preload" href="images/logo.svg" as="image">
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
+
+    <!-- Font preload for better performance -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- PWA optimizations -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Gold Calculator">
+    <meta name="application-name" content="Gold Calculator">
+    <meta name="msapplication-TileColor" content="#D4AF37">
+    <meta name="msapplication-config" content="browserconfig.xml">
+
+    <script>
+        // Prevent layout shift by reserving space early
+        document.documentElement.style.setProperty('--gold-price-height', '60px');
+        document.documentElement.style.setProperty('--hero-min-height', '400px');
+    </script>
+
+    <!-- Critical CSS Inline for faster rendering -->
+    <style>
+        :root{--gold-primary:#D4AF37;--gold-secondary:#FFD700;--gold-dark:#B8860B;--gold-light:#FFF8DC}
+        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;color:#333}
+        img{height:auto;max-width:100%}
+        .hero-logo img{width:80px;height:80px}
+        .navbar-brand{display:flex;align-items:center;font-weight:bold;font-size:1.5rem}
+        .gold-icon{color:#FFD700;font-size:1.5rem;margin-right:10px}
+        .hero-section{background:linear-gradient(rgba(255,255,255,0.9),rgba(255,255,255,0.9));padding:5rem 0;min-height:var(--hero-min-height,400px)}
+        .gold-price-display{background-color:var(--gold-light);border-radius:8px;padding:1.5rem;margin:2rem auto;max-width:500px;box-shadow:0 4px 8px rgba(0,0,0,0.1);min-height:var(--gold-price-height,60px)}
+        .price-box{font-size:2.5rem;font-weight:700;color:var(--gold-dark);margin:1rem 0}
+        .feature-box{min-height:200px;background-color:white;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.05)}
+        @media (max-width:768px){.price-box{font-size:2rem}.hero-section{padding:3rem 0}}
+        @media (max-width:576px){.price-box{font-size:1.8rem}.gold-price-display{padding:1rem}}
+    </style>
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
@@ -57,10 +89,11 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3389504348016979"
      crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/styles.css">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"></noscript>
     <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
 </head>
 <body>
     <!-- Header Section -->
@@ -138,7 +171,7 @@
     <section class="hero-section">
         <div class="container text-center py-5">
             <div class="hero-logo mb-4">
-                <img src="images/logo.svg" alt="Precious Metal Calculator - Professional Value Estimation and Analysis Tool" class="img-fluid" style="max-height: 80px;">
+                <img src="images/logo.svg" alt="Precious Metal Calculator - Professional Value Estimation and Analysis Tool" class="img-fluid" style="max-height: 80px;" width="80" height="80" loading="eager">
             </div>
             <h1 class="display-4">Calculate Your Precious Metal Value Instantly</h1>
             <p class="lead">Get accurate estimations based on real-time market prices</p>
@@ -435,10 +468,18 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
-    <script src="js/gold-api.js"></script>
-    <script src="js/main.js"></script>
+    <script defer src="js/gold-api.js"></script>
+    <script defer src="js/main.js"></script>
+
+    <!-- Move Google Analytics to bottom for better performance -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-DHFJF4DKPM');
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DHFJF4DKPM"></script>
 </body>
 </html>

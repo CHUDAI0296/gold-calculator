@@ -17,6 +17,17 @@ body {
     color: #333;
 }
 
+/* Prevent layout shift */
+img {
+    height: auto;
+    max-width: 100%;
+}
+
+.hero-logo img {
+    width: 80px;
+    height: 80px;
+}
+
 /* Header Styles */
 .navbar-brand {
     display: flex;
@@ -43,10 +54,11 @@ body {
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('../images/gold-background.jpg');
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
     background-size: cover;
     background-position: center;
     padding: 5rem 0;
+    contain: layout style paint;
 }
 
 /* Gold Price Display */
@@ -57,6 +69,7 @@ body {
     margin: 2rem auto;
     max-width: 500px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    contain: layout style paint;
 }
 
 .price-box {
@@ -90,6 +103,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     height: 100%;
     transition: transform 0.3s ease;
+    min-height: 200px; /* Prevent layout shift */
 }
 
 .feature-box:hover {
@@ -128,6 +142,7 @@ body {
 .calculator-form .card {
     border: none;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-height: 400px; /* Prevent layout shift */
 }
 
 .value-display {

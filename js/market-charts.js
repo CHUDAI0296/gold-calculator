@@ -3,15 +3,44 @@
  * Handles the display of historical price charts for precious metals
  */
 
+// Performance optimization: Use requestIdleCallback for non-critical work
+function scheduleWork(callback) {
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(callback);
+    } else {
+        setTimeout(callback, 1);
+    }
+}
+
+// Debounce function for performance
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize market charts
-    initializeMarketCharts();
-    
-    // Initialize event listeners
-    initializeEventListeners();
-    
-    // Update current prices
-    updateCurrentPrices();
+    // Only initialize if Chart.js is loaded
+    if (typeof Chart !== 'undefined') {
+        scheduleWork(() => {
+            // Initialize market charts
+            initializeMarketCharts();
+
+            // Initialize event listeners
+            initializeEventListeners();
+
+            // Update current prices
+            updateCurrentPrices();
+        });
+    } else {
+        console.warn('Chart.js not loaded yet');
+    }
 });
 
 /**
@@ -106,28 +135,30 @@ function initializeMarketCharts() {
  * Initialize event listeners for the chart controls
  */
 function initializeEventListeners() {
-    // Time range buttons
-    const timeRangeButtons = document.querySelectorAll('.time-range-btn');
-    timeRangeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            timeRangeButtons.forEach(btn => btn.classList.remove('active'));
-            
-            // Add active class to clicked button
-            this.classList.add('active');
-            
-            // Get the selected time range
-            const range = parseInt(this.dataset.range);
-            
-            // Load data for the selected range
-            loadHistoricalData(range);
-        });
-    });
-    
+    // Time range buttons - use event delegation
+    const timeRangeContainer = document.querySelector('.btn-group');
+    if (timeRangeContainer) {
+        timeRangeContainer.addEventListener('click', debounce(function(e) {
+            if (e.target.classList.contains('time-range-btn')) {
+                // Remove active class from all buttons
+                timeRangeContainer.querySelectorAll('.time-range-btn').forEach(btn => btn.classList.remove('active'));
+
+                // Add active class to clicked button
+                e.target.classList.add('active');
+
+                // Get the selected time range
+                const range = parseInt(e.target.dataset.range);
+
+                // Load data for the selected range
+                loadHistoricalData(range);
+            }
+        }, 250));
+    }
+
     // Metal selection checkboxes
     const metalCheckboxes = document.querySelectorAll('#showGold, #showSilver, #showPlatinum');
     metalCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', updateChartVisibility);
+        checkbox.addEventListener('change', debounce(updateChartVisibility, 100));
     });
 }
 
