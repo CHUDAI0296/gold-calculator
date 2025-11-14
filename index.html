@@ -495,12 +495,237 @@
     </footer>
 
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Chart.js for home-page chart -->
-    <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Inline Ultra Lightweight Chart - Zero dependencies -->
+    <script>
+        // Ultra lightweight chart implementation for home page
+        class HomeChart {
+            constructor(canvasId, options = {}) {
+                this.canvas = document.getElementById(canvasId);
+                if (!this.canvas) return null;
+                
+                this.ctx = this.canvas.getContext('2d');
+                this.options = {
+                    lineColor: '#D4AF37',
+                    pointColor: '#FFD700',
+                    backgroundColor: '#f8f9fa',
+                    gridColor: '#dee2e6',
+                    basePrice: 1950,
+                    ...options
+                };
+                
+                this.data = [];
+                this.init();
+            }
+            
+            init() {
+                this.generateData(7); // 7 days for home page
+                this.setupCanvas();
+                this.draw();
+                
+                // Auto-update every 30 seconds
+                setInterval(() => {
+                    this.updateData();
+                    this.draw();
+                }, 30000);
+            }
+            
+            setupCanvas() {
+                const container = this.canvas.parentElement;
+                const rect = container.getBoundingClientRect();
+                
+                this.canvas.width = rect.width;
+                this.canvas.height = rect.height || 200;
+                
+                const dpr = window.devicePixelRatio || 1;
+                this.canvas.width = this.canvas.width * dpr;
+                this.canvas.height = this.canvas.height * dpr;
+                this.ctx.scale(dpr, dpr);
+                
+                this.canvas.style.width = rect.width + 'px';
+                this.canvas.style.height = (rect.height || 200) + 'px';
+                
+                window.addEventListener('resize', () => {
+                    this.setupCanvas();
+                    this.draw();
+                });
+            }
+            
+            generateData(days = 7) {
+                const now = new Date();
+                this.data = [];
+                
+                for (let i = days; i >= 0; i--) {
+                    const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+                    const trend = Math.sin((days - i) / days * Math.PI) * 25;
+                    const noise = (Math.random() - 0.5) * 15;
+                    const price = this.options.basePrice + trend + noise;
+                    
+                    this.data.push({
+                        date: date.toISOString().split('T')[0],
+                        price: Math.max(1000, price),
+                        label: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+                    });
+                }
+            }
+            
+            updateData() {
+                const lastDate = new Date(this.data[this.data.length - 1].date);
+                const newDate = new Date(lastDate.getTime() + 24 * 60 * 60 * 1000);
+                const lastPrice = this.data[this.data.length - 1].price;
+                const change = (Math.random() - 0.5) * 10;
+                const newPrice = Math.max(1000, lastPrice + change);
+                
+                this.data.push({
+                    date: newDate.toISOString().split('T')[0],
+                    price: newPrice,
+                    label: newDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+                });
+                
+                if (this.data.length > 8) {
+                    this.data.shift();
+                }
+            }
+            
+            draw() {
+                if (!this.ctx || !this.data.length) return;
+                
+                const width = this.canvas.width / (window.devicePixelRatio || 1);
+                const height = this.canvas.height / (window.devicePixelRatio || 1);
+                
+                this.ctx.clearRect(0, 0, width, height);
+                this.ctx.fillStyle = this.options.backgroundColor;
+                this.ctx.fillRect(0, 0, width, height);
+                
+                this.drawGrid(width, height);
+                this.drawLine(width, height);
+                this.drawLabels(width, height);
+                this.drawCurrentPrice(width, height);
+            }
+            
+            drawGrid(width, height) {
+                this.ctx.strokeStyle = this.options.gridColor;
+                this.ctx.lineWidth = 1;
+                
+                for (let i = 0; i <= 3; i++) {
+                    const y = (height - 60) * (i / 3) + 30;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(40, y);
+                    this.ctx.lineTo(width - 10, y);
+                    this.ctx.stroke();
+                }
+                
+                const step = Math.max(1, Math.floor(this.data.length / 4));
+                for (let i = 0; i < this.data.length; i += step) {
+                    const x = 40 + (width - 50) * (i / (this.data.length - 1));
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(x, 30);
+                    this.ctx.lineTo(x, height - 30);
+                    this.ctx.stroke();
+                }
+            }
+            
+            drawLine(width, height) {
+                if (this.data.length < 2) return;
+                
+                const chartWidth = width - 50;
+                const chartHeight = height - 80;
+                const minPrice = Math.min(...this.data.map(d => d.price));
+                const maxPrice = Math.max(...this.data.map(d => d.price));
+                const priceRange = maxPrice - minPrice || 1;
+                
+                this.ctx.strokeStyle = this.options.lineColor;
+                this.ctx.lineWidth = 2;
+                this.ctx.beginPath();
+                
+                this.data.forEach((point, index) => {
+                    const x = 40 + chartWidth * (index / (this.data.length - 1));
+                    const y = 40 + chartHeight * (1 - (point.price - minPrice) / priceRange);
+                    
+                    if (index === 0) {
+                        this.ctx.moveTo(x, y);
+                    } else {
+                        this.ctx.lineTo(x, y);
+                    }
+                });
+                
+                this.ctx.stroke();
+                
+                this.ctx.fillStyle = this.options.pointColor;
+                this.data.forEach((point, index) => {
+                    const x = 40 + chartWidth * (index / (this.data.length - 1));
+                    const y = 40 + chartHeight * (1 - (point.price - minPrice) / priceRange);
+                    
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, 3, 0, 2 * Math.PI);
+                    this.ctx.fill();
+                });
+            }
+            
+            drawLabels(width, height) {
+                this.ctx.fillStyle = '#495057';
+                this.ctx.font = '10px Arial';
+                this.ctx.textAlign = 'center';
+                
+                const step = Math.max(1, Math.floor(this.data.length / 4));
+                this.data.forEach((point, index) => {
+                    if (index % step === 0) {
+                        const x = 40 + (width - 50) * (index / (this.data.length - 1));
+                        this.ctx.fillText(point.label, x, height - 10);
+                    }
+                });
+                
+                this.ctx.textAlign = 'right';
+                const minPrice = Math.min(...this.data.map(d => d.price));
+                const maxPrice = Math.max(...this.data.map(d => d.price));
+                
+                for (let i = 0; i <= 3; i++) {
+                    const price = minPrice + (maxPrice - minPrice) * (1 - i / 3);
+                    const y = (height - 80) * (i / 3) + 45;
+                    this.ctx.fillText('$' + price.toFixed(0), 35, y);
+                }
+            }
+            
+            drawCurrentPrice(width, height) {
+                if (this.data.length === 0) return;
+                
+                const currentPrice = this.data[this.data.length - 1].price;
+                const minPrice = Math.min(...this.data.map(d => d.price));
+                const maxPrice = Math.max(...this.data.map(d => d.price));
+                const priceRange = maxPrice - minPrice || 1;
+                
+                const x = 40 + (width - 50) * ((this.data.length - 1) / (this.data.length - 1));
+                const y = 40 + (height - 80) * (1 - (currentPrice - minPrice) / priceRange);
+                
+                this.ctx.fillStyle = '#ff6b6b';
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                this.ctx.fill();
+                
+                this.ctx.fillStyle = '#ff6b6b';
+                this.ctx.font = 'bold 12px Arial';
+                this.ctx.textAlign = 'left';
+                this.ctx.fillText('$' + currentPrice.toFixed(2), x + 10, y + 4);
+            }
+        }
+        
+        // Initialize home chart when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const homeCanvas = document.getElementById('homePriceChart');
+                if (homeCanvas) {
+                    window.homeChart = new HomeChart('homePriceChart', {
+                        lineColor: '#D4AF37',
+                        pointColor: '#FFD700',
+                        backgroundColor: '#f8f9fa',
+                        gridColor: '#dee2e6'
+                    });
+                }
+            }, 100);
+        });
+    </script>
     <!-- Custom JS -->
     <script defer src="js/gold-api.js"></script>
     <script defer src="js/main.js"></script>
-    <script defer src="js/home-chart.js"></script>
 
     <!-- Move Google Analytics to bottom for better performance -->
     <script>

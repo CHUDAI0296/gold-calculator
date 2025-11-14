@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Test - Gold Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .price-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #D4AF37;
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🪙 Gold Calculator Chart Test</h1>
+        <p>This page tests the ultra-lightweight chart implementation without external dependencies.</p>
+        
+        <div id="status" class="status info">Initializing charts...</div>
+        
+        <div class="test-section">
+            <h2>Market Chart Test</h2>
+            <div class="chart-container">
+                <canvas id="marketChart"></canvas>
+            </div>
+            <div class="price-display" id="marketPrice">Loading...</div>
+            <button onclick="updateMarketChart()">Update Market Chart</button>
+            <button onclick="resetMarketChart()">Reset Market Chart</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>Home Chart Test</h2>
+            <div class="chart-container" style="height: 300px;">
+                <canvas id="homeChart"></canvas>
+            </div>
+            <div class="price-display" id="homePrice">Loading...</div>
+            <button onclick="updateHomeChart()">Update Home Chart</button>
+            <button onclick="resetHomeChart()">Reset Home Chart</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>Console Log</h2>
+            <div id="console" style="background: #f8f9fa; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px; max-height: 200px; overflow-y: auto;"></div>
+            <button onclick="clearConsole()">Clear Console</button>
+        </div>
+    </div>
+
+    <!-- Ultra Lightweight Charts -->
+    <script src="js/ultra-lightweight-charts.js"></script>
+    
+    <script>
+        let marketChart = null;
+        let homeChart = null;
+        
+        function log(message, type = 'info') {
+            const consoleDiv = document.getElementById('console');
+            const timestamp = new Date().toLocaleTimeString();
+            const color = type === 'error' ? 'red' : type === 'success' ? 'green' : 'blue';
+            consoleDiv.innerHTML += `<div style="color: ${color};">[${timestamp}] ${message}</div>`;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+            
+            // Also log to browser console
+            console.log(`[${timestamp}] ${message}`);
+        }
+        
+        function updateStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+            log(message, type);
+        }
+        
+        function initializeCharts() {
+            try {
+                log('Starting chart initialization...');
+                
+                // Initialize market chart
+                const marketCanvas = document.getElementById('marketChart');
+                if (marketCanvas) {
+                    marketChart = new UltraLightweightChart('marketChart', {
+                        lineColor: '#D4AF37',
+                        pointColor: '#FFD700',
+                        backgroundColor: '#ffffff',
+                        gridColor: '#e0e0e0',
+                        basePrice: 2000
+                    });
+                    
+                    if (marketChart && marketChart.isInitialized) {
+                        updateStatus('Market chart initialized successfully', 'success');
+                        updateMarketPrice();
+                    } else {
+                        updateStatus('Market chart initialization failed', 'error');
+                    }
+                } else {
+                    updateStatus('Market chart canvas not found', 'error');
+                }
+                
+                // Initialize home chart
+                const homeCanvas = document.getElementById('homeChart');
+                if (homeCanvas) {
+                    homeChart = new UltraLightweightChart('homeChart', {
+                        lineColor: '#D4AF37',
+                        pointColor: '#FFD700',
+                        backgroundColor: '#f8f9fa',
+                        gridColor: '#dee2e6',
+                        textColor: '#495057',
+                        basePrice: 1950
+                    });
+                    
+                    if (homeChart && homeChart.isInitialized) {
+                        log('Home chart initialized successfully', 'success');
+                        updateHomePrice();
+                    } else {
+                        log('Home chart initialization failed', 'error');
+                    }
+                } else {
+                    log('Home chart canvas not found', 'error');
+                }
+                
+            } catch (error) {
+                updateStatus(`Chart initialization error: ${error.message}`, 'error');
+                console.error('Full error:', error);
+            }
+        }
+        
+        function updateMarketPrice() {
+            if (marketChart && marketChart.data.length > 0) {
+                const currentPrice = marketChart.data[marketChart.data.length - 1].price;
+                document.getElementById('marketPrice').textContent = `$${currentPrice.toFixed(2)} USD`;
+            }
+        }
+        
+        function updateHomePrice() {
+            if (homeChart && homeChart.data.length > 0) {
+                const currentPrice = homeChart.data[homeChart.data.length - 1].price;
+                document.getElementById('homePrice').textContent = `$${currentPrice.toFixed(2)} USD`;
+            }
+        }
+        
+        function updateMarketChart() {
+            if (marketChart) {
+                marketChart.updateData();
+                marketChart.draw();
+                updateMarketPrice();
+                log('Market chart updated', 'success');
+            } else {
+                log('Market chart not available', 'error');
+            }
+        }
+        
+        function updateHomeChart() {
+            if (homeChart) {
+                homeChart.updateData();
+                homeChart.draw();
+                updateHomePrice();
+                log('Home chart updated', 'success');
+            } else {
+                log('Home chart not available', 'error');
+            }
+        }
+        
+        function resetMarketChart() {
+            if (marketChart) {
+                marketChart.generateData(30);
+                marketChart.draw();
+                updateMarketPrice();
+                log('Market chart reset', 'success');
+            }
+        }
+        
+        function resetHomeChart() {
+            if (homeChart) {
+                homeChart.generateData(7); // 7 days for home chart
+                homeChart.draw();
+                updateHomePrice();
+                log('Home chart reset', 'success');
+            }
+        }
+        
+        function clearConsole() {
+            document.getElementById('console').innerHTML = '';
+        }
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeCharts);
+        } else {
+            initializeCharts();
+        }
+    </script>
+</body>
+</html>
