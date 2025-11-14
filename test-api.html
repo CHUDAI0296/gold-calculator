@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test - Gold Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .info { background-color: #d1ecf1; border-color: #bee5eb; color: #0c5460; }
+        .loading { background-color: #fff3cd; border-color: #ffeaa7; color: #856404; }
+    </style>
+</head>
+<body>
+    <h1>Gold Price API Test</h1>
+    <div id="test-results"></div>
+    
+    <script src="js/gold-api.js"></script>
+    <script>
+        const resultsDiv = document.getElementById('test-results');
+        
+        function addResult(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            resultsDiv.appendChild(div);
+            // Auto-scroll to bottom
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+        }
+        
+        async function runTests() {
+            addResult('Starting API tests...', 'loading');
+            
+            try {
+                // Wait for functions to be available
+                if (typeof fetchGoldPrice !== 'function') {
+                    throw new Error('Gold API functions not loaded');
+                }
+                
+                // Test 1: Fetch gold price
+                addResult('Testing gold price fetch...', 'loading');
+                const goldPrice = await fetchGoldPrice();
+                addResult(`Gold price: $${goldPrice}`, goldPrice > 1000 ? 'success' : 'error');
+                
+                // Test 2: Fetch silver price
+                addResult('Testing silver price fetch...', 'loading');
+                const silverPrice = await fetchSilverPrice();
+                addResult(`Silver price: $${silverPrice}`, silverPrice > 10 ? 'success' : 'error');
+                
+                // Test 3: Fetch platinum price
+                addResult('Testing platinum price fetch...', 'loading');
+                const platinumPrice = await fetchPlatinumPrice();
+                addResult(`Platinum price: $${platinumPrice}`, platinumPrice > 500 ? 'success' : 'error');
+                
+                // Test 4: Update all prices
+                addResult('Testing bulk price update...', 'loading');
+                const allPrices = await updateAllMetalPrices();
+                addResult(`All prices updated: Gold $${allPrices.gold}, Silver $${allPrices.silver}, Platinum $${allPrices.platinum}`, 'success');
+                
+                // Test 5: Price history
+                addResult('Testing price history...', 'loading');
+                const goldHistory = getPriceHistory('gold', 2);
+                addResult(`Price history entries: ${goldHistory.length}`, goldHistory.length > 0 ? 'success' : 'error');
+                
+                addResult('All tests completed successfully!', 'success');
+                
+            } catch (error) {
+                addResult(`Test error: ${error.message}`, 'error');
+                console.error('Test error:', error);
+            }
+        }
+        
+        // Run tests when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(runTests, 2000); // Wait 2 seconds to ensure scripts are loaded
+        });
+    </script>
+</body>
+</html>

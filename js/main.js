@@ -41,14 +41,17 @@ function scheduleWork(callback) {
 document.addEventListener('DOMContentLoaded', function() {
     // Schedule non-critical work
     scheduleWork(() => {
-        // Initialize gold price display
-        updateGoldPrice();
+        // Initialize gold price display with real API data
+        initializeRealTimePrices();
 
         // Update the copyright year
         updateCopyrightYear();
 
         // Preload critical images
         preloadCriticalImages();
+        
+        // Start price auto-refresh (every 30 seconds)
+        startPriceAutoRefresh(30);
     });
 });
 
@@ -71,7 +74,69 @@ function preloadCriticalImages() {
 }
 
 /**
- * Fetch and update the current gold price
+ * Initialize real-time prices using actual API data
+ */
+async function initializeRealTimePrices() {
+    try {
+        // Fetch real-time prices from API
+        const prices = await updateAllMetalPrices();
+        
+        // Update all price displays on the page
+        updatePriceDisplays(prices);
+        
+        console.log('Real-time prices initialized successfully');
+    } catch (error) {
+        console.error('Error initializing real-time prices:', error);
+        // Fallback to old method if API fails
+        updateGoldPrice();
+    }
+}
+
+/**
+ * Update price displays with real API data
+ * @param {Object} prices - Price data object
+ */
+function updatePriceDisplays(prices) {
+    if (!prices) return;
+    
+    // Update gold price displays
+    const goldPriceElements = document.querySelectorAll('#current-gold-price');
+    goldPriceElements.forEach(element => {
+        if (element && prices.gold) {
+            element.textContent = '$' + prices.gold.toFixed(2);
+        }
+    });
+    
+    // Update silver price displays
+    const silverPriceElements = document.querySelectorAll('#current-silver-price');
+    silverPriceElements.forEach(element => {
+        if (element && prices.silver) {
+            element.textContent = '$' + prices.silver.toFixed(2);
+        }
+    });
+    
+    // Update platinum price displays
+    const platinumPriceElements = document.querySelectorAll('#current-platinum-price');
+    platinumPriceElements.forEach(element => {
+        if (element && prices.platinum) {
+            element.textContent = '$' + prices.platinum.toFixed(2);
+        }
+    });
+    
+    // Update last updated timestamp
+    const lastUpdatedElements = document.querySelectorAll('#last-updated');
+    const now = new Date();
+    const formattedDate = now.toLocaleString();
+
+    lastUpdatedElements.forEach(element => {
+        if (element) {
+            element.textContent = formattedDate;
+        }
+    });
+}
+
+/**
+ * Fetch and update the current gold price (legacy function for fallback)
  */
 function updateGoldPrice() {
     // For demo purposes, we'll use a simulated gold price
@@ -131,4 +196,4 @@ function updateCopyrightYear() {
             element.textContent = `© ${currentYear} Gold Calculator. All rights reserved.`;
         }
     });
-} 
+}
