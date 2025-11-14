@@ -28,40 +28,39 @@ const metalApiSettings = {
     }
 };
 
+async function fetchJsonWithTimeout(url, ms, headers) {
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), ms || 8000);
+    const res = await fetch(url, { headers: headers || { 'Accept': 'application/json' }, signal: controller.signal, mode: 'cors' });
+    clearTimeout(t);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+}
+
 /**
  * Fetch the current gold price from reliable source
  * @returns {Promise<number>} - The current gold price in USD per ounce
  */
 async function fetchGoldPrice() {
     try {
-        // Try multiple free APIs with better error handling
         const endpoints = [
+            metalApiSettings.baseEndpoint + '/XAU/USD',
             metalApiSettings.primaryEndpoints.gold,
             metalApiSettings.additionalEndpoints.gold,
             metalApiSettings.backupEndpoints.gold
         ];
-        
         for (const endpoint of endpoints) {
             try {
-                const response = await fetch(endpoint, {
-                    timeout: 5000, // 5 second timeout
-                    headers: {
-                        'Accept': 'application/json',
-                        'User-Agent': 'GoldCalculator/1.0'
-                    }
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    const price = extractPriceFromData(data, 'gold');
-                    if (price > 0) {
-                        storePriceData('gold', price, Date.now() / 1000);
-                        return price;
-                    }
+                const headers = { 'Accept': 'application/json' };
+                if (endpoint.includes('api.goldapi.net')) headers['x-access-token'] = metalApiSettings.apiKey;
+                const data = await fetchJsonWithTimeout(endpoint, 8000, headers);
+                const price = extractPriceFromData(data, 'gold');
+                if (price > 0) {
+                    storePriceData('gold', price, Date.now() / 1000);
+                    return price;
                 }
             } catch (endpointError) {
-                console.warn(`Gold endpoint ${endpoint} failed:`, endpointError.message);
-                continue; // Try next endpoint
+                continue;
             }
         }
         
@@ -85,33 +84,23 @@ async function fetchGoldPrice() {
  */
 async function fetchSilverPrice() {
     try {
-        // Try multiple free APIs with better error handling
         const endpoints = [
+            metalApiSettings.baseEndpoint + '/XAG/USD',
             metalApiSettings.primaryEndpoints.silver,
             metalApiSettings.additionalEndpoints.silver,
             metalApiSettings.backupEndpoints.silver
         ];
-        
         for (const endpoint of endpoints) {
             try {
-                const response = await fetch(endpoint, {
-                    timeout: 5000,
-                    headers: {
-                        'Accept': 'application/json',
-                        'User-Agent': 'GoldCalculator/1.0'
-                    }
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    const price = extractPriceFromData(data, 'silver');
-                    if (price > 0) {
-                        storePriceData('silver', price, Date.now() / 1000);
-                        return price;
-                    }
+                const headers = { 'Accept': 'application/json' };
+                if (endpoint.includes('api.goldapi.net')) headers['x-access-token'] = metalApiSettings.apiKey;
+                const data = await fetchJsonWithTimeout(endpoint, 8000, headers);
+                const price = extractPriceFromData(data, 'silver');
+                if (price > 0) {
+                    storePriceData('silver', price, Date.now() / 1000);
+                    return price;
                 }
             } catch (endpointError) {
-                console.warn(`Silver endpoint ${endpoint} failed:`, endpointError.message);
                 continue;
             }
         }
@@ -132,33 +121,23 @@ async function fetchSilverPrice() {
  */
 async function fetchPlatinumPrice() {
     try {
-        // Try multiple free APIs with better error handling
         const endpoints = [
+            metalApiSettings.baseEndpoint + '/XPT/USD',
             metalApiSettings.primaryEndpoints.platinum,
             metalApiSettings.additionalEndpoints.platinum,
             metalApiSettings.backupEndpoints.platinum
         ];
-        
         for (const endpoint of endpoints) {
             try {
-                const response = await fetch(endpoint, {
-                    timeout: 5000,
-                    headers: {
-                        'Accept': 'application/json',
-                        'User-Agent': 'GoldCalculator/1.0'
-                    }
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    const price = extractPriceFromData(data, 'platinum');
-                    if (price > 0) {
-                        storePriceData('platinum', price, Date.now() / 1000);
-                        return price;
-                    }
+                const headers = { 'Accept': 'application/json' };
+                if (endpoint.includes('api.goldapi.net')) headers['x-access-token'] = metalApiSettings.apiKey;
+                const data = await fetchJsonWithTimeout(endpoint, 8000, headers);
+                const price = extractPriceFromData(data, 'platinum');
+                if (price > 0) {
+                    storePriceData('platinum', price, Date.now() / 1000);
+                    return price;
                 }
             } catch (endpointError) {
-                console.warn(`Platinum endpoint ${endpoint} failed:`, endpointError.message);
                 continue;
             }
         }
@@ -410,7 +389,23 @@ function getPriceHistory(metal, hours = 24) {
 function extractPriceFromData(data, metal) {
     if (!data) return 0;
     
-    // Handle different API response formats
+    // Array responses (e.g., metals.live)
+    if (Array.isArray(data)) {
+        const last = data[data.length - 1];
+        if (Array.isArray(last)) {
+            const nums = last.filter(v => typeof v === 'number');
+            if (nums.length) return parseFloat(nums[nums.length - 1]);
+            if (last.price) return parseFloat(last.price);
+        } else if (typeof last === 'number') {
+            return parseFloat(last);
+        } else if (typeof last === 'object' && last) {
+            if (last.price) return parseFloat(last.price);
+            const objVals = Object.values(last).filter(v => typeof v === 'number');
+            if (objVals.length) return parseFloat(objVals[objVals.length - 1]);
+        }
+    }
+    
+    // Handle object response formats
     if (data.rates && data.rates.USD) {
         return parseFloat(data.rates.USD);
     }
@@ -525,23 +520,15 @@ function generateInitialPriceData(metal, hours) {
  */
 function startPriceAutoRefresh(intervalSeconds = 30) {
     console.log(`Starting price auto-refresh every ${intervalSeconds} seconds`);
-    
-    // Initial price update
     updateAllMetalPrices(true);
-    
-    // Set up interval for automatic updates
-    setInterval(async () => {
+    if (window.priceRefreshInterval) {
+        clearInterval(window.priceRefreshInterval);
+    }
+    window.priceRefreshInterval = setInterval(async () => {
         try {
-            console.log('Auto-updating metal prices...');
             await updateAllMetalPrices(true);
-            
-            // Dispatch custom event for UI updates
-            window.dispatchEvent(new CustomEvent('pricesUpdated', {
-                detail: { timestamp: new Date().toISOString() }
-            }));
-        } catch (error) {
-            console.error('Error during auto-price update:', error);
-        }
+            window.dispatchEvent(new CustomEvent('pricesUpdated', { detail: { timestamp: new Date().toISOString() } }));
+        } catch (error) {}
     }, intervalSeconds * 1000);
 }
 

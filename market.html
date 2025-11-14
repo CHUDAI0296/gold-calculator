@@ -457,13 +457,14 @@
                     basePrice: 2000,
                     ...options
                 };
+                this.days = options.initialDays || 7;
                 
                 this.data = [];
                 this.init();
             }
             
             init() {
-                this.generateData();
+                this.generateData(this.days);
                 this.setupCanvas();
                 this.draw();
                 
@@ -529,6 +530,12 @@
                 if (this.data.length > 31) {
                     this.data.shift();
                 }
+            }
+
+            setRange(days) {
+                this.days = days;
+                this.generateData(days);
+                this.draw();
             }
             
             draw() {
@@ -662,8 +669,23 @@
                         lineColor: '#D4AF37',
                         pointColor: '#FFD700',
                         backgroundColor: '#ffffff',
-                        gridColor: '#e0e0e0'
+                        gridColor: '#e0e0e0',
+                        initialDays: 7
                     });
+
+                    const timeRangeContainer = document.querySelector('.btn-group');
+                    if (timeRangeContainer) {
+                        timeRangeContainer.addEventListener('click', function(e) {
+                            if (e.target.classList.contains('time-range-btn')) {
+                                timeRangeContainer.querySelectorAll('.time-range-btn').forEach(btn => btn.classList.remove('active'));
+                                e.target.classList.add('active');
+                                const range = parseInt(e.target.getAttribute('data-range'), 10);
+                                if (window.marketChart && !isNaN(range)) {
+                                    window.marketChart.setRange(range);
+                                }
+                            }
+                        });
+                    }
                 }
             }, 100);
         });

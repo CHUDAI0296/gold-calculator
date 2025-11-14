@@ -87,8 +87,12 @@ async function initializeRealTimePrices() {
         console.log('Real-time prices initialized successfully');
     } catch (error) {
         console.error('Error initializing real-time prices:', error);
-        // Fallback to old method if API fails
-        updateGoldPrice();
+        setTimeout(async () => {
+            try {
+                const retryPrices = await updateAllMetalPrices(true);
+                updatePriceDisplays(retryPrices);
+            } catch (e) {}
+        }, 5000);
     }
 }
 
