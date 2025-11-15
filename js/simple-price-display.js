@@ -77,7 +77,11 @@ class SimplePriceDisplay {
         if (newPrice && newPrice > 0) {
             this.currentPrice = newPrice;
             if (this.priceElement) {
-                this.priceElement.textContent = `$${newPrice.toFixed(2)}`;
+                if (typeof formatGoldPrice === 'function') {
+                    this.priceElement.textContent = formatGoldPrice(newPrice);
+                } else {
+                    this.priceElement.textContent = `$${newPrice.toFixed(2)}`;
+                }
             }
             this.updateTimestamp();
         }
@@ -97,22 +101,35 @@ class SimplePriceDisplay {
     }
     
     async fetchRealPrice() {
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 8000);
-            const response = await fetch('/api/spot/gold', {
-                method: 'GET',
-                headers: { 'Accept': 'application/json', 'User-Agent': 'GoldCalculator/1.0' },
-                signal: controller.signal
-            });
-            clearTimeout(timeoutId);
-            if (response.ok) {
-                const data = await response.json();
-                const price = data && data.price;
-                return (price && price > 0) ? price : null;
+        // Try backend first, then free sources as fallback
+        const attempts = [
+            async () => {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 8000);
+                const r = await fetch('/api/spot/gold', { headers: { 'Accept':'application/json' }, signal: controller.signal });
+                clearTimeout(timeoutId);
+                if (!r.ok) throw new Error('backend_fail');
+                const d = await r.json();
+                return d && d.price ? d.price : null;
+            },
+            async () => {
+                const r = await fetch('https://api.metals.live/v1/spot/gold', { headers: { 'Accept':'application/json' } });
+                if (!r.ok) throw new Error('metals_live_fail');
+                const d = await r.json();
+                const last = Array.isArray(d) ? d[d.length-1] : null;
+                if (typeof last === 'number') return last;
+                if (last && typeof last === 'object') return last.price || null;
+                return null;
+            },
+            async () => {
+                const r = await fetch('https://api.exchangerate.host/latest?base=XAU&symbols=USD', { headers: { 'Accept':'application/json' } });
+                if (!r.ok) throw new Error('exchangerate_host_fail');
+                const d = await r.json();
+                return d && d.rates && d.rates.USD ? d.rates.USD : null;
             }
-        } catch (error) {
-            console.warn('Failed to fetch price from backend:', error.message);
+        ];
+        for (const fn of attempts){
+            try { const price = await fn(); if (price && price > 0) return price; } catch(e){ continue; }
         }
         return null;
     }

@@ -153,16 +153,18 @@ async function getCurrentGoldPrice(forceFresh = false) {
     if (!forceFresh && storedPrice && lastUpdated) {
         const lastUpdateTime = new Date(lastUpdated).getTime();
         if (Date.now() - lastUpdateTime < 3600000) {
-            return parseFloat(storedPrice);
+            try { return parseFloat(storedPrice) * getPriceSourceMultiplier(); } catch(e) { return parseFloat(storedPrice); }
         }
     }
     try {
         const freshPrice = await fetchGoldPrice();
         localStorage.setItem('currentGoldPrice', freshPrice);
         localStorage.setItem('lastUpdated', new Date().toLocaleString());
-        return parseFloat(freshPrice);
+        try { return parseFloat(freshPrice) * getPriceSourceMultiplier(); } catch(e) { return parseFloat(freshPrice); }
     } catch (e) {
-        if (storedPrice) return parseFloat(storedPrice);
+        if (storedPrice) {
+            try { return parseFloat(storedPrice) * getPriceSourceMultiplier(); } catch(e2) { return parseFloat(storedPrice); }
+        }
         return NaN;
     }
 }
@@ -178,15 +180,17 @@ async function getCurrentSilverPrice(forceFresh = false) {
     if (!forceFresh && storedPrice && lastUpdated) {
         const lastUpdateTime = new Date(lastUpdated).getTime();
         if (Date.now() - lastUpdateTime < 3600000) {
-            return parseFloat(storedPrice);
+            try { return parseFloat(storedPrice) * getPriceSourceMultiplier(); } catch(e) { return parseFloat(storedPrice); }
         }
     }
     try {
         const freshPrice = await fetchSilverPrice();
         localStorage.setItem('currentSilverPrice', freshPrice);
-        return parseFloat(freshPrice);
+        try { return parseFloat(freshPrice) * getPriceSourceMultiplier(); } catch(e) { return parseFloat(freshPrice); }
     } catch (e) {
-        if (storedPrice) return parseFloat(storedPrice);
+        if (storedPrice) {
+            try { return parseFloat(storedPrice) * getPriceSourceMultiplier(); } catch(e2) { return parseFloat(storedPrice); }
+        }
         return NaN;
     }
 }
@@ -202,15 +206,17 @@ async function getCurrentPlatinumPrice(forceFresh = false) {
     if (!forceFresh && storedPrice && lastUpdated) {
         const lastUpdateTime = new Date(lastUpdated).getTime();
         if (Date.now() - lastUpdateTime < 3600000) {
-            return parseFloat(storedPrice);
+            try { return parseFloat(storedPrice) * getPriceSourceMultiplier(); } catch(e) { return parseFloat(storedPrice); }
         }
     }
     try {
         const freshPrice = await fetchPlatinumPrice();
         localStorage.setItem('currentPlatinumPrice', freshPrice);
-        return parseFloat(freshPrice);
+        try { return parseFloat(freshPrice) * getPriceSourceMultiplier(); } catch(e) { return parseFloat(freshPrice); }
     } catch (e) {
-        if (storedPrice) return parseFloat(storedPrice);
+        if (storedPrice) {
+            try { return parseFloat(storedPrice) * getPriceSourceMultiplier(); } catch(e2) { return parseFloat(storedPrice); }
+        }
         return NaN;
     }
 }
@@ -497,7 +503,19 @@ async function fetchHistoryDays(metalSymbol, days){
     const url = `/api/timeseries?start_date=${startStr}&end_date=${endStr}&metal=${metalSymbol}`;
     try {
         const data = await fetchJsonWithTimeout(url, 10000, { 'Accept':'application/json' });
-        return Array.isArray(data) ? data : [];
+        if (Array.isArray(data) && data.length) return data;
+    } catch(e) {}
+    try {
+        const freeUrl = `https://api.exchangerate.host/timeseries?start_date=${startStr}&end_date=${endStr}&base=${metalSymbol}&symbols=USD`;
+        const d2 = await fetchJsonWithTimeout(freeUrl, 10000, { 'Accept':'application/json' });
+        const out = [];
+        if (d2 && d2.rates){
+            Object.keys(d2.rates).sort().forEach(k=>{
+                const val = d2.rates[k] && d2.rates[k].USD;
+                if (val){ const ts = new Date(k).getTime()/1000; out.push({ price: parseFloat(val), timestamp: ts, date: new Date(ts*1000).toISOString()}); }
+            });
+        }
+        return out;
     } catch(e){
         return [];
     }

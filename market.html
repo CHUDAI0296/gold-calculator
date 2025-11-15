@@ -719,9 +719,9 @@
                     const item = byDate.get(dateStr);
                     const tr = document.createElement('tr');
                     const td1 = document.createElement('td'); td1.textContent = dateStr; tr.appendChild(td1);
-                    const td2 = document.createElement('td'); td2.textContent = item.gold ? ('$' + item.gold.toFixed(2)) : '--'; tr.appendChild(td2);
-                    const td3 = document.createElement('td'); td3.textContent = item.silver ? ('$' + item.silver.toFixed(2)) : '--'; tr.appendChild(td3);
-                    const td4 = document.createElement('td'); td4.textContent = item.platinum ? ('$' + item.platinum.toFixed(2)) : '--'; tr.appendChild(td4);
+                    const td2 = document.createElement('td'); td2.textContent = item.gold ? (typeof formatGoldPrice==='function'?formatGoldPrice(item.gold):('$'+item.gold.toFixed(2))) : '--'; tr.appendChild(td2);
+                    const td3 = document.createElement('td'); td3.textContent = item.silver ? (typeof formatGoldPrice==='function'?formatGoldPrice(item.silver):('$'+item.silver.toFixed(2))) : '--'; tr.appendChild(td3);
+                    const td4 = document.createElement('td'); td4.textContent = item.platinum ? (typeof formatGoldPrice==='function'?formatGoldPrice(item.platinum):('$'+item.platinum.toFixed(2))) : '--'; tr.appendChild(td4);
                     tbody.appendChild(tr);
                 });
                 try { if (typeof gtag === 'function') { gtag('event', 'table_range_change', { event_category: 'chart', range_days: days }); } } catch (err) {}
@@ -755,11 +755,25 @@
                     rightPriceScale: { borderColor: '#ccc' }
                 });
                 const candleSeries = chart.addCandlestickSeries({ upColor: '#26a69a', downColor: '#ef5350', borderDownColor: '#ef5350', borderUpColor: '#26a69a', wickDownColor: '#ef5350', wickUpColor: '#26a69a' });
-                fetch(`/api/gold/candles?days=${days}`).then(r=>r.json()).then(data=>{
-                    const candles = data.map(d=>({ time: d.time, open: d.open, high: d.high, low: d.low, close: d.close }));
+                fetch(`/api/gold/candles?days=${days}`).then(r=>{
+                    if (!r.ok) throw new Error('backend');
+                    return r.json();
+                }).then(data=>{
+                    const m = (typeof getPriceSourceMultiplier === 'function') ? getPriceSourceMultiplier() : 1;
+                    const candles = data.map(d=>({ time: d.time, open: d.open*m, high: d.high*m, low: d.low*m, close: d.close*m }));
                     candleSeries.setData(candles);
                     window.tvChart = chart;
-                }).catch(()=>{});
+                }).catch(()=>{
+                    const url = `https://query1.finance.yahoo.com/v8/finance/chart/GC=F?range=1mo&interval=1d&includePrePost=false`;
+                    fetch(url).then(rr=>rr.json()).then(dd=>{
+                        const res = dd && dd.chart && dd.chart.result && dd.chart.result[0];
+                        const ts = res ? res.timestamp : [];
+                        const q = res && res.indicators && res.indicators.quote && res.indicators.quote[0] || {};
+                        const m = (typeof getPriceSourceMultiplier === 'function') ? getPriceSourceMultiplier() : 1;
+                        const out = []; for (let i=0;i<(ts||[]).length;i++){ const o=q.open&&q.open[i],h=q.high&&q.high[i],l=q.low&&q.low[i],c=q.close&&q.close[i]; if([o,h,l,c].every(v=>typeof v==='number')) out.push({ time: ts[i], open:o*m, high:h*m, low:l*m, close:c*m}); }
+                        if (out.length) { candleSeries.setData(out); window.tvChart = chart; }
+                    }).catch(()=>{});
+                });
             }
             initTradingChart(30);
             const tradingRange = document.querySelectorAll('.trading-range-btn');
