@@ -42,6 +42,30 @@ app.get('/api/timeseries', async (req, res) => {
     const { start_date, end_date, metal } = req.query;
     const map = { XAU: 'XAU', XAG: 'XAG', XPT: 'XPT', gold: 'XAU', silver: 'XAG', platinum: 'XPT' };
     const base = map[(metal || 'XAU')];
+    const nasdaqKey = process.env.NASDAQ_API_KEY;
+    if (base === 'XAU' && nasdaqKey) {
+      try {
+        const urlNasdaq = `https://data.nasdaq.com/api/v3/datasets/LBMA/GOLD.json?api_key=${encodeURIComponent(nasdaqKey)}&start_date=${encodeURIComponent(start_date)}&end_date=${encodeURIComponent(end_date)}`;
+        const nr = await fetch(urlNasdaq, { headers: { 'Accept': 'application/json' } });
+        if (nr.ok) {
+          const nd = await nr.json();
+          const dataset = nd && nd.dataset;
+          const rows = dataset && dataset.data || [];
+          const out = [];
+          for (const row of rows) {
+            const dateStr = row[0];
+            const am = typeof row[1] === 'number' ? row[1] : parseFloat(row[1]);
+            const pm = typeof row[2] === 'number' ? row[2] : parseFloat(row[2]);
+            const price = isFinite(pm) ? pm : (isFinite(am) ? am : null);
+            if (price) {
+              const ts = new Date(dateStr).getTime() / 1000;
+              out.push({ price: parseFloat(price), timestamp: ts, date: new Date(ts*1000).toISOString() });
+            }
+          }
+          return res.json(out.sort((a,b)=>a.timestamp-b.timestamp));
+        }
+      } catch (e) {}
+    }
     const key = process.env.METALPRICE_API_KEY;
     if (!key) return res.status(400).json({ error: 'METALPRICE_API_KEY missing' });
     const url = `https://api.metalpriceapi.com/v1/timeseries?api_key=${encodeURIComponent(key)}&base=${base}&currencies=USD&start_date=${encodeURIComponent(start_date)}&end_date=${encodeURIComponent(end_date)}`;
