@@ -129,11 +129,9 @@ function updatePriceDisplays(prices) {
     
     // Update last updated timestamp
     const lastUpdatedElements = document.querySelectorAll('#last-updated');
-    const now = new Date();
-    const formattedDate = now.toLocaleString();
-
+    const formattedDate = localStorage.getItem('lastUpdated') || '';
     lastUpdatedElements.forEach(element => {
-        if (element) {
+        if (element && formattedDate) {
             element.textContent = formattedDate;
         }
     });

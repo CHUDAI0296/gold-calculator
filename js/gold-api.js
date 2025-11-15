@@ -64,18 +64,11 @@ async function fetchGoldPrice() {
             }
         }
         
-        // If all APIs fail, use realistic simulated data based on current market patterns
-        console.log('Using realistic simulated gold price (all APIs unavailable)');
-        const price = generateRealisticGoldPrice();
-        storePriceData('gold', price, Date.now() / 1000);
-        return price;
+        throw new Error('All gold price APIs unavailable');
         
     } catch (error) {
-        console.error('Unexpected error in fetchGoldPrice:', error.message);
-        const price = generateRealisticGoldPrice();
-        storePriceData('gold', price, Date.now() / 1000);
-        return price;
-    }
+        throw error;
+}
 }
 
 /**
@@ -105,14 +98,11 @@ async function fetchSilverPrice() {
             }
         }
         
-        // Use realistic simulated data
-        console.warn('All APIs failed, using realistic simulated silver price');
-        return generateRealisticSilverPrice();
+        throw new Error('All silver price APIs unavailable');
         
     } catch (error) {
-        console.error('Unexpected error in fetchSilverPrice:', error.message);
-        return generateRealisticSilverPrice();
-    }
+        throw error;
+}
 }
 
 /**
@@ -142,14 +132,11 @@ async function fetchPlatinumPrice() {
             }
         }
         
-        // Use realistic simulated data
-        console.warn('All APIs failed, using realistic simulated platinum price');
-        return generateRealisticPlatinumPrice();
+        throw new Error('All platinum price APIs unavailable');
         
     } catch (error) {
-        console.error('Unexpected error in fetchPlatinumPrice:', error.message);
-        return generateRealisticPlatinumPrice();
-    }
+        throw error;
+}
 }
 
 /**
@@ -158,31 +145,23 @@ async function fetchPlatinumPrice() {
  * @returns {Promise<number>} - The current gold price
  */
 async function getCurrentGoldPrice(forceFresh = false) {
-    if (!forceFresh) {
-        // Try to get from localStorage first
-        const storedPrice = localStorage.getItem('currentGoldPrice');
-        const lastUpdated = localStorage.getItem('lastUpdated');
-        
-        if (storedPrice && lastUpdated) {
-            const lastUpdateTime = new Date(lastUpdated).getTime();
-            const currentTime = new Date().getTime();
-            const timeDiff = currentTime - lastUpdateTime;
-            
-            // If price was updated in the last hour, use it
-            if (timeDiff < 3600000) {
-                return parseFloat(storedPrice);
-            }
+    const storedPrice = localStorage.getItem('currentGoldPrice');
+    const lastUpdated = localStorage.getItem('lastUpdated');
+    if (!forceFresh && storedPrice && lastUpdated) {
+        const lastUpdateTime = new Date(lastUpdated).getTime();
+        if (Date.now() - lastUpdateTime < 3600000) {
+            return parseFloat(storedPrice);
         }
     }
-    
-    // Fetch fresh price
-    const freshPrice = await fetchGoldPrice();
-    
-    // Store in localStorage
-    localStorage.setItem('currentGoldPrice', freshPrice);
-    localStorage.setItem('lastUpdated', new Date().toLocaleString());
-    
-    return parseFloat(freshPrice);
+    try {
+        const freshPrice = await fetchGoldPrice();
+        localStorage.setItem('currentGoldPrice', freshPrice);
+        localStorage.setItem('lastUpdated', new Date().toLocaleString());
+        return parseFloat(freshPrice);
+    } catch (e) {
+        if (storedPrice) return parseFloat(storedPrice);
+        return NaN;
+    }
 }
 
 /**
@@ -191,35 +170,22 @@ async function getCurrentGoldPrice(forceFresh = false) {
  * @returns {Promise<number>} - The current silver price
  */
 async function getCurrentSilverPrice(forceFresh = false) {
-    if (!forceFresh) {
-        // Try to get from localStorage first
-        const storedPrice = localStorage.getItem('currentSilverPrice');
-        const lastUpdated = localStorage.getItem('lastUpdated');
-        
-        if (storedPrice && lastUpdated) {
-            const lastUpdateTime = new Date(lastUpdated).getTime();
-            const currentTime = new Date().getTime();
-            const timeDiff = currentTime - lastUpdateTime;
-            
-            // If price was updated in the last hour, use it
-            if (timeDiff < 3600000) {
-                return parseFloat(storedPrice);
-            }
+    const storedPrice = localStorage.getItem('currentSilverPrice');
+    const lastUpdated = localStorage.getItem('lastUpdated');
+    if (!forceFresh && storedPrice && lastUpdated) {
+        const lastUpdateTime = new Date(lastUpdated).getTime();
+        if (Date.now() - lastUpdateTime < 3600000) {
+            return parseFloat(storedPrice);
         }
     }
-    
-    // Fetch fresh price
-    const freshPrice = await fetchSilverPrice();
-    
-    // Store in localStorage
-    localStorage.setItem('currentSilverPrice', freshPrice);
-    
-    // Only update lastUpdated if gold price was also updated
-    if (forceFresh) {
-        localStorage.setItem('lastUpdated', new Date().toLocaleString());
+    try {
+        const freshPrice = await fetchSilverPrice();
+        localStorage.setItem('currentSilverPrice', freshPrice);
+        return parseFloat(freshPrice);
+    } catch (e) {
+        if (storedPrice) return parseFloat(storedPrice);
+        return NaN;
     }
-    
-    return parseFloat(freshPrice);
 }
 
 /**
@@ -228,35 +194,22 @@ async function getCurrentSilverPrice(forceFresh = false) {
  * @returns {Promise<number>} - The current platinum price
  */
 async function getCurrentPlatinumPrice(forceFresh = false) {
-    if (!forceFresh) {
-        // Try to get from localStorage first
-        const storedPrice = localStorage.getItem('currentPlatinumPrice');
-        const lastUpdated = localStorage.getItem('lastUpdated');
-        
-        if (storedPrice && lastUpdated) {
-            const lastUpdateTime = new Date(lastUpdated).getTime();
-            const currentTime = new Date().getTime();
-            const timeDiff = currentTime - lastUpdateTime;
-            
-            // If price was updated in the last hour, use it
-            if (timeDiff < 3600000) {
-                return parseFloat(storedPrice);
-            }
+    const storedPrice = localStorage.getItem('currentPlatinumPrice');
+    const lastUpdated = localStorage.getItem('lastUpdated');
+    if (!forceFresh && storedPrice && lastUpdated) {
+        const lastUpdateTime = new Date(lastUpdated).getTime();
+        if (Date.now() - lastUpdateTime < 3600000) {
+            return parseFloat(storedPrice);
         }
     }
-    
-    // Fetch fresh price
-    const freshPrice = await fetchPlatinumPrice();
-    
-    // Store in localStorage
-    localStorage.setItem('currentPlatinumPrice', freshPrice);
-    
-    // Only update lastUpdated if gold price was also updated
-    if (forceFresh) {
-        localStorage.setItem('lastUpdated', new Date().toLocaleString());
+    try {
+        const freshPrice = await fetchPlatinumPrice();
+        localStorage.setItem('currentPlatinumPrice', freshPrice);
+        return parseFloat(freshPrice);
+    } catch (e) {
+        if (storedPrice) return parseFloat(storedPrice);
+        return NaN;
     }
-    
-    return parseFloat(freshPrice);
 }
 
 /**
@@ -268,10 +221,6 @@ async function updateAllMetalPrices(forceFresh = false) {
     const goldPrice = await getCurrentGoldPrice(forceFresh);
     const silverPrice = await getCurrentSilverPrice(forceFresh);
     const platinumPrice = await getCurrentPlatinumPrice(forceFresh);
-    
-    // Update lastUpdated timestamp
-    localStorage.setItem('lastUpdated', new Date().toLocaleString());
-    
     return {
         gold: goldPrice,
         silver: silverPrice,

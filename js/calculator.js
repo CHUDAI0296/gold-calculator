@@ -140,6 +140,20 @@ async function handleCalculation(event) {
     
     // Display results
     displayResults(result, includeRefining);
+
+    try {
+        if (typeof gtag === 'function') {
+            gtag('event', 'calculator_submit', {
+                event_category: 'calculator',
+                value_usd: includeRefining ? result.finalValue : result.rawValue,
+                weight: weight,
+                karat: karat,
+                unit: unit,
+                include_refining: includeRefining ? 'yes' : 'no',
+                gold_price: goldPrice
+            });
+        }
+    } catch (e) {}
 }
 
 /**
@@ -266,4 +280,4 @@ function displayResults(result, includeRefining = false) {
         top: resultsSection.offsetTop - 50,
         behavior: 'smooth'
     });
-} 
+}

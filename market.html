@@ -681,6 +681,7 @@
                                 e.target.classList.add('active');
                                 const range = parseInt(e.target.getAttribute('data-range'), 10);
                                 if (window.marketChart && !isNaN(range)) {
+                                    try { if (typeof gtag === 'function') { gtag('event', 'chart_range_change', { event_category: 'chart', range: range }); } } catch (err) {}
                                     window.marketChart.setRange(range);
                                 }
                             }
