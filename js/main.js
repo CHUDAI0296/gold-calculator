@@ -140,41 +140,16 @@ function updatePriceDisplays(prices) {
 /**
  * Fetch and update the current gold price (legacy function for fallback)
  */
-function updateGoldPrice() {
-    // For demo purposes, we'll use a simulated gold price
-    // In a production environment, you would connect to a real API
-
-    // Simulated gold price (around $2000 with some random variation)
-    const basePrice = 2000;
-    const variation = Math.random() * 100 - 50; // Random value between -50 and +50
-    const goldPrice = (basePrice + variation).toFixed(2);
-
-    // Update all gold price displays on the page
-    const goldPriceElements = document.querySelectorAll('#current-gold-price');
-    goldPriceElements.forEach(element => {
-        if (element) {
-            element.textContent = '$' + goldPrice;
-        }
-    });
-
-    // Update last updated timestamp
-    const lastUpdatedElements = document.querySelectorAll('#last-updated');
-    const now = new Date();
-    const formattedDate = now.toLocaleString();
-
-    lastUpdatedElements.forEach(element => {
-        if (element) {
-            element.textContent = formattedDate;
-        }
-    });
-
-    // Store the gold price in local storage for use across pages
+async function updateGoldPrice() {
     try {
-        localStorage.setItem('currentGoldPrice', goldPrice);
-        localStorage.setItem('lastUpdated', formattedDate);
-    } catch (e) {
-        // Handle localStorage errors silently
-        console.warn('LocalStorage not available');
+        const price = await getCurrentGoldPrice();
+        const goldPriceElements = document.querySelectorAll('#current-gold-price');
+        goldPriceElements.forEach(element => { if (element && price) { element.textContent = '$' + price.toFixed(2); } });
+        const lastUpdatedElements = document.querySelectorAll('#last-updated');
+        const formattedDate = localStorage.getItem('lastUpdated') || new Date().toLocaleString();
+        lastUpdatedElements.forEach(element => { if (element) { element.textContent = formattedDate; } });
+    } catch(e) {
+        console.warn('Failed to update gold price from API');
     }
 }
 

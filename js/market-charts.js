@@ -183,66 +183,35 @@ function updateChartVisibility() {
  * Load historical price data for the specified number of days
  * @param {number} days - Number of days to load
  */
-function loadHistoricalData(days) {
-    // In a real implementation, you would fetch data from an API
-    // For demo purposes, we'll generate simulated historical data
-    
-    const endDate = new Date();
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - days);
-    
-    const dates = [];
-    const goldPrices = [];
-    const silverPrices = [];
-    const platinumPrices = [];
-    
-    // Generate data points for each day in the range
-    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-        // Format date as MM/DD/YYYY
-        const dateStr = `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
-        dates.push(dateStr);
-        
-        // Generate simulated prices
-        // Base prices
-        const baseGoldPrice = 2000;
-        const baseSilverPrice = 25;
-        const basePlatinumPrice = 950;
-        
-        // Add some randomness to simulate price fluctuations
-        // The further back in time, the more different the price might be
-        const daysDiff = Math.floor((endDate - d) / (1000 * 60 * 60 * 24));
-        const trendFactor = daysDiff / days; // 0 to 1, higher for older dates
-        
-        // Gold: trending up slightly over time
-        const goldTrend = -50 * trendFactor; // Lower in the past
-        const goldRandom = (Math.random() - 0.3) * 30; // Daily fluctuation
-        goldPrices.push(baseGoldPrice + goldTrend + goldRandom);
-        
-        // Silver: more volatile
-        const silverTrend = -3 * trendFactor; // Lower in the past
-        const silverRandom = (Math.random() - 0.3) * 2; // Daily fluctuation
-        silverPrices.push(baseSilverPrice + silverTrend + silverRandom);
-        
-        // Platinum: trending down slightly
-        const platinumTrend = 30 * trendFactor; // Higher in the past
-        const platinumRandom = (Math.random() - 0.3) * 15; // Daily fluctuation
-        platinumPrices.push(basePlatinumPrice + platinumTrend + platinumRandom);
+async function loadHistoricalData(days) {
+    try {
+        const end = new Date();
+        const start = new Date(end.getTime() - days*24*60*60*1000);
+        const startStr = start.toISOString().slice(0,10);
+        const endStr = end.toISOString().slice(0,10);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(()=>controller.abort(), 10000);
+        const response = await fetch(`/api/gold/timeseries?start_date=${startStr}&end_date=${endStr}`, { headers: { 'Accept':'application/json' }, signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (!response.ok) return;
+        const rows = await response.json();
+        const dates = rows.map(r=>{
+            const d = new Date(r.timestamp*1000);
+            return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
+        });
+        const goldPrices = rows.map(r=>r.price);
+        const silverPrices = []; // extend later when backend provides multi-metal
+        const platinumPrices = [];
+        if (window.priceHistoryChart) {
+            window.priceHistoryChart.data.labels = dates;
+            window.priceHistoryChart.data.datasets[0].data = goldPrices;
+            window.priceHistoryChart.update();
+        }
+        updatePriceChangeIndicators(goldPrices, silverPrices, platinumPrices);
+        updateYearlyStats(goldPrices, silverPrices, platinumPrices);
+    } catch (e) {
+        console.warn('Failed to load historical data:', e.message);
     }
-    
-    // Update chart data
-    if (window.priceHistoryChart) {
-        window.priceHistoryChart.data.labels = dates;
-        window.priceHistoryChart.data.datasets[0].data = goldPrices;
-        window.priceHistoryChart.data.datasets[1].data = silverPrices;
-        window.priceHistoryChart.data.datasets[2].data = platinumPrices;
-        window.priceHistoryChart.update();
-    }
-    
-    // Update price change indicators
-    updatePriceChangeIndicators(goldPrices, silverPrices, platinumPrices);
-    
-    // Update year-to-date and high/low values
-    updateYearlyStats(goldPrices, silverPrices, platinumPrices);
 }
 
 /**
@@ -387,4 +356,4 @@ function updateYearlyStats(goldPrices, silverPrices, platinumPrices) {
         document.getElementById('platinum-high').textContent = formatGoldPrice(platinumHigh);
         document.getElementById('platinum-low').textContent = formatGoldPrice(platinumLow);
     }
-} 
+}

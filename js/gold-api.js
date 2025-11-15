@@ -20,6 +20,9 @@ const metalApiSettings = {
         silver: 'https://api.metalpriceapi.com/v1/latest?api_key=demo&base=XAG&currencies=USD',
         platinum: 'https://api.metalpriceapi.com/v1/latest?api_key=demo&base=XPT&currencies=USD'
     },
+    timeseries: {
+        metalprice: 'https://api.metalpriceapi.com/v1/timeseries'
+    },
     // Alternative free APIs (backup options)
     backupEndpoints: {
         gold: 'https://api.metals.live/v1/spot/gold',
@@ -319,11 +322,6 @@ function getPriceHistory(metal, hours = 24) {
     const storageKey = `${metal}PriceHistory`;
     let priceHistory = JSON.parse(localStorage.getItem(storageKey)) || [];
     
-    if (priceHistory.length === 0) {
-        // Generate some initial data if none exists
-        return generateInitialPriceData(metal, hours);
-    }
-    
     // Filter by time range
     const cutoffTime = Date.now() / 1000 - (hours * 60 * 60);
     return priceHistory.filter(point => point.timestamp > cutoffTime);
@@ -490,4 +488,21 @@ function stopPriceAutoRefresh() {
         window.priceRefreshInterval = null;
         console.log('Price auto-refresh stopped');
     }
+}
+async function fetchHistoryDays(metalSymbol, days){
+    const end = new Date();
+    const start = new Date(end.getTime() - days*24*60*60*1000);
+    const startStr = start.toISOString().slice(0,10);
+    const endStr = end.toISOString().slice(0,10);
+    const url = `/api/timeseries?start_date=${startStr}&end_date=${endStr}&metal=${metalSymbol}`;
+    try {
+        const data = await fetchJsonWithTimeout(url, 10000, { 'Accept':'application/json' });
+        return Array.isArray(data) ? data : [];
+    } catch(e){
+        return [];
+    }
+}
+
+async function fetchGoldHistoryDays(days){
+    return fetchHistoryDays('XAU', days);
 }

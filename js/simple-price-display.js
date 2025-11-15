@@ -97,73 +97,24 @@ class SimplePriceDisplay {
     }
     
     async fetchRealPrice() {
-        // Simple price endpoints that work without CORS issues
-        const endpoints = [
-            {
-                url: 'https://api.metals.live/v1/spot/gold',
-                parser: (data) => data && data[0] ? data[0].price : null
-            },
-            {
-                url: 'https://api.metalpriceapi.com/v1/latest?api_key=demo&base=XAU&currencies=USD',
-                parser: (data) => data && data.rates && data.rates.USD ? 1 / data.rates.USD : null
-            },
-            {
-                url: 'https://api.goldapi.io/api/XAU/USD',
-                headers: {
-                    'x-access-token': 'goldapi-1v2d2ukw1684l4v-io',
-                    'Content-Type': 'application/json'
-                },
-                parser: (data) => data && data.price ? data.price : null
-            },
-            {
-                url: 'https://query1.finance.yahoo.com/v8/finance/chart/GC=F',
-                parser: (data) => {
-                    if (data && data.chart && data.chart.result && data.chart.result[0]) {
-                        const result = data.chart.result[0];
-                        if (result.meta && result.meta.regularMarketPrice) {
-                            return result.meta.regularMarketPrice;
-                        }
-                    }
-                    return null;
-                }
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
+            const response = await fetch('/api/spot/gold', {
+                method: 'GET',
+                headers: { 'Accept': 'application/json', 'User-Agent': 'GoldCalculator/1.0' },
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+            if (response.ok) {
+                const data = await response.json();
+                const price = data && data.price;
+                return (price && price > 0) ? price : null;
             }
-        ];
-        
-        for (const endpoint of endpoints) {
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000);
-                
-                const response = await fetch(endpoint.url, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        'User-Agent': 'GoldCalculator/1.0',
-                        ...(endpoint.headers || {})
-                    },
-                    signal: controller.signal,
-                    mode: 'cors'
-                });
-                
-                clearTimeout(timeoutId);
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    const price = endpoint.parser(data);
-                    
-                    if (price && price > 0) {
-                        console.log(`Successfully fetched price: $${price}`);
-                        return price;
-                    }
-                }
-            } catch (error) {
-                console.warn(`Failed to fetch price from ${endpoint.url}:`, error.message);
-                continue;
-            }
+        } catch (error) {
+            console.warn('Failed to fetch price from backend:', error.message);
         }
-        
-        console.warn('All price endpoints failed, using simulated price');
-        return null; // Will trigger simulation
+        return null;
     }
     
     async updateFromAPI() {
@@ -173,13 +124,10 @@ class SimplePriceDisplay {
                 this.updatePrice(realPrice);
                 this.setStatus('connected');
             } else {
-                // Fallback to simulation
-                this.simulatePriceUpdate();
-                this.setStatus('simulated');
+                this.setStatus('unavailable');
             }
         } catch (error) {
             console.error('Price update failed:', error);
-            this.simulatePriceUpdate();
             this.setStatus('error');
         }
     }
@@ -192,17 +140,17 @@ class SimplePriceDisplay {
                 text: '<i class="fas fa-circle" style="font-size: 0.5rem; margin-right: 0.25rem;"></i> Live Data',
                 color: '#28a745'
             },
-            simulated: {
-                text: '<i class="fas fa-circle" style="font-size: 0.5rem; margin-right: 0.25rem;"></i> Simulated Data',
-                color: '#ffc107'
-            },
             error: {
                 text: '<i class="fas fa-circle" style="font-size: 0.5rem; margin-right: 0.25rem;"></i> Connection Issue',
                 color: '#dc3545'
+            },
+            unavailable: {
+                text: '<i class="fas fa-circle" style="font-size: 0.5rem; margin-right: 0.25rem;"></i> Data Unavailable',
+                color: '#6c757d'
             }
         };
         
-        const config = statusConfig[status] || statusConfig.simulated;
+        const config = statusConfig[status] || statusConfig.unavailable;
         this.statusElement.innerHTML = config.text;
         this.statusElement.style.color = config.color;
     }

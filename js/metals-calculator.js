@@ -102,43 +102,19 @@ function initializeMetalsCalculator() {
  * Update all metal prices display
  */
 async function updateAllMetalPrices() {
-    // Get prices from localStorage or set defaults
-    const goldPrice = localStorage.getItem('currentGoldPrice') || '2000.00';
-    const silverPrice = localStorage.getItem('currentSilverPrice') || '25.00';
-    const platinumPrice = localStorage.getItem('currentPlatinumPrice') || '950.00';
-    
-    // Update gold price display
+    const [goldPrice, silverPrice, platinumPrice] = await Promise.all([
+        getCurrentGoldPrice(),
+        getCurrentSilverPrice(),
+        getCurrentPlatinumPrice()
+    ]);
     const goldPriceElements = document.querySelectorAll('#current-gold-price');
-    goldPriceElements.forEach(element => {
-        element.textContent = formatGoldPrice(goldPrice);
-    });
-    
-    // Update silver price display
+    goldPriceElements.forEach(element => { if (element && goldPrice) { element.textContent = formatGoldPrice(goldPrice); } });
     const silverPriceElements = document.querySelectorAll('#current-silver-price');
-    silverPriceElements.forEach(element => {
-        element.textContent = formatGoldPrice(silverPrice);
-    });
-    
-    // Update platinum price display
+    silverPriceElements.forEach(element => { if (element && silverPrice) { element.textContent = formatGoldPrice(silverPrice); } });
     const platinumPriceElements = document.querySelectorAll('#current-platinum-price');
-    platinumPriceElements.forEach(element => {
-        element.textContent = formatGoldPrice(platinumPrice);
-    });
-    
-    // Update timestamp
+    platinumPriceElements.forEach(element => { if (element && platinumPrice) { element.textContent = formatGoldPrice(platinumPrice); } });
     const lastUpdatedElements = document.querySelectorAll('#last-updated');
-    lastUpdatedElements.forEach(element => {
-        element.textContent = localStorage.getItem('lastUpdated') || new Date().toLocaleString();
-    });
-    
-    // Store prices in localStorage if not already set
-    if (!localStorage.getItem('currentSilverPrice')) {
-        localStorage.setItem('currentSilverPrice', silverPrice);
-    }
-    
-    if (!localStorage.getItem('currentPlatinumPrice')) {
-        localStorage.setItem('currentPlatinumPrice', platinumPrice);
-    }
+    lastUpdatedElements.forEach(element => { element.textContent = localStorage.getItem('lastUpdated') || new Date().toLocaleString(); });
 }
 
 /**
@@ -402,4 +378,4 @@ function displayMetalResults(result, includeRefining = false, metalType = 'Metal
  */
 function printResults() {
     window.print();
-} 
+}

@@ -185,7 +185,7 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col-md-6">
-                            <h2 class="mb-0">Price History Chart</h2>
+                            <h2 class="mb-0">Gold Price History</h2>
                         </div>
                         <div class="col-md-6 text-md-end">
                             <!-- Time Range Selector -->
@@ -199,10 +199,40 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="chart-container" style="position: relative; height:60vh; width:100%">
-                    <canvas id="priceHistoryChart"></canvas>
-                    <div id="simplePriceDisplay" style="display: none;"></div>
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="priceHistoryTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Gold (USD/oz)</th>
+                                    <th>Silver (USD/oz)</th>
+                                    <th>Platinum (USD/oz)</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="text-muted small" id="tableNote"></div>
+                    </div>
                 </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h2 class="mb-0">Trading Chart</h2>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <div class="btn-group" role="group" aria-label="Trading range selector">
+                                <button type="button" class="btn btn-outline-secondary trading-range-btn active" data-days="30">30 Days</button>
+                                <button type="button" class="btn btn-outline-secondary trading-range-btn" data-days="90">90 Days</button>
+                                <button type="button" class="btn btn-outline-secondary trading-range-btn" data-days="365">1 Year</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="tradingChart" style="height: 420px; position: relative;"></div>
+                    <div class="text-muted small">Data source: Yahoo Finance GC=F via backend</div>
                 </div>
             </div>
             
@@ -660,35 +690,85 @@
             }
         }
         
-        // Initialize charts when DOM is ready
+        // Initialize table when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => {
-                const marketCanvas = document.getElementById('priceHistoryChart');
-                if (marketCanvas) {
-                    window.marketChart = new SimpleChart('priceHistoryChart', {
-                        lineColor: '#D4AF37',
-                        pointColor: '#FFD700',
-                        backgroundColor: '#ffffff',
-                        gridColor: '#e0e0e0',
-                        initialDays: 7
-                    });
-
-                    const timeRangeContainer = document.querySelector('.btn-group');
-                    if (timeRangeContainer) {
-                        timeRangeContainer.addEventListener('click', function(e) {
-                            if (e.target.classList.contains('time-range-btn')) {
-                                timeRangeContainer.querySelectorAll('.time-range-btn').forEach(btn => btn.classList.remove('active'));
-                                e.target.classList.add('active');
-                                const range = parseInt(e.target.getAttribute('data-range'), 10);
-                                if (window.marketChart && !isNaN(range)) {
-                                    try { if (typeof gtag === 'function') { gtag('event', 'chart_range_change', { event_category: 'chart', range: range }); } } catch (err) {}
-                                    window.marketChart.setRange(range);
-                                }
-                            }
-                        });
-                    }
+            async function renderTable(days){
+                const [gRows, sRows, pRows] = await Promise.all([
+                    fetchHistoryDays('XAU', days),
+                    fetchHistoryDays('XAG', days),
+                    fetchHistoryDays('XPT', days)
+                ]);
+                const tbody = document.querySelector('#priceHistoryTable tbody');
+                const note = document.getElementById('tableNote');
+                tbody.innerHTML = '';
+                if ((!gRows || gRows.length === 0) && (!sRows || sRows.length === 0) && (!pRows || pRows.length === 0)){
+                    note.textContent = 'No historical data available for the selected period from the provider.';
+                    return;
                 }
-            }, 100);
+                note.textContent = '';
+                const byDate = new Map();
+                function addRows(rows, key){
+                    rows.forEach(r=>{
+                        const d = new Date(r.timestamp*1000); const dateStr = d.toLocaleDateString();
+                        if (!byDate.has(dateStr)) byDate.set(dateStr, { dateStr });
+                        byDate.get(dateStr)[key] = parseFloat(r.price);
+                    });
+                }
+                addRows(gRows,'gold'); addRows(sRows,'silver'); addRows(pRows,'platinum');
+                Array.from(byDate.keys()).sort((a,b)=> new Date(a)-new Date(b)).forEach(dateStr=>{
+                    const item = byDate.get(dateStr);
+                    const tr = document.createElement('tr');
+                    const td1 = document.createElement('td'); td1.textContent = dateStr; tr.appendChild(td1);
+                    const td2 = document.createElement('td'); td2.textContent = item.gold ? ('$' + item.gold.toFixed(2)) : '--'; tr.appendChild(td2);
+                    const td3 = document.createElement('td'); td3.textContent = item.silver ? ('$' + item.silver.toFixed(2)) : '--'; tr.appendChild(td3);
+                    const td4 = document.createElement('td'); td4.textContent = item.platinum ? ('$' + item.platinum.toFixed(2)) : '--'; tr.appendChild(td4);
+                    tbody.appendChild(tr);
+                });
+                try { if (typeof gtag === 'function') { gtag('event', 'table_range_change', { event_category: 'chart', range_days: days }); } } catch (err) {}
+            }
+
+            renderTable(7);
+
+            const timeRangeContainer = document.querySelector('.btn-group');
+            if (timeRangeContainer) {
+                timeRangeContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('time-range-btn')) {
+                        timeRangeContainer.querySelectorAll('.time-range-btn').forEach(btn => btn.classList.remove('active'));
+                        e.target.classList.add('active');
+                        const range = parseInt(e.target.getAttribute('data-range'), 10);
+                        if (!isNaN(range)) {
+                            renderTable(range);
+                        }
+                    }
+                });
+            }
+            // Trading chart
+            function initTradingChart(days){
+                if (!window.LightweightCharts) return;
+                if (window.tvChart) { window.tvChart.remove(); }
+                const chart = LightweightCharts.createChart(document.getElementById('tradingChart'), {
+                    width: document.getElementById('tradingChart').clientWidth,
+                    height: 420,
+                    layout: { background: { color: '#ffffff' }, textColor: '#333' },
+                    grid: { vertLines: { color: '#eee' }, horzLines: { color: '#eee' } },
+                    timeScale: { borderColor: '#ccc' },
+                    rightPriceScale: { borderColor: '#ccc' }
+                });
+                const candleSeries = chart.addCandlestickSeries({ upColor: '#26a69a', downColor: '#ef5350', borderDownColor: '#ef5350', borderUpColor: '#26a69a', wickDownColor: '#ef5350', wickUpColor: '#26a69a' });
+                fetch(`/api/gold/candles?days=${days}`).then(r=>r.json()).then(data=>{
+                    const candles = data.map(d=>({ time: d.time, open: d.open, high: d.high, low: d.low, close: d.close }));
+                    candleSeries.setData(candles);
+                    window.tvChart = chart;
+                }).catch(()=>{});
+            }
+            initTradingChart(30);
+            const tradingRange = document.querySelectorAll('.trading-range-btn');
+            tradingRange.forEach(btn=>{
+                btn.addEventListener('click', function(){
+                    tradingRange.forEach(b=>b.classList.remove('active')); this.classList.add('active');
+                    const days = parseInt(this.getAttribute('data-days'),10); initTradingChart(days);
+                });
+            });
         });
     </script>
 
@@ -704,3 +784,5 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3389504348016979" crossorigin="anonymous"></script>
 </body>
 </html>
+    <!-- Lightweight Charts -->
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
