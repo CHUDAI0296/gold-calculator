@@ -22,7 +22,10 @@ export default function TradingView({ containerId, height = 400 }: TradingViewPr
       script.src = 'https://s3.tradingview.com/tv.js';
       script.async = true;
       let fallbackTimer: number | undefined;
+      let didFallback = false;
       const startFallback = () => {
+        if (didFallback) return;
+        didFallback = true;
         const cdn = document.createElement('script');
         cdn.src = 'https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js';
         cdn.async = true;
@@ -67,6 +70,8 @@ export default function TradingView({ containerId, height = 400 }: TradingViewPr
             if (!hasIframe) startFallback();
           } catch { startFallback(); }
         }, 5000);
+        // 强制兜底：8秒后仍未兜底则执行兜底
+        window.setTimeout(() => { startFallback(); }, 8000);
       };
 
       script.onerror = () => {
