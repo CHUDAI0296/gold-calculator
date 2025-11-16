@@ -1,15 +1,7 @@
-import { Metadata } from 'next';
+'use client';
 import JsonLd from '@/components/JsonLd';
 
-export const metadata: Metadata = {
-  title: 'Gold Calculator - Calculate Gold Value by Weight and Karat',
-  description: 'Calculate the value of your gold items with our easy-to-use calculator. Support for all karat types and weight units with real-time gold prices.',
-  alternates: {
-    canonical: 'https://www.goldcalculator.click/calculator'
-  }
-};
-
-'use client';
+ 
 
 import { useState, useEffect } from 'react';
 import React from 'react';
@@ -21,9 +13,9 @@ export default function Calculator() {
   // 从本地API获取实时金价
   const getGoldPrice = async () => {
     try {
-      const response = await fetch('/api/gold-price');
+      const response = await fetch('/api/spot/gold');
       const data = await response.json();
-      return data[0].price;
+      return data && data.price ? data.price : null;
     } catch (error) {
       console.error('Error fetching gold price:', error);
       return null;

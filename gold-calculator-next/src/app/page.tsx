@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from 'react';
 import { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
@@ -11,15 +10,15 @@ export const metadata: Metadata = {
   }
 };
 
+export const dynamic = 'force-dynamic';
 export default async function Home() {
   // 从本地API获取实时金价
   const getGoldPrice = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/gold-price', {
-        next: { revalidate: 300 } // 5分钟缓存
-      });
+      const base = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+      const response = await fetch(`${base}/api/spot/gold`, { next: { revalidate: 300 } });
       const data = await response.json();
-      return data[0].price;
+      return data && data.price ? data.price : null;
     } catch (error) {
       console.error('Error fetching gold price:', error);
       return null;

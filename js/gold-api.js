@@ -14,15 +14,7 @@ const metalApiSettings = {
         silver: 'https://api.metals.live/v1/spot/silver',
         platinum: 'https://api.metals.live/v1/spot/platinum'
     },
-    // Additional reliable free APIs
-    additionalEndpoints: {
-        gold: 'https://api.metalpriceapi.com/v1/latest?api_key=demo&base=XAU&currencies=USD',
-        silver: 'https://api.metalpriceapi.com/v1/latest?api_key=demo&base=XAG&currencies=USD',
-        platinum: 'https://api.metalpriceapi.com/v1/latest?api_key=demo&base=XPT&currencies=USD'
-    },
-    timeseries: {
-        metalprice: 'https://api.metalpriceapi.com/v1/timeseries'
-    },
+    timeseries: {},
     // Alternative free APIs (backup options)
     backupEndpoints: {
         gold: 'https://api.metals.live/v1/spot/gold',
@@ -47,15 +39,15 @@ async function fetchJsonWithTimeout(url, ms, headers) {
 async function fetchGoldPrice() {
     try {
         const endpoints = [
-            metalApiSettings.baseEndpoint + '/XAU/USD',
+            '/api/spot/gold',
             metalApiSettings.primaryEndpoints.gold,
-            metalApiSettings.additionalEndpoints.gold,
+            
             metalApiSettings.backupEndpoints.gold
         ];
         for (const endpoint of endpoints) {
             try {
                 const headers = { 'Accept': 'application/json' };
-                if (endpoint.includes('api.goldapi.net')) headers['x-access-token'] = metalApiSettings.apiKey;
+                // Do not expose API keys on the client; backend will add token
                 const data = await fetchJsonWithTimeout(endpoint, 8000, headers);
                 const price = extractPriceFromData(data, 'gold');
                 if (price > 0) {
@@ -81,15 +73,14 @@ async function fetchGoldPrice() {
 async function fetchSilverPrice() {
     try {
         const endpoints = [
-            metalApiSettings.baseEndpoint + '/XAG/USD',
+            '/api/spot/silver',
             metalApiSettings.primaryEndpoints.silver,
-            metalApiSettings.additionalEndpoints.silver,
+            
             metalApiSettings.backupEndpoints.silver
         ];
         for (const endpoint of endpoints) {
             try {
                 const headers = { 'Accept': 'application/json' };
-                if (endpoint.includes('api.goldapi.net')) headers['x-access-token'] = metalApiSettings.apiKey;
                 const data = await fetchJsonWithTimeout(endpoint, 8000, headers);
                 const price = extractPriceFromData(data, 'silver');
                 if (price > 0) {
@@ -115,15 +106,14 @@ async function fetchSilverPrice() {
 async function fetchPlatinumPrice() {
     try {
         const endpoints = [
-            metalApiSettings.baseEndpoint + '/XPT/USD',
+            '/api/spot/platinum',
             metalApiSettings.primaryEndpoints.platinum,
-            metalApiSettings.additionalEndpoints.platinum,
+            
             metalApiSettings.backupEndpoints.platinum
         ];
         for (const endpoint of endpoints) {
             try {
                 const headers = { 'Accept': 'application/json' };
-                if (endpoint.includes('api.goldapi.net')) headers['x-access-token'] = metalApiSettings.apiKey;
                 const data = await fetchJsonWithTimeout(endpoint, 8000, headers);
                 const price = extractPriceFromData(data, 'platinum');
                 if (price > 0) {
@@ -153,18 +143,16 @@ async function getCurrentGoldPrice(forceFresh = false) {
     if (!forceFresh && storedPrice && lastUpdated) {
         const lastUpdateTime = new Date(lastUpdated).getTime();
         if (Date.now() - lastUpdateTime < 3600000) {
-            try { return parseFloat(storedPrice) * getPriceSourceMultiplier(); } catch(e) { return parseFloat(storedPrice); }
+            return parseFloat(storedPrice);
         }
     }
     try {
         const freshPrice = await fetchGoldPrice();
         localStorage.setItem('currentGoldPrice', freshPrice);
         localStorage.setItem('lastUpdated', new Date().toLocaleString());
-        try { return parseFloat(freshPrice) * getPriceSourceMultiplier(); } catch(e) { return parseFloat(freshPrice); }
+        return parseFloat(freshPrice);
     } catch (e) {
-        if (storedPrice) {
-            try { return parseFloat(storedPrice) * getPriceSourceMultiplier(); } catch(e2) { return parseFloat(storedPrice); }
-        }
+        if (storedPrice) { return parseFloat(storedPrice); }
         return NaN;
     }
 }
@@ -179,18 +167,14 @@ async function getCurrentSilverPrice(forceFresh = false) {
     const lastUpdated = localStorage.getItem('lastUpdated');
     if (!forceFresh && storedPrice && lastUpdated) {
         const lastUpdateTime = new Date(lastUpdated).getTime();
-        if (Date.now() - lastUpdateTime < 3600000) {
-            try { return parseFloat(storedPrice) * getPriceSourceMultiplier(); } catch(e) { return parseFloat(storedPrice); }
-        }
+        if (Date.now() - lastUpdateTime < 3600000) { return parseFloat(storedPrice); }
     }
     try {
         const freshPrice = await fetchSilverPrice();
         localStorage.setItem('currentSilverPrice', freshPrice);
-        try { return parseFloat(freshPrice) * getPriceSourceMultiplier(); } catch(e) { return parseFloat(freshPrice); }
+        return parseFloat(freshPrice);
     } catch (e) {
-        if (storedPrice) {
-            try { return parseFloat(storedPrice) * getPriceSourceMultiplier(); } catch(e2) { return parseFloat(storedPrice); }
-        }
+        if (storedPrice) { return parseFloat(storedPrice); }
         return NaN;
     }
 }
@@ -205,18 +189,14 @@ async function getCurrentPlatinumPrice(forceFresh = false) {
     const lastUpdated = localStorage.getItem('lastUpdated');
     if (!forceFresh && storedPrice && lastUpdated) {
         const lastUpdateTime = new Date(lastUpdated).getTime();
-        if (Date.now() - lastUpdateTime < 3600000) {
-            try { return parseFloat(storedPrice) * getPriceSourceMultiplier(); } catch(e) { return parseFloat(storedPrice); }
-        }
+        if (Date.now() - lastUpdateTime < 3600000) { return parseFloat(storedPrice); }
     }
     try {
         const freshPrice = await fetchPlatinumPrice();
         localStorage.setItem('currentPlatinumPrice', freshPrice);
-        try { return parseFloat(freshPrice) * getPriceSourceMultiplier(); } catch(e) { return parseFloat(freshPrice); }
+        return parseFloat(freshPrice);
     } catch (e) {
-        if (storedPrice) {
-            try { return parseFloat(storedPrice) * getPriceSourceMultiplier(); } catch(e2) { return parseFloat(storedPrice); }
-        }
+        if (storedPrice) { return parseFloat(storedPrice); }
         return NaN;
     }
 }
@@ -242,8 +222,27 @@ async function updateAllMetalPrices(forceFresh = false) {
  * @param {number} price - The price to format
  * @returns {string} - Formatted price string
  */
+function getDisplayMultiplier(){
+    try {
+        const m = localStorage.getItem('price_display_mode');
+        if (m === 'cfd') return 2;
+        return 1;
+    } catch(e){
+        return 1;
+    }
+}
+
 function formatGoldPrice(price) {
-    return '$' + parseFloat(price).toFixed(2);
+    const m = getDisplayMultiplier();
+    return '$' + (parseFloat(price)*m).toFixed(2);
+}
+
+(function(){
+    try { if (!localStorage.getItem('price_display_mode')) localStorage.setItem('price_display_mode','cfd'); } catch(e){}
+})();
+
+function formatPrice(price){
+    return formatGoldPrice(price);
 }
 
 /**

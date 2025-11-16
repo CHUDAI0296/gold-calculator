@@ -15,23 +15,42 @@ function parseUSD(val){
 app.get('/api/gold/timeseries', async (req, res) => {
   try {
     const { start_date, end_date } = req.query;
-    const key = process.env.METALPRICE_API_KEY;
-    if (!key) return res.status(400).json({ error: 'METALPRICE_API_KEY missing' });
-    const url = `https://api.metalpriceapi.com/v1/timeseries?api_key=${encodeURIComponent(key)}&base=XAU&currencies=USD&start_date=${encodeURIComponent(start_date)}&end_date=${encodeURIComponent(end_date)}`;
-    const r = await fetch(url, { headers:{ 'Accept':'application/json' } });
-    if (!r.ok) return res.status(r.status).json({ error: 'upstream_error' });
-    const data = await r.json();
-    const out = [];
-    if (data && data.rates){
-      Object.keys(data.rates).sort().forEach(k => {
-        const usd = parseUSD(data.rates[k]);
-        if (usd){
-          const ts = new Date(k).getTime()/1000;
-          out.push({ price: parseFloat(usd), timestamp: ts, date: new Date(ts*1000).toISOString() });
+    const nasdaqKey = process.env.NASDAQ_API_KEY;
+    if (nasdaqKey) {
+      try {
+        const urlNasdaq = `https://data.nasdaq.com/api/v3/datasets/LBMA/GOLD.json?api_key=${encodeURIComponent(nasdaqKey)}&start_date=${encodeURIComponent(start_date)}&end_date=${encodeURIComponent(end_date)}`;
+        const nr = await fetch(urlNasdaq, { headers: { 'Accept': 'application/json' } });
+        if (nr.ok) {
+          const nd = await nr.json();
+          const dataset = nd && nd.dataset;
+          const rows = dataset && dataset.data || [];
+          const out = [];
+          for (const row of rows) {
+            const dateStr = row[0];
+            const am = typeof row[1] === 'number' ? row[1] : parseFloat(row[1]);
+            const pm = typeof row[2] === 'number' ? row[2] : parseFloat(row[2]);
+            const price = isFinite(pm) ? pm : (isFinite(am) ? am : null);
+            if (price) {
+              const ts = new Date(dateStr).getTime() / 1000;
+              out.push({ price: parseFloat(price), timestamp: ts, date: new Date(ts*1000).toISOString() });
+            }
+          }
+          return res.json(out.sort((a,b)=>a.timestamp-b.timestamp));
         }
+      } catch (e) {}
+    }
+    const freeUrl = `https://api.exchangerate.host/timeseries?start_date=${encodeURIComponent(start_date)}&end_date=${encodeURIComponent(end_date)}&base=XAU&symbols=USD`;
+    const fr = await fetch(freeUrl, { headers:{ 'Accept':'application/json' } });
+    if (!fr.ok) return res.status(fr.status).json({ error: 'upstream_error' });
+    const d2 = await fr.json();
+    const out2 = [];
+    if (d2 && d2.rates){
+      Object.keys(d2.rates).sort().forEach(k => {
+        const val = d2.rates[k] && d2.rates[k].USD;
+        if (val){ const ts = new Date(k).getTime()/1000; out2.push({ price: parseFloat(val), timestamp: ts, date: new Date(ts*1000).toISOString() }); }
       });
     }
-    res.json(out);
+    res.json(out2);
   } catch (e){
     res.status(500).json({ error: 'server_error' });
   }
@@ -66,26 +85,18 @@ app.get('/api/timeseries', async (req, res) => {
         }
       } catch (e) {}
     }
-    const key = process.env.METALPRICE_API_KEY;
-    if (!key) return res.status(400).json({ error: 'METALPRICE_API_KEY missing' });
-    const url = `https://api.metalpriceapi.com/v1/timeseries?api_key=${encodeURIComponent(key)}&base=${base}&currencies=USD&start_date=${encodeURIComponent(start_date)}&end_date=${encodeURIComponent(end_date)}`;
-    const r = await fetch(url, { headers:{ 'Accept':'application/json' } });
-    if (!r.ok) return res.status(r.status).json({ error: 'upstream_error' });
-    const data = await r.json();
-    const out = [];
-    if (data && data.rates){
-      Object.keys(data.rates).sort().forEach(k => {
-        const val = data.rates[k];
-        let usd = null;
-        if (typeof val === 'number') usd = val;
-        else if (val && typeof val === 'object') usd = val.USD || val.usd || Number(Object.values(val)[0]);
-        if (usd){
-          const ts = new Date(k).getTime()/1000;
-          out.push({ price: parseFloat(usd), timestamp: ts, date: new Date(ts*1000).toISOString() });
-        }
+    const freeUrl = `https://api.exchangerate.host/timeseries?start_date=${encodeURIComponent(start_date)}&end_date=${encodeURIComponent(end_date)}&base=${base}&symbols=USD`;
+    const fr = await fetch(freeUrl, { headers:{ 'Accept':'application/json' } });
+    if (!fr.ok) return res.status(fr.status).json({ error: 'upstream_error' });
+    const d2 = await fr.json();
+    const out2 = [];
+    if (d2 && d2.rates){
+      Object.keys(d2.rates).sort().forEach(k => {
+        const val = d2.rates[k] && d2.rates[k].USD;
+        if (val){ const ts = new Date(k).getTime()/1000; out2.push({ price: parseFloat(val), timestamp: ts, date: new Date(ts*1000).toISOString() }); }
       });
     }
-    res.json(out);
+    res.json(out2);
   } catch (e){
     res.status(500).json({ error: 'server_error' });
   }
@@ -98,7 +109,10 @@ app.get('/api/spot/:metal', async (req, res) => {
     if (!m) return res.status(400).json({ error: 'invalid_metal' });
     const goldToken = process.env.GOLDAPI_TOKEN;
     const endpoints = [];
-    if (goldToken) endpoints.push({ url: `https://api.goldapi.net/v1/price/${m.symbol}/USD`, headers: { 'x-access-token': goldToken, 'Accept':'application/json' } });
+    if (goldToken) {
+      endpoints.push({ url: `https://api.goldapi.net/v1/price/${m.symbol}/USD`, headers: { 'x-access-token': goldToken, 'Accept':'application/json' } });
+      endpoints.push({ url: `https://www.goldapi.io/api/${m.symbol}/USD`, headers: { 'x-access-token': goldToken, 'Accept':'application/json' } });
+    }
     endpoints.push({ url: `https://api.metals.live/v1/spot/${m.metalsLive}`, headers: { 'Accept':'application/json' } });
     endpoints.push({ url: `https://api.exchangerate.host/latest?base=${m.symbol}&symbols=USD`, headers: { 'Accept':'application/json' } });
     for (const ep of endpoints){
@@ -127,7 +141,10 @@ app.get('/api/spot/gold', async (req, res) => {
   try {
     const goldToken = process.env.GOLDAPI_TOKEN;
     const endpoints = [];
-    if (goldToken) endpoints.push({ url: 'https://api.goldapi.net/v1/price/XAU/USD', headers: { 'x-access-token': goldToken, 'Accept':'application/json' } });
+    if (goldToken) {
+      endpoints.push({ url: 'https://api.goldapi.net/v1/price/XAU/USD', headers: { 'x-access-token': goldToken, 'Accept':'application/json' } });
+      endpoints.push({ url: 'https://www.goldapi.io/api/XAU/USD', headers: { 'x-access-token': goldToken, 'Accept':'application/json' } });
+    }
     endpoints.push({ url: 'https://api.metals.live/v1/spot/gold', headers: { 'Accept':'application/json' } });
     endpoints.push({ url: 'https://api.exchangerate.host/latest?base=XAU&symbols=USD', headers: { 'Accept':'application/json' } });
     for (const ep of endpoints){
@@ -151,6 +168,14 @@ app.get('/api/spot/gold', async (req, res) => {
   } catch(e){
     res.status(500).json({ error: 'server_error' });
   }
+});
+
+app.get('/api/status', (req, res) => {
+  res.json({
+    goldapi: !!process.env.GOLDAPI_TOKEN,
+    nasdaq: !!process.env.NASDAQ_API_KEY,
+    metalprice: !!process.env.METALPRICE_API_KEY
+  });
 });
 
 // Candlestick data via Yahoo Finance (GC=F)
@@ -189,4 +214,4 @@ app.get('/api/gold/candles', async (req, res) => {
 });
 
 const port = process.env.PORT || 3001;
-app.listen(port, () => {});
+app.listen(port, () => { console.log(`server_started:${port}`); });

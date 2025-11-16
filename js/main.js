@@ -107,7 +107,7 @@ function updatePriceDisplays(prices) {
     const goldPriceElements = document.querySelectorAll('#current-gold-price');
     goldPriceElements.forEach(element => {
         if (element && prices.gold) {
-            element.textContent = '$' + prices.gold.toFixed(2);
+            element.textContent = (typeof formatGoldPrice==='function'?formatGoldPrice(prices.gold):('$'+prices.gold.toFixed(2)));
         }
     });
     
@@ -115,7 +115,7 @@ function updatePriceDisplays(prices) {
     const silverPriceElements = document.querySelectorAll('#current-silver-price');
     silverPriceElements.forEach(element => {
         if (element && prices.silver) {
-            element.textContent = '$' + prices.silver.toFixed(2);
+            element.textContent = (typeof formatGoldPrice==='function'?formatGoldPrice(prices.silver):('$'+prices.silver.toFixed(2)));
         }
     });
     
@@ -123,7 +123,7 @@ function updatePriceDisplays(prices) {
     const platinumPriceElements = document.querySelectorAll('#current-platinum-price');
     platinumPriceElements.forEach(element => {
         if (element && prices.platinum) {
-            element.textContent = '$' + prices.platinum.toFixed(2);
+            element.textContent = (typeof formatGoldPrice==='function'?formatGoldPrice(prices.platinum):('$'+prices.platinum.toFixed(2)));
         }
     });
     

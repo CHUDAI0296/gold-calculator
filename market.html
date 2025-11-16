@@ -175,6 +175,12 @@
                 </div>
             </div>
             <p class="small text-muted mt-2">Last updated: <span id="last-updated">Loading...</span></p>
+            <div class="mt-2">
+                <div id="display-mode-group" class="btn-group btn-group-sm" role="group" aria-label="Display mode">
+                    <button type="button" class="btn btn-outline-secondary" data-mode="spot">现货显示</button>
+                    <button type="button" class="btn btn-outline-secondary" data-mode="cfd">CFD显示</button>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -746,23 +752,22 @@
 
             renderTable(7);
 
-            // Update current price cards
-            (async function updateCards(){
+            async function updateCards(){
                 try {
                     const [gp, sp, pp] = await Promise.all([
                         getCurrentGoldPrice(), getCurrentSilverPrice(), getCurrentPlatinumPrice()
                     ]);
-                    const m = (typeof getPriceSourceMultiplier === 'function') ? getPriceSourceMultiplier() : 1;
                     const goldEl = document.getElementById('current-gold-price');
                     const silverEl = document.getElementById('current-silver-price');
                     const platinumEl = document.getElementById('current-platinum-price');
-                    if (goldEl && gp) goldEl.textContent = (typeof formatGoldPrice==='function'?formatGoldPrice(gp):('$'+(gp*m).toFixed(2)));
-                    if (silverEl && sp) silverEl.textContent = (typeof formatGoldPrice==='function'?formatGoldPrice(sp):('$'+(sp*m).toFixed(2)));
-                    if (platinumEl && pp) platinumEl.textContent = (typeof formatGoldPrice==='function'?formatGoldPrice(pp):('$'+(pp*m).toFixed(2)));
+                    if (goldEl && gp) goldEl.textContent = (typeof formatGoldPrice==='function'?formatGoldPrice(gp):('$'+gp.toFixed(2)));
+                    if (silverEl && sp) silverEl.textContent = (typeof formatGoldPrice==='function'?formatGoldPrice(sp):('$'+sp.toFixed(2)));
+                    if (platinumEl && pp) platinumEl.textContent = (typeof formatGoldPrice==='function'?formatGoldPrice(pp):('$'+pp.toFixed(2)));
                     const lu = document.getElementById('last-updated');
                     if (lu) lu.textContent = localStorage.getItem('lastUpdated') || new Date().toLocaleString();
                 } catch(e) {}
-            })();
+            }
+            updateCards();
 
             const timeRangeContainer = document.querySelector('.btn-group');
             if (timeRangeContainer) {
@@ -794,7 +799,7 @@
                     if (!r.ok) throw new Error('backend');
                     return r.json();
                 }).then(data=>{
-                    const m = (typeof getPriceSourceMultiplier === 'function') ? getPriceSourceMultiplier() : 1;
+                    const m = (typeof getDisplayMultiplier==='function')?getDisplayMultiplier():1;
                     const candles = data.map(d=>({ time: d.time, open: d.open*m, high: d.high*m, low: d.low*m, close: d.close*m }));
                     candleSeries.setData(candles);
                     window.tvChart = chart;
@@ -804,7 +809,7 @@
                         const res = dd && dd.chart && dd.chart.result && dd.chart.result[0];
                         const ts = res ? res.timestamp : [];
                         const q = res && res.indicators && res.indicators.quote && res.indicators.quote[0] || {};
-                        const m = (typeof getPriceSourceMultiplier === 'function') ? getPriceSourceMultiplier() : 1;
+                        const m = (typeof getDisplayMultiplier==='function')?getDisplayMultiplier():1;
                         const out = []; for (let i=0;i<(ts||[]).length;i++){ const o=q.open&&q.open[i],h=q.high&&q.high[i],l=q.low&&q.low[i],c=q.close&&q.close[i]; if([o,h,l,c].every(v=>typeof v==='number')) out.push({ time: ts[i], open:o*m, high:h*m, low:l*m, close:c*m}); }
                         if (out.length) { candleSeries.setData(out); window.tvChart = chart; }
                     }).catch(()=>{});
@@ -818,6 +823,13 @@
                     const days = parseInt(this.getAttribute('data-days'),10); initTradingChart(days);
                 });
             });
+            const modeGroup = document.getElementById('display-mode-group');
+            if (modeGroup){
+                const setMode = function(m){ try{ localStorage.setItem('price_display_mode', m); }catch(e){} updateCards(); const activeRangeBtn = document.querySelector('.time-range-btn.active'); const range = activeRangeBtn ? parseInt(activeRangeBtn.getAttribute('data-range'),10) : 7; renderTable(range); const actDaysBtn = document.querySelector('.trading-range-btn.active'); const days = actDaysBtn ? parseInt(actDaysBtn.getAttribute('data-days'),10) : 30; initTradingChart(days); };
+                const cur = (localStorage.getItem('price_display_mode') || 'cfd');
+                Array.from(modeGroup.querySelectorAll('button')).forEach(b=>{ b.classList.toggle('active', b.getAttribute('data-mode')===cur); });
+                modeGroup.addEventListener('click', function(e){ const btn = e.target.closest('button[data-mode]'); if (!btn) return; Array.from(modeGroup.querySelectorAll('button')).forEach(b=>b.classList.remove('active')); btn.classList.add('active'); setMode(btn.getAttribute('data-mode')); });
+            }
         });
     </script>
 

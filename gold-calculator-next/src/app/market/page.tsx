@@ -4,6 +4,8 @@ import TradingView from '@/components/TradingView';
 import MarketStats from '@/components/MarketStats';
 import MarketAnalysis from '@/components/MarketAnalysis';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Gold Market Charts - Live Gold Price Charts and Analysis',
   description: 'View real-time gold price charts, historical data, and market analysis. Track gold price trends and make informed investment decisions.',
@@ -18,6 +20,12 @@ export default function Market() {
       <JsonLd type="market" />
       <div className="container py-5 relative">
       <h1 className="text-center mb-4">Gold Market Charts</h1>
+      <div className="flex justify-center mb-3">
+        <div className="btn-group" role="group" aria-label="Display mode">
+          <button className="btn btn-outline-secondary btn-sm" onClick={()=>{ try{ localStorage.setItem('price_display_mode','spot') }catch{}; location.reload() }}>现货显示</button>
+          <button className="btn btn-outline-secondary btn-sm" onClick={()=>{ try{ localStorage.setItem('price_display_mode','cfd') }catch{}; location.reload() }}>CFD显示</button>
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
         <div className="md:col-span-8">
@@ -49,6 +57,7 @@ export default function Market() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

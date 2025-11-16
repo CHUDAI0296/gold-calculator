@@ -50,7 +50,7 @@ interface JsonLdProps {
   data?: Partial<StructuredData>;
 }
 
-export default function JsonLd({ type, data }: JsonLdProps) {
+export default function JsonLd({ type }: JsonLdProps) {
   const getStructuredData = () => {
     const baseData = {
       "@context": "https://schema.org",
