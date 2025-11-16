@@ -15,8 +15,7 @@ export default async function Home() {
   // 从本地API获取实时金价
   const getGoldPrice = async () => {
     try {
-      const base = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-      const response = await fetch(`${base}/api/spot/gold`, { next: { revalidate: 300 } });
+      const response = await fetch(`/api/spot/gold`, { next: { revalidate: 300 } });
       const data = await response.json();
       return data && data.price ? data.price : null;
     } catch (error) {
