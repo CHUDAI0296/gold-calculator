@@ -22,39 +22,22 @@ export default function TradingView({ containerId, height = 400 }: TradingViewPr
       script.src = 'https://s3.tradingview.com/tv.js';
       script.async = true;
       let fallbackTimer: number | undefined;
-      let didFallback = false;
       const startFallback = () => {
-        if (didFallback) return;
-        didFallback = true;
-        try {
-          const el = document.getElementById(containerId);
-          if (!el) return;
-          el.innerHTML = '';
-          const wrap = document.createElement('div');
-          wrap.className = 'tradingview-widget-container';
-          const inner = document.createElement('div');
-          inner.className = 'tradingview-widget-container__widget';
-          inner.style.height = `${height}px`;
-          wrap.appendChild(inner);
-          const scr = document.createElement('script');
-          scr.type = 'text/javascript';
-          scr.src = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
-          scr.async = true;
-          scr.innerHTML = JSON.stringify({
-            autosize: true,
-            symbol: 'TVC:GOLD',
-            interval: 'D',
-            timezone: 'Etc/UTC',
-            theme: 'light',
-            style: '1',
-            locale: 'en',
-            toolbar_bg: '#f1f3f6',
-            enable_publishing: false,
-            allow_symbol_change: false
-          });
-          wrap.appendChild(scr);
-          el.appendChild(wrap);
-        } catch {}
+        const cdn = document.createElement('script');
+        cdn.src = 'https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js';
+        cdn.async = true;
+        cdn.onload = async () => {
+          try {
+            const el = document.getElementById(containerId);
+            if (!el || !(window as any).LightweightCharts) return;
+            const chart = (window as any).LightweightCharts.createChart(el, { width: el.clientWidth, height, layout: { background: { color: '#ffffff' }, textColor: '#333' }, grid: { vertLines: { color: '#eee' }, horzLines: { color: '#eee' } }, timeScale: { borderColor: '#ccc' }, rightPriceScale: { borderColor: '#ccc' } });
+            const series = chart.addCandlestickSeries({ upColor: '#26a69a', downColor: '#ef5350', borderDownColor: '#ef5350', borderUpColor: '#26a69a', wickDownColor: '#ef5350', wickUpColor: '#26a69a' });
+            const resp = await fetch('/api/gold-candles?days=30', { cache: 'no-store' });
+            const data = await resp.json();
+            if (Array.isArray(data)) series.setData(data);
+          } catch {}
+        };
+        document.head.appendChild(cdn);
       };
       script.onload = () => {
         if (fallbackTimer) window.clearTimeout(fallbackTimer);
@@ -74,24 +57,13 @@ export default function TradingView({ containerId, height = 400 }: TradingViewPr
           container_id: containerId,
           save_image: false
         });
-
-        window.setTimeout(() => {
-          try {
-            const el = document.getElementById(containerId);
-            if (!el) { startFallback(); return; }
-            const hasIframe = !!el.querySelector('iframe');
-            if (!hasIframe) startFallback();
-          } catch { startFallback(); }
-        }, 5000);
-        // 强制兜底：8秒后仍未兜底则执行兜底
-        window.setTimeout(() => { startFallback(); }, 8000);
       };
 
       script.onerror = () => {
         startFallback();
       };
 
-      fallbackTimer = window.setTimeout(() => startFallback(), 3000);
+      fallbackTimer = window.setTimeout(() => startFallback(), 4000);
       document.head.appendChild(script);
     } catch (error) {
       const el = document.getElementById(containerId);
