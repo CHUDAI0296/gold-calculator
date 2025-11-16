@@ -34,6 +34,15 @@ export default function RootLayout({
         <GoogleAnalytics />
         <Navigation />
         <main>{children}</main>
+        <Script id="sw-kill" strategy="afterInteractive">
+          {`
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.getRegistrations().then(function(rs){
+                rs.forEach(function(r){ r.unregister(); });
+              }).catch(function(){});
+            }
+          `}
+        </Script>
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3389504348016979"
           crossOrigin="anonymous"

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
+import CurrentPriceBanner from '@/components/CurrentPriceBanner';
+import DisplayModeToggle from '@/components/DisplayModeToggle';
 
 export const metadata: Metadata = {
   title: 'Gold Calculator - Calculate Gold Value Instantly',
@@ -12,20 +14,6 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic';
 export default async function Home() {
-  // 从本地API获取实时金价
-  const getGoldPrice = async () => {
-    try {
-      const response = await fetch(`/api/spot/gold`, { next: { revalidate: 300 } });
-      const data = await response.json();
-      return data && data.price ? data.price : null;
-    } catch (error) {
-      console.error('Error fetching gold price:', error);
-      return null;
-    }
-  };
-
-  const goldPrice = await getGoldPrice();
-
   return (
     <React.Fragment>
       <JsonLd type="website" />
@@ -34,17 +22,8 @@ export default async function Home() {
         <div className="container text-center py-5">
           <h1 className="display-4">Calculate Your Gold Value Instantly</h1>
           <p className="lead">Get accurate estimations based on real-time gold prices</p>
-          <div className="gold-price-display my-4">
-            <h3>Current Gold Price</h3>
-            <div className="price-box">
-              {goldPrice ? (
-                <span>{goldPrice.toFixed(2)} USD/oz</span>
-              ) : (
-                <span>Loading...</span>
-              )}
-            </div>
-            <p className="small text-muted">Last updated: {new Date().toLocaleString()}</p>
-          </div>
+          <CurrentPriceBanner />
+          <div className="d-flex justify-content-center"><DisplayModeToggle /></div>
           <div className="row justify-content-center">
             <div className="col-md-4 mb-3">
               <a href="/calculator" className="btn btn-primary btn-lg w-100">Gold Calculator</a>

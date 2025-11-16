@@ -1,5 +1,6 @@
 'use client';
 import JsonLd from '@/components/JsonLd';
+import CalculatorPriceDisplay from '@/components/CalculatorPriceDisplay';
 
  
 
@@ -71,13 +72,7 @@ export default function Calculator() {
               <h2 className="h5 mb-0">Current Gold Price</h2>
             </div>
             <div className="card-body">
-              <div className="price-display text-center">
-                <span className="display-4">
-                  {goldPrice ? `$${goldPrice.toFixed(2)}` : 'Loading...'}
-                </span>
-                <p className="text-muted">USD per troy ounce</p>
-                <p className="small">Last updated: {new Date().toLocaleString()}</p>
-              </div>
+              <CalculatorPriceDisplay />
             </div>
           </div>
         </div>
