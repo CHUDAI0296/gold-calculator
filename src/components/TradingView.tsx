@@ -30,6 +30,7 @@ export default function TradingView({ containerId, height = 400 }: TradingViewPr
           try {
             const el = document.getElementById(containerId);
             if (!el || !(window as any).LightweightCharts) return;
+            el.innerHTML = '';
             const chart = (window as any).LightweightCharts.createChart(el, { width: el.clientWidth, height, layout: { background: { color: '#ffffff' }, textColor: '#333' }, grid: { vertLines: { color: '#eee' }, horzLines: { color: '#eee' } }, timeScale: { borderColor: '#ccc' }, rightPriceScale: { borderColor: '#ccc' } });
             const series = chart.addCandlestickSeries({ upColor: '#26a69a', downColor: '#ef5350', borderDownColor: '#ef5350', borderUpColor: '#26a69a', wickDownColor: '#ef5350', wickUpColor: '#26a69a' });
             const resp = await fetch('/api/gold-candles?days=30', { cache: 'no-store' });
@@ -57,13 +58,22 @@ export default function TradingView({ containerId, height = 400 }: TradingViewPr
           container_id: containerId,
           save_image: false
         });
+
+        window.setTimeout(() => {
+          try {
+            const el = document.getElementById(containerId);
+            if (!el) { startFallback(); return; }
+            const hasIframe = !!el.querySelector('iframe');
+            if (!hasIframe) startFallback();
+          } catch { startFallback(); }
+        }, 5000);
       };
 
       script.onerror = () => {
         startFallback();
       };
 
-      fallbackTimer = window.setTimeout(() => startFallback(), 4000);
+      fallbackTimer = window.setTimeout(() => startFallback(), 3000);
       document.head.appendChild(script);
     } catch (error) {
       const el = document.getElementById(containerId);
