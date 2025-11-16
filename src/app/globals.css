@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@config "./tailwind.config.js";
+
+@layer base {
+  :root {
+    --gold-primary: #ffd700;
+    --gold-secondary: #daa520;
+    --gold-dark: #b8860b;
+  }
+}
+
+@layer components {
+  .gold-icon {
+    color: var(--gold-primary);
+  }
+
+  .feature-icon {
+    color: var(--gold-secondary);
+    font-size: 2.5rem;
+  }
+}
+
+@layer utilities {
+  .navbar { background-color: #0f1115; }
+  .navbar .navbar-brand { color: #fff; text-decoration: none; }
+  .navbar .navbar-toggler { border-color: rgba(255,255,255,0.3); }
+  .navbar-nav { list-style: none; margin: 0; padding: 0; display: flex; gap: 1rem; }
+  .navbar-nav .nav-link { color: #e9ecef; text-decoration: none; }
+  .navbar-nav .nav-link:hover { color: #ffd700; }
+  .dropdown-menu { min-width: 14rem; }
+
+  .hero-section {
+    background: #ffffff;
+    color: #333;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    position: relative;
+  }
+
+  .hero-section::before {
+    content: none;
+  }
+
+  .hero-section > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .price-box {
+    background: linear-gradient(135deg, #fffbe6 0%, #fff1b8 100%);
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+    border: 2px solid #ffb300;
+    box-shadow: 0 10px 24px rgba(255, 179, 0, 0.25);
+    color: #333;
+    letter-spacing: 0.3px;
+  }
+
+  .feature-box {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 300ms ease-in-out;
+  }
+
+  .feature-box:hover {
+    transform: translateY(-5px);
+  }
+}
+
+@media (min-width: 768px) {
+    .hero-section {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+
+    .price-box {
+      font-size: 1.25rem;
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+    }
+  }
