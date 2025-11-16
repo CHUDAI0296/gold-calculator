@@ -14,6 +14,15 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic';
 export default async function Home() {
+  async function getInitialPrice(){
+    try {
+      const base = process.env.NEXT_PUBLIC_BASE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
+      const r = await fetch(`${base}/api/spot/gold`, { cache: 'no-store' })
+      const d = await r.json()
+      return d && d.price ? d.price : null
+    } catch { return null }
+  }
+  const initialPrice = await getInitialPrice()
   return (
     <React.Fragment>
       <JsonLd type="website" />
@@ -22,7 +31,7 @@ export default async function Home() {
         <div className="container text-center py-5">
           <h1 className="display-4">Calculate Your Gold Value Instantly</h1>
           <p className="lead">Get accurate estimations based on real-time gold prices</p>
-          <CurrentPriceBanner />
+          <CurrentPriceBanner initialPrice={initialPrice ?? undefined} />
           <div className="d-flex justify-content-center"><DisplayModeToggle /></div>
           <div className="row justify-content-center">
             <div className="col-md-4 mb-3">
