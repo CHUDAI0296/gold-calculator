@@ -23,6 +23,9 @@ export async function GET(_req: NextRequest, { params }: { params: { metal: stri
     }
     endpoints.push({ url: `https://api.metals.live/v1/spot/${m.metalsLive}`, headers: { 'Accept':'application/json' } })
     endpoints.push({ url: `https://api.exchangerate.host/latest?base=${m.symbol}&symbols=USD`, headers: { 'Accept':'application/json' } })
+    const tickerMap: Record<string,string> = { XAU:'GC=F', XAG:'SI=F', XPT:'PL=F' }
+    const yfTicker = tickerMap[m.symbol]
+    endpoints.push({ url: `https://query1.finance.yahoo.com/v8/finance/chart/${yfTicker}?range=1d&interval=1m&includePrePost=false`, headers: { 'Accept':'application/json' } })
 
     for (const ep of endpoints) {
       try {
@@ -36,7 +39,21 @@ export async function GET(_req: NextRequest, { params }: { params: { metal: stri
           else if (Array.isArray(last)) { const nums = last.filter(v => typeof v === 'number'); if (nums.length) price = nums[nums.length-1] as number }
           else if (last && typeof last === 'object') { price = (last.price as number) || parseUSD(last) }
         } else {
+          // standard shapes
           price = (data.price as number) || (data.rate as number) || (data.rates && (data.rates.USD as number)) || parseUSD(data)
+          // yahoo finance shape
+          if (!price && data && data.chart && data.chart.result && data.chart.result[0]) {
+            const result = data.chart.result[0]
+            const meta = result.meta || {}
+            const regular = meta.regularMarketPrice as number
+            const quote = result.indicators && result.indicators.quote && result.indicators.quote[0] || {}
+            const closes = quote.close || []
+            if (typeof regular === 'number' && isFinite(regular)) price = regular
+            else if (Array.isArray(closes) && closes.length) {
+              const lastClose = closes.filter((v:any)=> typeof v === 'number' && isFinite(v)).pop()
+              if (typeof lastClose === 'number') price = lastClose
+            }
+          }
         }
         if (price) return NextResponse.json({ price: parseFloat(String(price)) })
       } catch { continue }
