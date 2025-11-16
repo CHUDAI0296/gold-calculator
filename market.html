@@ -468,7 +468,7 @@
 
     <!-- Optimized JS Loading -->
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script defer src="js/gold-api.js"></script>
+    <script defer src="js/gold-api.js?v=20251116"></script>
 
     <!-- Inline Ultra Lightweight Chart - Zero dependencies -->
     <script>
@@ -692,6 +692,23 @@
         
         // Initialize table when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
+            if (typeof fetchHistoryDays !== 'function') {
+                window.fetchHistoryDays = async function(metalSymbol, days){
+                    const end = new Date();
+                    const start = new Date(end.getTime() - days*24*60*60*1000);
+                    const startStr = start.toISOString().slice(0,10);
+                    const endStr = end.toISOString().slice(0,10);
+                    try {
+                        const r = await fetch(`/api/timeseries?start_date=${startStr}&end_date=${endStr}&metal=${metalSymbol}`);
+                        if (r.ok) { const d = await r.json(); if (Array.isArray(d)) return d; }
+                    } catch(e) {}
+                    try {
+                        const r2 = await fetch(`https://api.exchangerate.host/timeseries?start_date=${startStr}&end_date=${endStr}&base=${metalSymbol}&symbols=USD`);
+                        const d2 = await r2.json(); const out = []; if (d2 && d2.rates){ Object.keys(d2.rates).sort().forEach(k=>{ const v=d2.rates[k]&&d2.rates[k].USD; if (v){ const ts=new Date(k).getTime()/1000; out.push({ price: parseFloat(v), timestamp: ts, date: new Date(ts*1000).toISOString()}); } }); }
+                        return out;
+                    } catch(e){ return []; }
+                }
+            }
             async function renderTable(days){
                 const [gRows, sRows, pRows] = await Promise.all([
                     fetchHistoryDays('XAU', days),
@@ -728,6 +745,24 @@
             }
 
             renderTable(7);
+
+            // Update current price cards
+            (async function updateCards(){
+                try {
+                    const [gp, sp, pp] = await Promise.all([
+                        getCurrentGoldPrice(), getCurrentSilverPrice(), getCurrentPlatinumPrice()
+                    ]);
+                    const m = (typeof getPriceSourceMultiplier === 'function') ? getPriceSourceMultiplier() : 1;
+                    const goldEl = document.getElementById('current-gold-price');
+                    const silverEl = document.getElementById('current-silver-price');
+                    const platinumEl = document.getElementById('current-platinum-price');
+                    if (goldEl && gp) goldEl.textContent = (typeof formatGoldPrice==='function'?formatGoldPrice(gp):('$'+(gp*m).toFixed(2)));
+                    if (silverEl && sp) silverEl.textContent = (typeof formatGoldPrice==='function'?formatGoldPrice(sp):('$'+(sp*m).toFixed(2)));
+                    if (platinumEl && pp) platinumEl.textContent = (typeof formatGoldPrice==='function'?formatGoldPrice(pp):('$'+(pp*m).toFixed(2)));
+                    const lu = document.getElementById('last-updated');
+                    if (lu) lu.textContent = localStorage.getItem('lastUpdated') || new Date().toLocaleString();
+                } catch(e) {}
+            })();
 
             const timeRangeContainer = document.querySelector('.btn-group');
             if (timeRangeContainer) {
@@ -799,4 +834,4 @@
 </body>
 </html>
     <!-- Lightweight Charts -->
-    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
