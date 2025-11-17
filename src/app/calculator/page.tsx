@@ -7,6 +7,7 @@ import CalculatorPriceDisplay from '@/components/CalculatorPriceDisplay';
 import { useState, useEffect } from 'react';
 import React from 'react';
 
+
 export default function Calculator() {
   const [goldPrice, setGoldPrice] = useState<number | null>(null);
   const [calculatedValue, setCalculatedValue] = useState<number>(0);

@@ -8,8 +8,8 @@ import DisplayModeToggle from '@/components/DisplayModeToggle';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Gold Market Charts - Live Gold Price Charts and Analysis',
-  description: 'View real-time gold price charts, historical data, and market analysis. Track gold price trends and make informed investment decisions.',
+  title: 'Gold Market Charts – Real‑Time Price, Trends and Technicals',
+  description: 'Interactive gold price charts with 24h high/low, MACD/RSI, moving averages and market headlines. Analyze trends to time your trades better.',
   alternates: {
     canonical: 'https://www.goldcalculator.click/market'
   }

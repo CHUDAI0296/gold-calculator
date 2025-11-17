@@ -5,11 +5,9 @@ import CurrentPriceBanner from '@/components/CurrentPriceBanner';
 import DisplayModeToggle from '@/components/DisplayModeToggle';
 
 export const metadata: Metadata = {
-  title: 'Gold Calculator - Calculate Gold Value Instantly',
-  description: 'Calculate the value of your gold with our easy-to-use gold calculator. Get real-time gold prices and accurate estimations.',
-  alternates: {
-    canonical: 'https://www.goldcalculator.click'
-  }
+  title: 'Instant Gold Value Calculator & Market Insights',
+  description: 'Calculate gold value instantly by weight and karat with live prices. Explore market charts, news and guides to make smarter selling and buying decisions.',
+  alternates: { canonical: 'https://www.goldcalculator.click' }
 };
 
 export const dynamic = 'force-dynamic';

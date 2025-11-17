@@ -16,7 +16,7 @@ export default function NewsPage(){
   React.useEffect(()=>{
     const load = async ()=>{
       try{
-        const r = await fetch('/api/news?q=gold,黄金,金价,precious,metal', { cache: 'no-store' })
+        const r = await fetch('/api/news?q=gold,黄金,金价,bullion,伦敦金,金条,央行购金,Comex,XAU,GLD,金矿&limit=20', { cache: 'no-store' })
         const d = await r.json()
         if (Array.isArray(d)) setItems(d)
       } finally { setLoading(false) }
