@@ -46,11 +46,7 @@ export default function RootLayout({
             }
           `}
         </Script>
-        <Script
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3389504348016979"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        {/* Ad script removed per request */}
         <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
           strategy="afterInteractive"

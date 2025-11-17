@@ -11,7 +11,7 @@ export default function Navigation() {
       <nav className="navbar navbar-expand-lg navbar-dark">
         <div className="container">
           <Link href="/" className="navbar-brand">
-            <i className="fas fa-coins gold-icon"></i> <span suppressHydrationWarning>Gold Calculator</span>
+            <i className="fas fa-coins gold-icon" aria-hidden="true"></i> <span suppressHydrationWarning>Gold Calculator</span>
           </Link>
           <button 
             className="navbar-toggler" 

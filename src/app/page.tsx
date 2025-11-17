@@ -53,21 +53,21 @@ export default async function Home() {
           <div className="row">
             <div className="col-md-4 mb-4">
               <div className="feature-box text-center p-4">
-                <i className="fas fa-tachometer-alt feature-icon mb-3"></i>
+                <i className="fas fa-tachometer-alt feature-icon mb-3" aria-hidden="true"></i>
                 <h3>Real-Time Prices</h3>
                 <p>Our calculator uses up-to-date gold prices to provide accurate valuations.</p>
               </div>
             </div>
             <div className="col-md-4 mb-4">
               <div className="feature-box text-center p-4">
-                <i className="fas fa-balance-scale feature-icon mb-3"></i>
+                <i className="fas fa-balance-scale feature-icon mb-3" aria-hidden="true"></i>
                 <h3>Multiple Karat Options</h3>
                 <p>Calculate values for all gold purities from 8K to 24K.</p>
               </div>
             </div>
             <div className="col-md-4 mb-4">
               <div className="feature-box text-center p-4">
-                <i className="fas fa-mobile-alt feature-icon mb-3"></i>
+                <i className="fas fa-mobile-alt feature-icon mb-3" aria-hidden="true"></i>
                 <h3>Mobile Friendly</h3>
                 <p>Use our calculator on any device, anytime, anywhere.</p>
               </div>
@@ -159,7 +159,7 @@ export default async function Home() {
                 <div className="card-body text-center">
                   <h4>Precious Metal Price Trends</h4>
                   <div className="chart-preview">
-                    <i className="fas fa-chart-line fa-5x my-4" style={{ color: 'var(--gold-primary)' }}></i>
+                    <i className="fas fa-chart-line fa-5x my-4" style={{ color: 'var(--gold-primary)' }} role="img" aria-label="Precious metal price trend preview"></i>
                     <p>Interactive charts with historical data</p>
                   </div>
                 </div>
