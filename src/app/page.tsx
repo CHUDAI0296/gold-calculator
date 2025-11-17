@@ -5,7 +5,7 @@ import CurrentPriceBanner from '@/components/CurrentPriceBanner';
 import DisplayModeToggle from '@/components/DisplayModeToggle';
 
 export const metadata: Metadata = {
-  title: 'Instant Gold Value Calculator & Market Insights',
+  title: 'Instant Gold Value Calculator & Market Insights | Gold Calculator',
   description: 'Calculate gold value instantly by weight and karat with live prices. Explore market charts, news and guides to make smarter selling and buying decisions.',
   alternates: { canonical: 'https://www.goldcalculator.click' }
 };
