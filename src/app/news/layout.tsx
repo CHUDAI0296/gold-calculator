@@ -15,7 +15,8 @@ export const metadata: Metadata = {
     siteName: 'Gold Calculator',
     type: 'website'
   },
-  twitter: { card: 'summary', title, description }
+  twitter: { card: 'summary', title, description },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } }
 }
 
 export default function NewsLayout({ children }: { children: React.ReactNode }){

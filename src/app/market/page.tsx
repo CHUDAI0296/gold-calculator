@@ -12,7 +12,8 @@ export const metadata: Metadata = {
   description: 'Interactive gold price charts with 24h high/low, MACD/RSI, moving averages and market headlines. Analyze trends to time your trades better.',
   alternates: {
     canonical: 'https://www.goldcalculator.click/market'
-  }
+  },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } }
 };
 
 export default function Market() {

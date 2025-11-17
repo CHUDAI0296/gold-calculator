@@ -43,7 +43,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return {
     title,
     description,
-    alternates: { canonical: `https://www.goldcalculator.click/${encodeURIComponent(slug)}` }
+    alternates: { canonical: `https://www.goldcalculator.click/${encodeURIComponent(slug)}` },
+    robots: { index: false, follow: true, googleBot: { index: false, follow: true } }
   }
 }
 
