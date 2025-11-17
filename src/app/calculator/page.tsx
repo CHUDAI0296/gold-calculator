@@ -64,6 +64,7 @@ export default function Calculator() {
   return (
     <React.Fragment>
       <JsonLd type="calculator" />
+      <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url:'/' }, { name:'Gold Calculator', url:'/calculator' } ] }} />
       <div className="container py-5">
       <h1 className="text-center mb-4">Gold Value Calculator</h1>
       <div className="row">

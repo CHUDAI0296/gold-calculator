@@ -20,6 +20,7 @@ export default function Market() {
   return (
     <div className="market-page">
       <JsonLd type="market" />
+      <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url: '/' }, { name:'Market Charts', url: '/market' } ] }} />
       <div className="container py-5 relative">
       <h1 className="text-center mb-4">Gold Market Charts</h1>
       <div className="flex justify-center mb-3"><DisplayModeToggle /></div>

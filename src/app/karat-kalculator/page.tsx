@@ -13,6 +13,7 @@ export default function Page() {
   return (
     <div className="container py-5">
       <JsonLd type="calculator" />
+      <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url: '/' }, { name:'Karat Kalculator', url: '/karat-kalculator' } ] }} />
       <KaratCalculator />
     </div>
   )

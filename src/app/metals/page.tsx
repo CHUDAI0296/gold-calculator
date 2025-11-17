@@ -19,7 +19,8 @@ export default function MetalsPage(){
 
   return (
     <div className="container py-5">
-      <JsonLd type="website" />
+      <JsonLd type="metals" />
+      <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url: '/' }, { name:'Silver & Platinum', url: '/metals' } ] }} />
       <h1 className="text-center mb-4">Silver & Platinum Prices</h1>
       <div className="row">
         <div className="col-md-6 mb-4">

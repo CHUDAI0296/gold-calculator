@@ -50,9 +50,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default function LegacyPage({ params }: { params: { slug: string } }){
   const title = titles[params.slug] || 'Page'
+  const description = descriptions[params.slug] || 'Gold pricing tools, calculators and market resources.'
+  const url = `https://www.goldcalculator.click/${encodeURIComponent(params.slug)}`
   return (
     <div className="container py-5">
-      <JsonLd type="website" />
+      <JsonLd type="webpage" data={{ name: title, description, url }} />
+      <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url:'/' }, { name: title, url:`/${params.slug}` } ] }} />
       <h1 className="text-center mb-4">{title}</h1>
       <div className="card">
         <div className="card-body">

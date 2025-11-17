@@ -26,7 +26,8 @@ export default function NewsPage(){
 
   return (
     <div className="container py-5">
-      <JsonLd type="website" />
+      <JsonLd type="news" />
+      <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url: '/' }, { name:'Market News', url: '/news' } ] }} />
       <h1 className="text-center mb-4">Gold Market News</h1>
       <p className="text-muted text-center mb-4">Latest headlines related to gold and precious metals.</p>
       <div className="row g-3">

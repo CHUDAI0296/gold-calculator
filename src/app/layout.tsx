@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import Navigation from '@/components/Navigation';
 import Script from 'next/script';
 import GoogleAnalytics from './GoogleAnalytics';
+import JsonLd from '@/components/JsonLd'
 
 // 导入样式
 import '@/app/globals.css';
@@ -33,6 +34,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className} suppressHydrationWarning>
         <GoogleAnalytics />
+        <JsonLd type="organization" />
         <Navigation />
         <main>{children}</main>
         <Script id="sw-kill" strategy="afterInteractive">
