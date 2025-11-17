@@ -50,6 +50,7 @@ export default function MarketAnalysis() {
   const [macd, setMacd] = React.useState<{ macd: number; signal: number; hist: number } | null>(null);
   const [ma, setMa] = React.useState<number | null>(null);
   const [news, setNews] = React.useState<string>("Loading market news...");
+  const [newsItems, setNewsItems] = React.useState<{ title: string; link: string; source: string }[] | null>(null);
   const [mode, setMode] = React.useState<string>('cfd');
 
   React.useEffect(() => {
@@ -72,8 +73,16 @@ export default function MarketAnalysis() {
           if (macdVal != null) setMacd({ macd: parseFloat(macdVal.macd.toFixed(2)), signal: parseFloat(macdVal.signal.toFixed(2)), hist: parseFloat(macdVal.hist.toFixed(2)) });
         }
       } catch {}
-      // 简单新闻占位：提示用户稍后更新
-      setNews("News feed will be updated soon.");
+      try {
+        const nr = await fetch('/api/news', { cache: 'no-store' });
+        const nd = await nr.json();
+        if (Array.isArray(nd) && nd.length) {
+          setNewsItems(nd.map((x: any) => ({ title: x.title, link: x.link, source: x.source })));
+          setNews("");
+        } else {
+          setNews("No recent market headlines.");
+        }
+      } catch { setNews("No recent market headlines."); }
     };
     load();
   }, []);
@@ -96,7 +105,15 @@ export default function MarketAnalysis() {
         </div>
         <div>
           <h3 className="text-base font-semibold mb-2">Market News</h3>
-          <div className="text-sm text-gray-600">{news}</div>
+          {newsItems ? (
+            <ul className="text-sm text-gray-600 list-disc ps-5">
+              {newsItems.map((n, i) => (
+                <li key={i}><a href={n.link} target="_blank" rel="noopener noreferrer">{n.title}</a> <span className="text-muted">({n.source})</span></li>
+              ))}
+            </ul>
+          ) : (
+            <div className="text-sm text-gray-600">{news}</div>
+          )}
         </div>
       </div>
     </div>
