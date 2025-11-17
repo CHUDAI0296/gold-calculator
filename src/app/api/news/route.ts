@@ -46,8 +46,11 @@ async function fetchWithTimeout(url: string, ms = 4000): Promise<string> {
   } finally { clearTimeout(id) }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    const { searchParams } = new URL(req.url)
+    const q = (searchParams.get('q') || '').trim().toLowerCase()
+    const limit = Math.min(20, Math.max(5, parseInt(searchParams.get('limit') || '12', 10)))
     const feeds = [
       { url: 'https://feeds.reuters.com/reuters/commoditiesNews', source: 'Reuters' },
       { url: 'https://www.kitco.com/rss/kitco_news.rss', source: 'Kitco' },
@@ -62,10 +65,15 @@ export async function GET() {
     }))
     // 去重与排序
     const seen = new Set<string>()
-    const dedup = results
+    let items = results
+    if (q) {
+      const kws = q.split(/[,|\s]+/).filter(Boolean)
+      items = items.filter(it => kws.some(k => it.title.toLowerCase().includes(k)))
+    }
+    const dedup = items
       .filter(it => { const key = it.link.split('?')[0]; if (seen.has(key)) return false; seen.add(key); return true })
       .sort((a,b)=> b.published - a.published)
-      .slice(0, 12)
+      .slice(0, limit)
     return NextResponse.json(dedup)
   } catch {
     return NextResponse.json([], { status: 200 })

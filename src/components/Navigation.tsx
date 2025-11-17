@@ -26,6 +26,7 @@ export default function Navigation() {
               <li className="nav-item"><Link href="/calculator" className="nav-link">Gold Calculator</Link></li>
               <li className="nav-item"><Link href="/metals" className="nav-link">Other Metals</Link></li>
               <li className="nav-item"><Link href="/market" className="nav-link">Market Charts</Link></li>
+              <li className="nav-item"><Link href="/news" className="nav-link">Market News</Link></li>
               <li className="nav-item"><Link href="/karat-kalculator" className="nav-link">Karat Kalculator</Link></li>
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Education</a>
