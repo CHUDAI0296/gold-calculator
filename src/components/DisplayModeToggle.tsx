@@ -4,7 +4,7 @@ import React from 'react';
 export default function DisplayModeToggle(){
   const setMode = (m: 'spot'|'cfd') => {
     try { localStorage.setItem('price_display_mode', m) } catch {}
-    location.reload()
+    try { window.dispatchEvent(new CustomEvent('price_display_mode_change', { detail: m })) } catch {}
   }
   return (
     <div className="btn-group" role="group" aria-label="Display mode">

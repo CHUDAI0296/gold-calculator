@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
-import TradingView from '@/components/TradingView';
-import MarketStats from '@/components/MarketStats';
-import MarketAnalysis from '@/components/MarketAnalysis';
+import dynamicImport from 'next/dynamic';
+const TradingView = dynamicImport(() => import('@/components/TradingView'), { ssr: false, loading: () => <div style={{height:400}} /> });
+const MarketStats = dynamicImport(() => import('@/components/MarketStats'), { ssr: false, loading: () => <div className="bg-white rounded-lg shadow-md h-full" style={{height: 200}} /> });
+const MarketAnalysis = dynamicImport(() => import('@/components/MarketAnalysis'), { ssr: false, loading: () => <div className="bg-white rounded-lg shadow-md h-48" /> });
 import DisplayModeToggle from '@/components/DisplayModeToggle';
 
 export const dynamic = 'force-dynamic';

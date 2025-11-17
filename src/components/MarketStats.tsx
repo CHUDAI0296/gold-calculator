@@ -33,6 +33,9 @@ export default function MarketStats() {
       } catch {}
     }
     load()
+    const onMode = (e: any) => { if (e && e.detail) setMode(e.detail) }
+    window.addEventListener('price_display_mode_change', onMode as any)
+    return () => { window.removeEventListener('price_display_mode_change', onMode as any) }
   }, [])
 
   return (
@@ -41,7 +44,10 @@ export default function MarketStats() {
         <h2 className="text-lg font-semibold m-0">Market Statistics</h2>
       </div>
       <div className="p-4">
-        <div className="mb-3 text-2xl">{price!=null ? `$${(price*m).toFixed(2)}` : 'Loading...'} <span className="text-sm text-gray-500">USD/oz</span></div>
+        <div className="mb-3 text-2xl" style={{ minHeight: 32 }}>
+          <span style={{ display:'inline-block', width:'10ch' }}>{price!=null ? `$${(price*m).toFixed(2)}` : 'Loading...'}</span>
+          <span className="text-sm text-gray-500"> USD/oz</span>
+        </div>
         <table className="w-full">
           <tbody className="divide-y divide-gray-200">
             <tr>

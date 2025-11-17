@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import JsonLd from '@/components/JsonLd';
 
@@ -9,21 +8,14 @@ function timeAgo(ts: number){
   return `${Math.round(diff/d)} days ago`
 }
 
-export default function NewsPage(){
-  const [items, setItems] = React.useState<{title:string;link:string;source:string;published:number}[]>([])
-  const [loading, setLoading] = React.useState(true)
-  const [limit, setLimit] = React.useState(10)
+export default async function NewsPage({ searchParams }: { searchParams?: { [key:string]: string | string[] | undefined } }){
+  const limitParam = typeof searchParams?.limit === 'string' ? parseInt(searchParams!.limit, 10) : 10
+  const limit = Math.min(30, Math.max(5, Number.isFinite(limitParam) ? limitParam : 10))
+  const query = 'gold,黄金,金价,bullion,伦敦金,金条,央行购金,Comex,XAU,GLD,金矿'
+  const r = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/news?q=${encodeURIComponent(query)}&limit=${limit}`, { cache: 'no-store' })
+  const items: {title:string;link:string;source:string;published:number}[] = await r.json()
 
-  React.useEffect(()=>{
-    const load = async ()=>{
-      try{
-        const r = await fetch(`/api/news?q=gold,黄金,金价,bullion,伦敦金,金条,央行购金,Comex,XAU,GLD,金矿&limit=${limit}` , { cache: 'no-store' })
-        const d = await r.json()
-        if (Array.isArray(d)) setItems(d)
-      } finally { setLoading(false) }
-    }
-    load()
-  },[limit])
+  const nextLimit = Math.min(limit + 10, 30)
 
   return (
     <div className="container py-5">
@@ -32,9 +24,7 @@ export default function NewsPage(){
       <h1 className="text-center mb-4">Gold Market News</h1>
       <p className="text-muted text-center mb-4">Latest headlines related to bullion and precious metals.</p>
       <div className="row g-3">
-        {loading ? (
-          <div className="text-center">Loading news...</div>
-        ) : items.length===0 ? (
+        {(!items || items.length===0) ? (
           <div className="text-center">No recent gold-related headlines.</div>
         ) : (
           <>
@@ -49,7 +39,7 @@ export default function NewsPage(){
               </div>
             ))}
             <div className="col-12 text-center">
-              <button className="btn btn-outline-secondary" onClick={()=> setLimit(v=> Math.min(v+10, 30))}>Load more</button>
+              <a className="btn btn-outline-secondary" href={`/news?limit=${nextLimit}`}>Load more</a>
             </div>
           </>
         )}

@@ -85,6 +85,9 @@ export default function MarketAnalysis() {
       } catch { setNews("No recent market headlines."); }
     };
     load();
+    const onMode = (e: any) => { if (e && e.detail) setMode(e.detail) };
+    window.addEventListener('price_display_mode_change', onMode as any);
+    return () => { window.removeEventListener('price_display_mode_change', onMode as any); };
   }, []);
 
   const m = mode === 'cfd' ? 2 : 1;

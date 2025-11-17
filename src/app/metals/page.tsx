@@ -1,21 +1,18 @@
-"use client";
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import JsonLd from '@/components/JsonLd'
 
-export default function MetalsPage(){
-  const [silver, setSilver] = useState<number|null>(null)
-  const [platinum, setPlatinum] = useState<number|null>(null)
-  const [mode, setMode] = useState<string>('cfd')
+export default async function MetalsPage({ searchParams }: { searchParams?: { [key:string]: string | string[] | undefined } }){
+  const mode = (typeof searchParams?.mode === 'string' ? searchParams!.mode : 'cfd') === 'spot' ? 'spot' : 'cfd'
   const m = mode === 'cfd' ? 2 : 1
 
-  useEffect(()=>{
-    try { const v = localStorage.getItem('price_display_mode') || 'cfd'; setMode(v) } catch {}
-    const load = async ()=>{
-      try { const r1 = await fetch('/api/spot/silver', { cache:'no-store' }); const d1 = await r1.json(); if (d1 && d1.price) setSilver(d1.price) } catch {}
-      try { const r2 = await fetch('/api/spot/platinum', { cache:'no-store' }); const d2 = await r2.json(); if (d2 && d2.price) setPlatinum(d2.price) } catch {}
-    }
-    load()
-  },[])
+  const [r1, r2] = await Promise.all([
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/spot/silver`, { cache:'no-store' }),
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/spot/platinum`, { cache:'no-store' })
+  ])
+  const d1 = await r1.json()
+  const d2 = await r2.json()
+  const silver: number | null = d1 && d1.price ? d1.price : null
+  const platinum: number | null = d2 && d2.price ? d2.price : null
 
   return (
     <div className="container py-5">
@@ -44,8 +41,8 @@ export default function MetalsPage(){
       </div>
       <div className="text-center">
         <div className="btn-group btn-group-sm" role="group" aria-label="Display mode">
-          <button className="btn btn-outline-secondary" onClick={()=>{ try{ localStorage.setItem('price_display_mode','spot') }catch{}; setMode('spot') }}>现货显示</button>
-          <button className="btn btn-outline-secondary" onClick={()=>{ try{ localStorage.setItem('price_display_mode','cfd') }catch{}; setMode('cfd') }}>CFD显示</button>
+          <a className={`btn btn-outline-secondary${mode==='spot'?' active':''}`} href="/metals?mode=spot" aria-pressed={mode==='spot'}>现货显示</a>
+          <a className={`btn btn-outline-secondary${mode==='cfd'?' active':''}`} href="/metals?mode=cfd" aria-pressed={mode==='cfd'}>CFD显示</a>
         </div>
       </div>
     </div>
