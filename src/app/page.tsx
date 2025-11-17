@@ -29,7 +29,7 @@ export default async function Home() {
       <section className="hero-section">
         <div className="container text-center py-5">
           <h1 className="display-4">Calculate Your Gold Value Instantly</h1>
-          <p className="lead">Get accurate estimations based on real-time gold prices</p>
+          <p className="lead">Get accurate estimations using real‑time market prices</p>
           <CurrentPriceBanner initialPrice={initialPrice ?? undefined} />
           <div className="d-flex justify-content-center"><DisplayModeToggle /></div>
           <div className="row justify-content-center">
@@ -87,9 +87,9 @@ export default async function Home() {
                   <h3 className="mb-0">Gold Calculator</h3>
                 </div>
                 <div className="card-body">
-                  <p>Calculate the value of your gold items based on weight, karat, and current market prices.</p>
+                  <p>Calculate item value by weight and karat with live market prices.</p>
                   <ul>
-                    <li>8K to 24K gold options</li>
+                    <li>8K to 24K options</li>
                     <li>Multiple weight units</li>
                     <li>Refining charges calculator</li>
                   </ul>

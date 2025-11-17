@@ -71,7 +71,7 @@ export default function Calculator() {
         <div className="col-md-6 mb-4">
           <div className="card">
             <div className="card-header bg-warning text-dark">
-              <h2 className="h5 mb-0">Current Gold Price</h2>
+                  <h2 className="h5 mb-0">Current Price</h2>
             </div>
             <div className="card-body">
               <CalculatorPriceDisplay />

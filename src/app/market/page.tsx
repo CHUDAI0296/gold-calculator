@@ -29,7 +29,7 @@ export default function Market() {
         <div className="md:col-span-8">
           <div className="bg-white rounded-lg shadow-md h-full">
             <div className="bg-warning text-dark p-4 rounded-t-lg">
-              <h2 className="text-lg font-semibold m-0">Gold Price Chart</h2>
+              <h2 className="text-lg font-semibold m-0">Price Chart</h2>
             </div>
             <div className="p-4">
               <TradingView containerId="priceChart" height={400} />
