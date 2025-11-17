@@ -29,7 +29,9 @@ export async function GET(req: Request) {
               out.push({ price: parseFloat(String(price)), timestamp: ts, date: new Date(ts*1000).toISOString() })
             }
           }
-          return NextResponse.json(out.sort((a,b)=>a.timestamp-b.timestamp))
+          if (out.length > 0) {
+            return NextResponse.json(out.sort((a,b)=>a.timestamp-b.timestamp))
+          }
         }
       } catch {}
     }
