@@ -9,10 +9,10 @@ function parseUSD(val: any): number | null {
 
 export async function GET(_req: NextRequest, { params }: { params: { metal: string } }) {
   try {
-    const metalMap: Record<string, { symbol: 'XAU'|'XAG'|'XPT'; metalsLive: 'gold'|'silver'|'platinum' }> = {
-      gold: { symbol: 'XAU', metalsLive: 'gold' },
-      silver: { symbol: 'XAG', metalsLive: 'silver' },
-      platinum: { symbol: 'XPT', metalsLive: 'platinum' },
+    const metalMap: Record<string, { symbol: 'XAU'|'XAG'|'XPT'; metalsLive: 'gold'|'silver'|'platinum'; yahoo: string }> = {
+      gold: { symbol: 'XAU', metalsLive: 'gold', yahoo: 'GC=F' },
+      silver: { symbol: 'XAG', metalsLive: 'silver', yahoo: 'SI=F' },
+      platinum: { symbol: 'XPT', metalsLive: 'platinum', yahoo: 'PL=F' },
     }
     const m = metalMap[params.metal]
     if (!m) return NextResponse.json({ error: 'invalid_metal' }, { status: 400 })
@@ -24,6 +24,7 @@ export async function GET(_req: NextRequest, { params }: { params: { metal: stri
     }
     endpoints.push({ url: `https://api.metals.live/v1/spot/${m.metalsLive}`, headers: { 'Accept':'application/json' } })
     endpoints.push({ url: `https://api.exchangerate.host/latest?base=${m.symbol}&symbols=USD`, headers: { 'Accept':'application/json' } })
+    endpoints.push({ url: `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(m.yahoo)}?range=1d&interval=1h&includePrePost=false`, headers: { 'Accept':'application/json' } })
 
     const firstResolved = <T,>(promises: Promise<T>[]): Promise<T> => {
       return new Promise<T>((resolve, reject) => {
@@ -48,6 +49,17 @@ export async function GET(_req: NextRequest, { params }: { params: { metal: stri
       let price: number | null = null
       if (data == null) return null
       if (typeof data === 'number') return data
+      // Yahoo Finance chart structure
+      try {
+        const result = data && data.chart && data.chart.result && data.chart.result[0]
+        const quote = result && result.indicators && result.indicators.quote && result.indicators.quote[0]
+        const closes = quote && quote.close
+        if (Array.isArray(closes)) {
+          for (let i = closes.length - 1; i >= 0; i--) {
+            if (typeof closes[i] === 'number' && isFinite(closes[i])) return closes[i] as number
+          }
+        }
+      } catch {}
       if (Array.isArray(data)) {
         const last = data[data.length-1]
         if (typeof last === 'number') price = last
