@@ -42,18 +42,7 @@ export default function Market() {
         <MarketAnalysis />
       </div>
 
-      <div className="mt-4">
-        <div className="bg-white rounded-lg shadow-md">
-          <div className="bg-warning text-dark p-4 rounded-t-lg">
-            <h2 className="text-lg font-semibold m-0">Market News</h2>
-          </div>
-          <div className="p-4">
-            <div id="marketNews" className="divide-y divide-gray-200">
-              {/* News items will be dynamically inserted here */}
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Market news is rendered inside MarketAnalysis now */}
       </div>
     </div>
   );
