@@ -50,10 +50,12 @@ export default function MarketAnalysis() {
   const [macd, setMacd] = React.useState<{ macd: number; signal: number; hist: number } | null>(null);
   const [ma, setMa] = React.useState<number | null>(null);
   const [news, setNews] = React.useState<string>("Loading market news...");
+  const [mode, setMode] = React.useState<string>('cfd');
 
   React.useEffect(() => {
     const load = async () => {
       try {
+        try { const v = localStorage.getItem('price_display_mode') || 'cfd'; setMode(v) } catch {}
         const end = new Date();
         const start = new Date(end.getTime() - 90 * 24 * 60 * 60 * 1000);
         const s = start.toISOString().slice(0, 10);
@@ -76,6 +78,8 @@ export default function MarketAnalysis() {
     load();
   }, []);
 
+  const m = mode === 'cfd' ? 2 : 1;
+
   return (
     <div className="bg-white rounded-lg shadow-md h-full">
       <div className="bg-warning text-dark p-4 rounded-t-lg">
@@ -86,8 +90,8 @@ export default function MarketAnalysis() {
           <h3 className="text-base font-semibold mb-2">Technical Indicators</h3>
           <ul className="space-y-2">
             <li>RSI: <span className="text-gray-600">{rsi != null ? rsi : "Loading..."}</span></li>
-            <li>MACD: <span className="text-gray-600">{macd != null ? `${macd.macd} / ${macd.signal} (${macd.hist})` : "Loading..."}</span></li>
-            <li>Moving Average: <span className="text-gray-600">{ma != null ? ma : "Loading..."}</span></li>
+            <li>MACD: <span className="text-gray-600">{macd != null ? `${(macd.macd*m).toFixed(2)} / ${(macd.signal*m).toFixed(2)} (${(macd.hist*m).toFixed(2)})` : "Loading..."}</span></li>
+            <li>Moving Average: <span className="text-gray-600">{ma != null ? (ma*m).toFixed(2) : "Loading..."}</span></li>
           </ul>
         </div>
         <div>
