@@ -38,13 +38,23 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/images/favicon.ico" />
         <link rel="apple-touch-icon" href="/images/favicon.svg" />
         {/* manifest removed to avoid 404 in dev */}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+        <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+          media="print"
+        />
       </head>
       <body className={inter.className} suppressHydrationWarning>
         <GoogleAnalytics />
         <JsonLd type="organization" />
         <Navigation />
         <main>{children}</main>
+        <Script id="fa-unblock" strategy="afterInteractive">
+          {`
+            try{ var l = document.querySelector('link[href*="font-awesome"][rel="stylesheet"]'); if(l) l.media='all'; }catch{}
+          `}
+        </Script>
         <Script id="sw-kill" strategy="afterInteractive">
           {`
             if ('serviceWorker' in navigator) {

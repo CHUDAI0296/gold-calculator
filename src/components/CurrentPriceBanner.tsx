@@ -17,7 +17,10 @@ export default function CurrentPriceBanner({ initialPrice }: { initialPrice?: nu
         if (d && d.price) { setPrice(d.price); setLastUpdated(new Date().toLocaleString()); }
       } catch {}
     };
-    load();
+    try {
+      const ric = (window as any).requestIdleCallback as undefined | ((cb: Function, opts?: any)=>void);
+      if (typeof ric === 'function') ric(load, { timeout: 1500 }); else setTimeout(load, 600);
+    } catch { setTimeout(load, 600) }
     const onMode = (e: any) => { if (e && e.detail) setMode(e.detail); };
     window.addEventListener('price_display_mode_change', onMode as any);
     return () => { window.removeEventListener('price_display_mode_change', onMode as any); };
