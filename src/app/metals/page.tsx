@@ -41,8 +41,8 @@ export default async function MetalsPage({ searchParams }: { searchParams?: { [k
       </div>
       <div className="text-center">
         <div className="btn-group btn-group-sm" role="group" aria-label="Display mode">
-          <a className={`btn btn-outline-secondary${mode==='spot'?' active':''}`} href="/metals?mode=spot" aria-pressed={mode==='spot'}>现货显示</a>
-          <a className={`btn btn-outline-secondary${mode==='cfd'?' active':''}`} href="/metals?mode=cfd" aria-pressed={mode==='cfd'}>CFD显示</a>
+          <a className={`btn btn-outline-secondary${mode==='spot'?' active':''}`} href="/metals?mode=spot" aria-pressed={mode==='spot'}>Spot View</a>
+          <a className={`btn btn-outline-secondary${mode==='cfd'?' active':''}`} href="/metals?mode=cfd" aria-pressed={mode==='cfd'}>CFD View</a>
         </div>
       </div>
     </div>

@@ -30,8 +30,8 @@ export default function CalculatorPriceDisplay() {
       <p className="text-muted">USD per troy ounce</p>
       <p className="small" suppressHydrationWarning style={{ minHeight: 20 }}>Last updated: {lastUpdated}</p>
       <div className="btn-group btn-group-sm" role="group" aria-label="Display mode">
-        <button className="btn btn-outline-secondary" onClick={() => { try { localStorage.setItem("price_display_mode", "spot"); } catch {} ; setMode("spot"); }}>现货显示</button>
-        <button className="btn btn-outline-secondary" onClick={() => { try { localStorage.setItem("price_display_mode", "cfd"); } catch {} ; setMode("cfd"); }}>CFD显示</button>
+        <button className="btn btn-outline-secondary" onClick={() => { try { localStorage.setItem("price_display_mode", "spot"); } catch {} ; setMode("spot"); }}>Spot View</button>
+        <button className="btn btn-outline-secondary" onClick={() => { try { localStorage.setItem("price_display_mode", "cfd"); } catch {} ; setMode("cfd"); }}>CFD View</button>
       </div>
     </div>
   );

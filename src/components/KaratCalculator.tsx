@@ -55,8 +55,8 @@ export default function KaratCalculator() {
                 <span className="display-4">{goldPrice != null ? `$${(goldPrice * displayMultiplier).toFixed(2)}` : "Loading..."}</span>
                 <p className="text-muted">USD per troy ounce</p>
                 <div className="btn-group btn-group-sm" role="group" aria-label="Display mode">
-                  <button className="btn btn-outline-secondary" onClick={() => { try { localStorage.setItem("price_display_mode", "spot"); } catch {} setDisplayMode("spot"); }}>现货显示</button>
-                  <button className="btn btn-outline-secondary" onClick={() => { try { localStorage.setItem("price_display_mode", "cfd"); } catch {} setDisplayMode("cfd"); }}>CFD显示</button>
+                  <button className="btn btn-outline-secondary" onClick={() => { try { localStorage.setItem("price_display_mode", "spot"); } catch {} setDisplayMode("spot"); }}>Spot View</button>
+                  <button className="btn btn-outline-secondary" onClick={() => { try { localStorage.setItem("price_display_mode", "cfd"); } catch {} setDisplayMode("cfd"); }}>CFD View</button>
                 </div>
               </div>
             </div>

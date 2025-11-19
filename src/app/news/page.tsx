@@ -11,7 +11,7 @@ function timeAgo(ts: number){
 export default async function NewsPage({ searchParams }: { searchParams?: { [key:string]: string | string[] | undefined } }){
   const limitParam = typeof searchParams?.limit === 'string' ? parseInt(searchParams!.limit, 10) : 10
   const limit = Math.min(30, Math.max(5, Number.isFinite(limitParam) ? limitParam : 10))
-  const query = 'gold,黄金,金价,bullion,伦敦金,金条,央行购金,Comex,XAU,GLD,金矿'
+  const query = 'gold,bullion,gold price,Comex,XAU,GLD,central bank gold'
   const r = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/news?q=${encodeURIComponent(query)}&limit=${limit}`, { cache: 'no-store' })
   const items: {title:string;link:string;source:string;published:number}[] = await r.json()
 
@@ -21,7 +21,7 @@ export default async function NewsPage({ searchParams }: { searchParams?: { [key
     <div className="container py-5">
       <JsonLd type="news" />
       <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url: '/' }, { name:'Market News', url: '/news' } ] }} />
-      <h1 className="text-center mb-4">Gold Market News</h1>
+      <h1 className="text-center mb-4">What’s moving gold and metals today?</h1>
       <p className="text-muted text-center mb-4">Latest headlines related to bullion and precious metals.</p>
       <div className="row g-3">
         {(!items || items.length===0) ? (

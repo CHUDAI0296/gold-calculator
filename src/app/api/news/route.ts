@@ -59,7 +59,7 @@ export async function GET(req: Request) {
       { url: 'https://finance.yahoo.com/news/rssindex', source: 'Yahoo Finance' },
       { url: 'https://news.google.com/rss/search?q=gold&hl=en-US&gl=US&ceid=US:en', source: 'Google News' },
       { url: 'https://news.google.com/rss/search?q=gold%20price&hl=en-US&gl=US&ceid=US:en', source: 'Google News' },
-      { url: 'https://news.google.com/rss/search?q=%E9%BB%84%E9%87%91&hl=zh-CN&gl=CN&ceid=CN:zh-Hans', source: 'Google 新闻' }
+      { url: 'https://news.google.com/rss/search?q=precious%20metals&hl=en-US&gl=US&ceid=US:en', source: 'Google News' }
     ]
     const results: NewsItem[] = []
     await Promise.all(feeds.map(async f => {

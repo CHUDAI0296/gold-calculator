@@ -40,15 +40,9 @@ export default function Navigation() {
               <li className="nav-item dropdown">
                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Resources</a>
                 <ul className="dropdown-menu">
-                  <li><Link href="/coin-melt-values" className="dropdown-item">Coin Melt Values</Link></li>
-                  <li><Link href="/live-karat-prices" className="dropdown-item">Live Karat Prices</Link></li>
-                  <li><Link href="/refining-services" className="dropdown-item">Refining Services</Link></li>
-                  <li><Link href="/dealer-program" className="dropdown-item">Dealer Program</Link></li>
-                  <li><Link href="/blog" className="dropdown-item">Blog</Link></li>
                   <li><Link href="/faq" className="dropdown-item">FAQ</Link></li>
                   <li><Link href="/about" className="dropdown-item">About</Link></li>
                   <li><Link href="/contact" className="dropdown-item">Contact</Link></li>
-                  <li><Link href="/sitemap" className="dropdown-item">Sitemap</Link></li>
                   <li><Link href="/privacy" className="dropdown-item">Privacy Policy</Link></li>
                 </ul>
               </li>

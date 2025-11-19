@@ -5,8 +5,8 @@ import CurrentPriceBanner from '@/components/CurrentPriceBanner';
 import DisplayModeToggle from '@/components/DisplayModeToggle';
 
 export const metadata: Metadata = {
-  title: 'Instant Gold Value Calculator & Market Insights | Gold Calculator',
-  description: 'Calculate gold value instantly by weight and karat with live prices. Explore market charts, news and guides to make smarter selling and buying decisions.',
+  title: 'How much is my gold worth today? | Gold Calculator',
+  description: 'Enter weight and karat to see today’s value. Quick answers for 1 oz worth, 18K per gram and market trends.',
   alternates: { canonical: 'https://www.goldcalculator.click' },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } }
 };
@@ -28,8 +28,8 @@ export default async function Home() {
       {/* Hero Section */}
       <section className="hero-section">
         <div className="container text-center py-5">
-          <h1 className="display-4">Calculate Your Gold Value Instantly</h1>
-          <p className="lead">Get accurate estimations using real‑time market prices</p>
+          <h1 className="display-4">How much is my gold worth today?</h1>
+          <p className="lead">Enter weight and karat to get a real‑time answer</p>
           <CurrentPriceBanner initialPrice={initialPrice ?? undefined} />
           <div className="d-flex justify-content-center"><DisplayModeToggle /></div>
           <div className="row justify-content-center">

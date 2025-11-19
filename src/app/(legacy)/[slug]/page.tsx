@@ -1,6 +1,7 @@
 import React from 'react'
 import JsonLd from '@/components/JsonLd'
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 const titles: Record<string, string> = {
   'about': 'About Us',
@@ -49,6 +50,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default function LegacyPage({ params }: { params: { slug: string } }){
+  const blocked = new Set(['coin-melt-values','live-karat-prices','refining-services','dealer-program','blog','sitemap'])
+  if (blocked.has(params.slug)) return notFound()
   const title = titles[params.slug] || 'Page'
   const description = descriptions[params.slug] || 'Gold pricing tools, calculators and market resources.'
   const url = `https://www.goldcalculator.click/${encodeURIComponent(params.slug)}`

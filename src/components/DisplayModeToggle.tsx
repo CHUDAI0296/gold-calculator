@@ -8,8 +8,8 @@ export default function DisplayModeToggle(){
   }
   return (
     <div className="btn-group" role="group" aria-label="Display mode">
-      <button className="btn btn-outline-secondary btn-sm" onClick={()=>setMode('spot')}>现货显示</button>
-      <button className="btn btn-outline-secondary btn-sm" onClick={()=>setMode('cfd')}>CFD显示</button>
+      <button className="btn btn-outline-secondary btn-sm" onClick={()=>setMode('spot')}>Spot View</button>
+      <button className="btn btn-outline-secondary btn-sm" onClick={()=>setMode('cfd')}>CFD View</button>
     </div>
   )
 }
