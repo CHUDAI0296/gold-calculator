@@ -9,7 +9,7 @@ import DisplayModeToggle from '@/components/DisplayModeToggle';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'What is the gold price today? Interactive charts & trends',
+  title: 'Gold Market Charts – Real‑Time Price, Trends and Technicals',
   description: 'See today’s price, 24h high/low, MACD/RSI and moving averages with live headlines to guide decisions.',
   alternates: {
     canonical: 'https://www.goldcalculator.click/market'

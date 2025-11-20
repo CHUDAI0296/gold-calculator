@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-const title = 'What’s moving gold and precious metals today? Live headlines'
+const title = 'Gold Market News - Live Gold Headlines and Precious Metals Updates'
 const description = 'Latest market headlines and insights from trusted sources. Follow bullion, futures, central bank buying and price drivers in real time.'
 
 export const metadata: Metadata = {

@@ -5,7 +5,7 @@ import CurrentPriceBanner from '@/components/CurrentPriceBanner';
 import DisplayModeToggle from '@/components/DisplayModeToggle';
 
 export const metadata: Metadata = {
-  title: 'How much is my gold worth today? | Gold Calculator',
+  title: 'Instant Gold Value Calculator & Market Insights | Gold Calculator',
   description: 'Enter weight and karat to see today’s value. Quick answers for 1 oz worth, 18K per gram and market trends.',
   alternates: { canonical: 'https://www.goldcalculator.click' },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } }
