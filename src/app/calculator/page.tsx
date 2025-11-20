@@ -231,6 +231,16 @@ export default function Calculator() {
           </div>
         </div>
       </div>
+
+      <div className="mt-5">
+        <h2 className="h5 mb-3">Need more answers?</h2>
+        <ul className="list-unstyled">
+          <li><a href="/calculator">How much is 18K gold worth per gram?</a></li>
+          <li><a href="/calculator">How do I calculate my gold price?</a></li>
+          <li><a href="/market">How much is 1 oz of gold worth right now?</a></li>
+          <li><a href="/faq">See all FAQs</a></li>
+        </ul>
+      </div>
     </div>
     </React.Fragment>
   );

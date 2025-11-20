@@ -28,7 +28,7 @@ export default function CurrentPriceBanner({ initialPrice }: { initialPrice?: nu
 
   return (
     <div className="gold-price-display my-4 text-center">
-      <h3>Current Gold Price</h3>
+      <h2>What is today’s gold price?</h2>
       <div className="price-box" style={{ minHeight: 32 }}>
         {price != null ? (
           <span suppressHydrationWarning style={{ display:'inline-block', width:'14ch' }}>{`$${(price * m).toFixed(2)} USD/oz`}</span>

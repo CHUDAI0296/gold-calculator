@@ -45,6 +45,16 @@ export default function Market() {
         <MarketAnalysis />
       </div>
 
+      <div className="mt-5">
+        <h2 className="h5 mb-3">Need more answers?</h2>
+        <ul className="list-unstyled">
+          <li><a href="/calculator">How much can I sell 1 oz of gold for?</a></li>
+          <li><a href="/calculator">How much is 18K gold worth per gram?</a></li>
+          <li><a href="/market">Will gold hit $5000 an ounce?</a></li>
+          <li><a href="/faq">See all FAQs</a></li>
+        </ul>
+      </div>
+
       {/* Market news is rendered inside MarketAnalysis now */}
       </div>
     </div>

@@ -19,7 +19,12 @@ const faqs = [
   { q: 'Do you support silver and platinum?', a: 'Yes. See the Metals page for live silver and platinum prices (USD/oz).' },
   { q: 'Can I use this value for insurance or collateral?', a: 'It’s a helpful reference. Actual underwriting may use different appraisal methods; consult your provider for formal requirements.' },
   { q: 'Where do prices come from and how reliable are they?', a: 'We fetch from multiple sources with timeouts and fallback logic to reduce single‑source failures. See Market for details.' },
-  { q: 'How often are prices updated?', a: 'We refresh frequently and prioritize recency. Some sections defer non‑critical requests for faster page loads on mobile.' }
+  { q: 'How often are prices updated?', a: 'We refresh frequently and prioritize recency. Some sections defer non‑critical requests for faster page loads on mobile.' },
+  { q: 'How much can I sell 1 oz of gold for?', a: 'Start with today’s spot price, then apply a negative discount (e.g., −5% to −10%) to approximate dealer buyback spreads. Use the calculator with ounces selected.' },
+  { q: 'Will gold hit $5000 an ounce?', a: 'No one can guarantee. Track real rates, USD strength and central bank demand. Use Market charts with moving averages and momentum to study scenarios over time.' }
+  ,{ q: 'How much is 14K gold worth per gram?', a: 'Select 14K in the calculator and set units to grams. The result reflects 58.5% purity times today’s spot price with any premium/discount you enter.' }
+  ,{ q: 'If I invested $1000 in gold 10 years ago, what’s it worth?', a: 'Use Market charts to read the 10‑year price change. Divide $1000 by the historical price to get ounces, then multiply by today’s spot, adjusting for premiums if needed.' }
+  ,{ q: 'Is a Costco gold bar worth it?', a: 'Compare the over‑spot premium to alternatives and consider resale spreads. For long‑term holding, lower premium and strong buyback policies usually win.' }
 ]
 
 function FaqJsonLd(){

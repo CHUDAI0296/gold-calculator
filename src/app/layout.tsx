@@ -50,6 +50,38 @@ export default function RootLayout({
         <JsonLd type="organization" />
         <Navigation />
         <main>{children}</main>
+        <footer className="bg-dark text-light mt-5">
+          <div className="container py-4">
+            <div className="row">
+              <div className="col-md-4 mb-3">
+                <h2 className="h6">Gold Calculator</h2>
+                <p className="small text-muted">Calculate gold value instantly with live prices.</p>
+              </div>
+              <div className="col-md-4 mb-3">
+                <h2 className="h6">Explore</h2>
+                <ul className="list-unstyled small">
+                  <li><a href="/calculator" className="link-light">Calculator</a></li>
+                  <li><a href="/market" className="link-light">Market</a></li>
+                  <li><a href="/metals" className="link-light">Metals</a></li>
+                  <li><a href="/news" className="link-light">News</a></li>
+                </ul>
+              </div>
+              <div className="col-md-4 mb-3">
+                <h2 className="h6">About</h2>
+                <ul className="list-unstyled small">
+                  <li><a href="/about" className="link-light">About</a></li>
+                  <li><a href="/contact" className="link-light">Contact</a></li>
+                  <li><a href="/faq" className="link-light">FAQ</a></li>
+                  <li><a href="/privacy" className="link-light">Privacy</a></li>
+                </ul>
+              </div>
+            </div>
+            <div className="border-top border-secondary pt-3 small text-muted d-flex justify-content-between">
+              <span>© {new Date().getFullYear()} Gold Calculator. All rights reserved.</span>
+              <span>Data for information only; not investment advice.</span>
+            </div>
+          </div>
+        </footer>
         <Script id="fa-unblock" strategy="afterInteractive">
           {`
             try{ var l = document.querySelector('link[href*="font-awesome"][rel="stylesheet"]'); if(l) l.media='all'; }catch{}
