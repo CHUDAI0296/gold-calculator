@@ -217,7 +217,8 @@ export default function RootLayout({
                 try{
                   var finalPrompt = ctx ? (prompt+'\n'+ctx) : prompt;
                   var resp = await fetch('/api/ai', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ prompt: finalPrompt, max_tokens: 4096 }) });
-                  if(!resp.body){ out.textContent='No response body'; btn.disabled=false; sending=false; return; }
+                  if(!resp.ok){ var txt = ''; try{ txt = await resp.text(); }catch{}; out.textContent = txt || ('HTTP '+resp.status); btn.disabled=false; sending=false; return; }
+                  if(!resp.body){ try{ out.textContent = await resp.text(); }catch{ out.textContent='No response'; } btn.disabled=false; sending=false; return; }
                   var reader = resp.body.getReader(); var decoder = new TextDecoder();
                   while(true){
                     var r = await reader.read(); if(r.done) break; out.textContent += decoder.decode(r.value, { stream:true });
