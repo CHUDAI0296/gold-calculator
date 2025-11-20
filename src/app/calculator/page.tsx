@@ -66,12 +66,12 @@ export default function Calculator() {
       <JsonLd type="calculator" />
       <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url:'/' }, { name:'Gold Calculator', url:'/calculator' } ] }} />
       <div className="container py-5">
-      <h1 className="text-center mb-4">How much is my gold worth?</h1>
+      <h1 className="text-center mb-4">Gold Value Calculator</h1>
       <div className="row">
         <div className="col-md-6 mb-4">
           <div className="card">
             <div className="card-header bg-warning text-dark">
-                  <h2 className="h5 mb-0">Current Price</h2>
+                  <h2 className="h5 mb-0">What is today’s gold price?</h2>
             </div>
             <div className="card-body">
               <CalculatorPriceDisplay />
@@ -82,7 +82,7 @@ export default function Calculator() {
         <div className="col-md-6 mb-4">
           <div className="card">
             <div className="card-header bg-warning text-dark">
-              <h2 className="h5 mb-0">Calculator Settings</h2>
+              <h2 className="h5 mb-0">How do I set up the calculator?</h2>
             </div>
             <div className="card-body">
               <form id="goldCalculator" onSubmit={calculateValue}>

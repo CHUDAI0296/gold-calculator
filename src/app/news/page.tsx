@@ -21,7 +21,7 @@ export default async function NewsPage({ searchParams }: { searchParams?: { [key
     <div className="container py-5">
       <JsonLd type="news" />
       <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url: '/' }, { name:'Market News', url: '/news' } ] }} />
-      <h1 className="text-center mb-4">What’s moving gold and metals today?</h1>
+      <h1 className="text-center mb-4">Gold Market News</h1>
       <p className="text-muted text-center mb-4">Latest headlines related to bullion and precious metals.</p>
       <div className="row g-3">
         {(!items || items.length===0) ? (

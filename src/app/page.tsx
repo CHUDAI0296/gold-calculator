@@ -28,7 +28,7 @@ export default async function Home() {
       {/* Hero Section */}
       <section className="hero-section">
         <div className="container text-center py-5">
-          <h1 className="display-4">How much is my gold worth today?</h1>
+          <h1 className="display-4">Calculate Your Gold Value Instantly</h1>
           <p className="lead">Enter weight and karat to get a real‑time answer</p>
           <CurrentPriceBanner initialPrice={initialPrice ?? undefined} />
           <div className="d-flex justify-content-center"><DisplayModeToggle /></div>
@@ -49,7 +49,7 @@ export default async function Home() {
       {/* Features Section */}
       <section className="features-section py-5 bg-light">
         <div className="container">
-          <h2 className="text-center mb-5">Why Use Our Gold Calculator</h2>
+          <h2 className="text-center mb-5">Why use our gold calculator?</h2>
           <div className="row">
             <div className="col-md-4 mb-4">
               <div className="feature-box text-center p-4">
@@ -79,7 +79,7 @@ export default async function Home() {
       {/* Calculators Section */}
       <section className="calculators-section py-5">
         <div className="container">
-          <h2 className="text-center mb-5">Our Precious Metal Calculators</h2>
+          <h2 className="text-center mb-5">Which precious metal calculators can I use?</h2>
           <div className="row">
             <div className="col-md-4 mb-4">
               <div className="card h-100">
@@ -144,7 +144,7 @@ export default async function Home() {
         <div className="container">
           <div className="row align-items-center">
             <div className="col-md-6">
-              <h2>Track Precious Metal Prices</h2>
+              <h2>How can I track precious metal prices?</h2>
               <p>Stay informed with our interactive market charts. Monitor gold, silver, and platinum price trends over time to make informed decisions.</p>
               <ul>
                 <li>Historical price charts</li>

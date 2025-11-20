@@ -22,7 +22,7 @@ export default async function MetalsPage({ searchParams }: { searchParams?: { [k
       <div className="row">
         <div className="col-md-6 mb-4">
           <div className="card h-100">
-            <div className="card-header bg-primary text-white"><h2 className="h5 mb-0">Silver</h2></div>
+            <div className="card-header bg-primary text-white"><h2 className="h5 mb-0">What is silver’s price today?</h2></div>
             <div className="card-body text-center">
               <div className="display-4">{silver!=null? `$${(silver*m).toFixed(2)}` : 'Loading...'}</div>
               <p className="text-muted">USD/oz</p>
@@ -31,7 +31,7 @@ export default async function MetalsPage({ searchParams }: { searchParams?: { [k
         </div>
         <div className="col-md-6 mb-4">
           <div className="card h-100">
-            <div className="card-header bg-secondary text-white"><h2 className="h5 mb-0">Platinum</h2></div>
+            <div className="card-header bg-secondary text-white"><h2 className="h5 mb-0">What is platinum’s price today?</h2></div>
             <div className="card-body text-center">
               <div className="display-4">{platinum!=null? `$${(platinum*m).toFixed(2)}` : 'Loading...'}</div>
               <p className="text-muted">USD/oz</p>
