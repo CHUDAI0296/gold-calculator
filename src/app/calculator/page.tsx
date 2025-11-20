@@ -241,6 +241,23 @@ export default function Calculator() {
           <li><a href="/faq">See all FAQs</a></li>
         </ul>
       </div>
+
+      <div className="mt-4">
+        <div className="card">
+          <div className="card-body d-flex align-items-center justify-content-between">
+            <div>
+              <h2 className="h5 mb-1">Need help from AI advisor?</h2>
+              <p className="mb-0">Ask about calculations, karat purity and sell quotes.</p>
+            </div>
+            <button
+              type="button"
+              className="btn btn-warning"
+              data-bs-toggle="modal"
+              data-bs-target="#aiAdvisorModal"
+            >Ask AI</button>
+          </div>
+        </div>
+      </div>
     </div>
     </React.Fragment>
   );

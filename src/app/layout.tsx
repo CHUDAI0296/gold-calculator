@@ -107,6 +107,40 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+
+        <button
+          type="button"
+          className="btn btn-warning rounded-circle position-fixed"
+          style={{ bottom: 20, right: 20, zIndex: 1030, width: 56, height: 56 }}
+          data-bs-toggle="modal"
+          data-bs-target="#aiAdvisorModal"
+          aria-label="Ask AI"
+          title="Ask AI"
+        >
+          <i className="fa-solid fa-robot"></i>
+        </button>
+
+        <div className="modal fade" id="aiAdvisorModal" tabIndex={-1} aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered modal-lg">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h2 className="h5 modal-title">AI Advisor</h2>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+                <p className="mb-3">Ask questions about gold price, 18K per gram, selling quotes, or market trends.</p>
+                <div className="d-flex gap-2">
+                  <a href="/calculator" className="btn btn-warning">Calculate gold value</a>
+                  <a href="/market" className="btn btn-primary">View market charts</a>
+                  <a href="/faq" className="btn btn-outline-secondary">See FAQs</a>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <Script id="fa-unblock" strategy="afterInteractive">
           {`
             try{ var l = document.querySelector('link[href*="font-awesome"][rel="stylesheet"]'); if(l) l.media='all'; }catch{}
