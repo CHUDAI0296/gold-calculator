@@ -118,6 +118,14 @@ export default function MarketAnalysis() {
             <div className="text-sm text-gray-600">{news}</div>
           )}
         </div>
+        <div id="ai-market-context" style={{ display: 'none' }}
+             data-mode={mode}
+             data-rsi={rsi != null ? rsi : ''}
+             data-macd={macd != null ? (macd.macd*m).toFixed(2) : ''}
+             data-signal={macd != null ? (macd.signal*m).toFixed(2) : ''}
+             data-hist={macd != null ? (macd.hist*m).toFixed(2) : ''}
+             data-ma={ma != null ? (ma*m).toFixed(2) : ''}
+        />
       </div>
     </div>
   );

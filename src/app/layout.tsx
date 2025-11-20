@@ -129,11 +129,16 @@ export default function RootLayout({
               </div>
               <div className="modal-body">
                 <p className="mb-3">Ask questions about gold price, 18K per gram, selling quotes, or market trends.</p>
-                <div className="d-flex gap-2">
-                  <a href="/calculator" className="btn btn-warning">Calculate gold value</a>
-                  <a href="/market" className="btn btn-primary">View market charts</a>
-                  <a href="/faq" className="btn btn-outline-secondary">See FAQs</a>
+                <div className="mb-3">
+                  <textarea id="aiPrompt" className="form-control" rows={3} placeholder="e.g. How much is 18K gold per gram?" />
                 </div>
+                <div className="d-flex gap-2">
+                  <button id="aiSendBtn" type="button" className="btn btn-warning">Ask AI</button>
+                  <a href="/calculator" className="btn btn-outline-warning">Calculator</a>
+                  <a href="/market" className="btn btn-primary">Market</a>
+                  <a href="/faq" className="btn btn-outline-secondary">FAQ</a>
+                </div>
+                <pre id="aiOutput" className="mt-3 small bg-dark text-light p-2" style={{ minHeight: 120 }}></pre>
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -153,6 +158,74 @@ export default function RootLayout({
                 rs.forEach(function(r){ r.unregister(); });
               }).catch(function(){});
             }
+          `}
+        </Script>
+        <Script id="ai-advisor-client" strategy="afterInteractive">
+          {`
+            (function(){
+              var btn = document.getElementById('aiSendBtn');
+              var input = document.getElementById('aiPrompt');
+              var out = document.getElementById('aiOutput');
+              if(!btn || !input || !out) return;
+              var sending = false;
+              btn.addEventListener('click', async function(){
+                if(sending) return; sending = true; btn.disabled = true; out.textContent='';
+                var prompt = (input.value||'').trim();
+                var ctx = '';
+                try{
+                  var form = document.getElementById('goldCalculator');
+                  if(form){
+                    var w = document.getElementById('weight');
+                    var u = document.getElementById('weightUnit');
+                    var k = document.getElementById('karat');
+                    var p = document.getElementById('premium');
+                    var resEl = document.querySelector('.result-display .display-4');
+                    var ww = w && w.value ? w.value : '';
+                    var uu = u && u.value ? u.value : '';
+                    var kk = k && k.value ? k.value : '';
+                    var pp = p && p.value ? p.value : '';
+                    var rr = resEl && resEl.textContent ? resEl.textContent.trim() : '';
+                    ctx = 'Context: weight='+ww+(uu?(' '+uu):'')+', karat='+kk+'K, premium='+pp+'%, estimated='+rr;
+                  }
+                  // News & Market context
+                  var path = location && location.pathname ? location.pathname : '';
+                  if(!ctx && path){
+                    if(path.startsWith('/news')){
+                      try{
+                        var q = new URLSearchParams(location.search).get('q');
+                        if(q) ctx = 'Context: news topic="'+q+'"'; else ctx = 'Context: news page';
+                      }catch{}
+                    } else if(path.startsWith('/market')){
+                      var ctxEl = document.getElementById('ai-market-context');
+                      if(ctxEl){
+                        var md = ctxEl.getAttribute('data-mode')||'';
+                        var rsi = ctxEl.getAttribute('data-rsi')||'';
+                        var macd = ctxEl.getAttribute('data-macd')||'';
+                        var sig = ctxEl.getAttribute('data-signal')||'';
+                        var hist = ctxEl.getAttribute('data-hist')||'';
+                        var ma = ctxEl.getAttribute('data-ma')||'';
+                        ctx = 'Context: market mode='+md+'; rsi='+rsi+'; macd='+macd+' / signal='+sig+' (hist '+hist+'); ma='+ma;
+                      } else {
+                        ctx = 'Context: market page (charts & indicators)';
+                      }
+                    } else if(path.startsWith('/metals')){
+                      ctx = 'Context: metals page (silver & platinum)';
+                    }
+                  }
+                }catch(e){}
+                if(!prompt){ out.textContent='Please enter a question.'; btn.disabled=false; sending=false; return; }
+                try{
+                  var finalPrompt = ctx ? (prompt+'\n'+ctx) : prompt;
+                  var resp = await fetch('/api/ai', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ prompt: finalPrompt, max_tokens: 4096 }) });
+                  if(!resp.body){ out.textContent='No response body'; btn.disabled=false; sending=false; return; }
+                  var reader = resp.body.getReader(); var decoder = new TextDecoder();
+                  while(true){
+                    var r = await reader.read(); if(r.done) break; out.textContent += decoder.decode(r.value, { stream:true });
+                  }
+                }catch(e){ out.textContent='Error: '+(e && e.message ? e.message : 'failed'); }
+                btn.disabled=false; sending=false;
+              });
+            })();
           `}
         </Script>
         {/* Ad script removed per request */}
