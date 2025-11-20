@@ -76,6 +76,31 @@ export default function RootLayout({
                 </ul>
               </div>
             </div>
+            <div className="row mt-2">
+              <div className="col-12">
+                <div className="d-flex align-items-center gap-3">
+                  <span className="small text-muted">Follow us</span>
+                  <a href="https://twitter.com/goldcalculator" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="text-light fs-5">
+                    <i className="fa-brands fa-x-twitter"></i>
+                  </a>
+                  <a href="https://www.linkedin.com/company/goldcalculator" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-light fs-5">
+                    <i className="fa-brands fa-linkedin"></i>
+                  </a>
+                  <a href="https://www.youtube.com/@goldcalculator" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="text-light fs-5">
+                    <i className="fa-brands fa-youtube"></i>
+                  </a>
+                  <a href="https://www.reddit.com/r/gold/" target="_blank" rel="noopener noreferrer" aria-label="Reddit" className="text-light fs-5">
+                    <i className="fa-brands fa-reddit"></i>
+                  </a>
+                  <a href="https://www.facebook.com/goldcalculator" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-light fs-5">
+                    <i className="fa-brands fa-facebook"></i>
+                  </a>
+                  <a href="https://www.instagram.com/goldcalculator" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-light fs-5">
+                    <i className="fa-brands fa-instagram"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
             <div className="border-top border-secondary pt-3 small text-muted d-flex justify-content-between">
               <span>© {new Date().getFullYear()} Gold Calculator. All rights reserved.</span>
               <span>Data for information only; not investment advice.</span>
