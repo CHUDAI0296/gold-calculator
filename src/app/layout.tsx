@@ -44,6 +44,12 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
           media="print"
         />
+        <meta name="google-adsense-account" content="ca-pub-6279351956858317" />
+        
+        
+        
+        
+        
       </head>
       <body className={inter.className} suppressHydrationWarning>
         <GoogleAnalytics />
@@ -161,7 +167,12 @@ export default function RootLayout({
           `}
         </Script>
         <Script src="/ai-advisor.js" strategy="afterInteractive" />
-        {/* Ad script removed per request */}
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6279351956858317"
+          async
+          strategy="beforeInteractive"
+          crossOrigin="anonymous"
+        />
         <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
           strategy="afterInteractive"
