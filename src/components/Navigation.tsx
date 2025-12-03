@@ -23,29 +23,11 @@ export default function Navigation() {
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}>
             <ul className="navbar-nav ms-auto">
               <li className="nav-item"><Link href="/" className="nav-link">Home</Link></li>
-              <li className="nav-item"><Link href="/calculator" className="nav-link">Gold Calculator</Link></li>
-              <li className="nav-item"><Link href="/metals" className="nav-link">Other Metals</Link></li>
-              <li className="nav-item"><Link href="/market" className="nav-link">Market Charts</Link></li>
-              <li className="nav-item"><Link href="/news" className="nav-link">Market News</Link></li>
-              <li className="nav-item"><Link href="/karat-kalculator" className="nav-link">Karat Kalculator</Link></li>
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Education</a>
-                <ul className="dropdown-menu">
-                  <li><Link href="/gold-education" className="dropdown-item">Gold Education</Link></li>
-                  <li><Link href="/silver-guide" className="dropdown-item">Silver Guide</Link></li>
-                  <li><Link href="/gold-history" className="dropdown-item">Gold History</Link></li>
-                  <li><Link href="/investment-guide" className="dropdown-item">Investment Guide</Link></li>
-                </ul>
-              </li>
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Resources</a>
-                <ul className="dropdown-menu">
-                  <li><Link href="/faq" className="dropdown-item">FAQ</Link></li>
-                  <li><Link href="/about" className="dropdown-item">About</Link></li>
-                  <li><Link href="/contact" className="dropdown-item">Contact</Link></li>
-                  <li><Link href="/privacy" className="dropdown-item">Privacy Policy</Link></li>
-                </ul>
-              </li>
+              <li className="nav-item"><Link href="/calculator" className="nav-link">Calculator</Link></li>
+              <li className="nav-item"><Link href="/market" className="nav-link">Market</Link></li>
+              <li className="nav-item"><Link href="/metals" className="nav-link">Metals</Link></li>
+              <li className="nav-item"><Link href="/news" className="nav-link">News</Link></li>
+              <li className="nav-item"><Link href="/faq" className="nav-link">FAQ</Link></li>
             </ul>
           </div>
         </div>
