@@ -73,8 +73,11 @@ export default function RootLayout({
                 </ul>
               </div>
               <div className="col-md-4 mb-3">
-                <h2 className="h6">About</h2>
+                <h2 className="h6">Contact & Legal</h2>
                 <ul className="list-unstyled small">
+                  <li><i className="fas fa-envelope me-2" aria-hidden="true"></i><a href="mailto:chudai@oldphotorestoration.site" className="link-light">chudai@oldphotorestoration.site</a></li>
+                  <li><i className="fas fa-phone me-2" aria-hidden="true"></i><span className="text-light">+86 19207810296</span></li>
+                  <li><i className="fas fa-location-dot me-2" aria-hidden="true"></i><span className="text-light">Guangxi, China</span></li>
                   <li><a href="/about" className="link-light">About</a></li>
                   <li><a href="/contact" className="link-light">Contact</a></li>
                   <li><a href="/faq" className="link-light">FAQ</a></li>
@@ -108,7 +111,7 @@ export default function RootLayout({
               </div>
             </div>
             <div className="border-top border-secondary pt-3 small text-muted d-flex justify-content-between">
-              <span>© {new Date().getFullYear()} Gold Calculator. All rights reserved.</span>
+              <span>© {new Date().getFullYear()} Chudai. All rights reserved.</span>
               <span>Data for information only; not investment advice.</span>
             </div>
           </div>
