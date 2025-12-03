@@ -65,7 +65,7 @@ export default function LegacyPage({ params }: { params: { slug: string } }){
           <p className="text-muted mb-3">This page has been rebuilt using the new site style. Content will be updated continuously.</p>
           <ul>
             <li>Real-time prices powered by `/api/spot` and `/api/timeseries`</li>
-            <li>Unified display mode toggle across pages (现货/CFD)</li>
+            <li>Unified display mode toggle across pages (Spot/CFD)</li>
             <li>Consistent layout and styling with the new theme</li>
           </ul>
           <p className="mt-3">Looking for calculations? Try the <a href="/calculator">Gold Calculator</a> or <a href="/karat-kalculator">Karat Kalculator</a>.</p>
