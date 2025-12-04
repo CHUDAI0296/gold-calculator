@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Gold Calculator - Calculate Gold Value Instantly',
+  title: 'Instant Gold Value Calculator - Live Prices Online',
   description: 'Calculate the value of your gold with our easy-to-use gold calculator. Get real-time gold prices and accurate estimations.',
   metadataBase: new URL('https://www.goldcalculator.click')
 };
