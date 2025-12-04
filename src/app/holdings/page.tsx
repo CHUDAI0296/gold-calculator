@@ -111,20 +111,12 @@ export default function HoldingsPage() {
     supabase.auth.getSession().then(({ data }) => {
       const uid = data.session?.user?.id || null;
       setUserId(uid);
-      if (uid) {
-        loadHoldings(uid);
-      } else {
-        router.replace('/login');
-      }
+      if (uid) loadHoldings(uid);
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
       const uid = session?.user?.id || null;
       setUserId(uid);
-      if (uid) {
-        loadHoldings(uid);
-      } else {
-        router.replace('/login');
-      }
+      if (uid) loadHoldings(uid);
     });
     return () => { sub?.subscription.unsubscribe(); };
   }, []);
@@ -193,10 +185,8 @@ export default function HoldingsPage() {
         setItems(prev => [...prev, { ...form, id }]);
       });
     } else {
-      setItems(prev => {
-        const id = Math.max(0, ...prev.map(i => i.id)) + 1;
-        return [...prev, { ...form, id }];
-      });
+      router.push('/login');
+      return;
     }
     setForm({ id: 0, quantity: 1, unit: "oz", karat: 24, purchaseAmount: 0, currency: "USD", fxRateToUsd: 1, purchaseDate: new Date().toISOString().slice(0,10), vendor: "", note: "" });
   };

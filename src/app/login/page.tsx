@@ -49,6 +49,7 @@ export default function LoginPage() {
       <JsonLd type="webpage" />
       <JsonLd type="breadcrumbs" data={{ items: [ { name:"Home", url:"/" }, { name:"Sign In", url:"/login" } ] }} />
       <h1 className="text-center mb-4">Sign In</h1>
+      <div className="alert alert-info text-center" role="alert">Click <strong>Sign Up</strong> to record your gold assets and track profit & loss.</div>
 
       {uid ? (
         <div className="card">
