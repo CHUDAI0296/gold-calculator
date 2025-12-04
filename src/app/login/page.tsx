@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import JsonLd from "@/components/JsonLd";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -12,7 +11,6 @@ export default function LoginPage() {
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
-  const router = useRouter();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -39,7 +37,11 @@ export default function LoginPage() {
   const signInPassword = async () => {
     setErr("");
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) { setErr(error.message || "Sign in failed"); return; }
+    if (error) {
+      setErr("");
+      sendLink();
+      return;
+    }
   };
 
   return (
