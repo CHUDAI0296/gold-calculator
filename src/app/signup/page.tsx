@@ -1,11 +1,11 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import JsonLd from "@/components/JsonLd";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-export default function SignUpPage() {
+function SignUpContent() {
   const params = useSearchParams();
   const preEmail = params.get('email') || '';
   const [email, setEmail] = useState(preEmail);
@@ -85,5 +85,13 @@ export default function SignUpPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function SignUpPage() {
+  return (
+    <Suspense fallback={<div className="container py-5"><h1 className="text-center mb-4">Sign Up</h1></div>}>
+      <SignUpContent />
+    </Suspense>
   );
 }
