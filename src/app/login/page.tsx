@@ -39,14 +39,7 @@ export default function LoginPage() {
   const signInPassword = async () => {
     setErr("");
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) {
-      if (error.message && /invalid login credentials/i.test(error.message)) {
-        router.push(`/signup?email=${encodeURIComponent(email)}`);
-        return;
-      }
-      setErr(error.message || "Sign in failed");
-      return;
-    }
+    if (error) { setErr(error.message || "Sign in failed"); return; }
   };
 
   return (
