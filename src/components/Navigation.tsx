@@ -1,10 +1,27 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [uid, setUid] = useState<string | null>(null);
+  const [email, setEmail] = useState<string>('');
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      const u = data.session?.user || null;
+      setUid(u?.id || null);
+      setEmail(u?.email || '');
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      const u = session?.user || null;
+      setUid(u?.id || null);
+      setEmail(u?.email || '');
+    });
+    return () => { sub?.subscription.unsubscribe(); };
+  }, []);
 
   return (
     <header className="bg-dark text-white">
@@ -29,6 +46,14 @@ export default function Navigation() {
               <li className="nav-item"><Link href="/holdings" className="nav-link">Holdings</Link></li>
               <li className="nav-item"><Link href="/news" className="nav-link">News</Link></li>
               <li className="nav-item"><Link href="/faq" className="nav-link">FAQ</Link></li>
+              {uid ? (
+                <li className="nav-item d-flex align-items-center ms-2">
+                  <span className="nav-link">{email || 'Account'}</span>
+                  <button className="btn btn-outline-light btn-sm ms-2" onClick={()=>supabase.auth.signOut()}>Sign Out</button>
+                </li>
+              ) : (
+                <li className="nav-item"><Link href="/holdings" className="nav-link">Sign In</Link></li>
+              )}
             </ul>
           </div>
         </div>
