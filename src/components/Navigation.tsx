@@ -52,7 +52,10 @@ export default function Navigation() {
                   <button className="btn btn-outline-light btn-sm ms-2" onClick={()=>supabase.auth.signOut()}>Sign Out</button>
                 </li>
               ) : (
-                <li className="nav-item"><Link href="/holdings" className="nav-link">Sign In</Link></li>
+                <>
+                  <li className="nav-item"><Link href="/login" className="nav-link">Sign In</Link></li>
+                  <li className="nav-item"><Link href="/signup" className="nav-link">Sign Up</Link></li>
+                </>
               )}
             </ul>
           </div>

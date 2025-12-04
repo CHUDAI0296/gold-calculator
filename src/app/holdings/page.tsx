@@ -2,6 +2,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import JsonLd from "@/components/JsonLd";
 import { supabase } from "@/lib/supabaseClient";
+import { useRouter } from "next/navigation";
 
 type Holding = {
   id: number;
@@ -94,6 +95,7 @@ export default function HoldingsPage() {
   const [userId, setUserId] = useState<string | null>(null);
   const [authEmail, setAuthEmail] = useState<string>("");
   const [authSending, setAuthSending] = useState<boolean>(false);
+  const router = useRouter();
 
   const loadHoldings = async (uid: string) => {
     const { data } = await supabase.from("holdings").select("id,quantity,unit,karat,purchase_amount,currency,purchase_date,vendor,note").eq("user_id", uid).order("purchase_date", { ascending: false });
@@ -111,12 +113,20 @@ export default function HoldingsPage() {
     supabase.auth.getSession().then(({ data }) => {
       const uid = data.session?.user?.id || null;
       setUserId(uid);
-      if (uid) loadHoldings(uid);
+      if (uid) {
+        loadHoldings(uid);
+      } else {
+        router.replace('/login');
+      }
     });
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
       const uid = session?.user?.id || null;
       setUserId(uid);
-      if (uid) loadHoldings(uid);
+      if (uid) {
+        loadHoldings(uid);
+      } else {
+        router.replace('/login');
+      }
     });
     return () => { sub?.subscription.unsubscribe(); };
   }, []);
@@ -273,26 +283,7 @@ export default function HoldingsPage() {
         </div>
       </div>
 
-      <div className="card mb-4">
-        <div className="card-body">
-          {userId ? (
-            <div className="d-flex align-items-center justify-content-between">
-              <div>Signed in</div>
-              <button className="btn btn-outline-secondary btn-sm" onClick={()=>supabase.auth.signOut().then(()=>{ setItems([]); })}>Sign out</button>
-            </div>
-          ) : (
-            <div className="row g-2 align-items-end">
-              <div className="col-md-6">
-                <label className="form-label">Email</label>
-                <input type="email" className="form-control" placeholder="Enter email to sign in" value={authEmail} onChange={e=>setAuthEmail(e.target.value)} />
-              </div>
-              <div className="col-md-3">
-                <button type="button" className="btn btn-primary w-100" disabled={authSending || !authEmail} onClick={()=>{ setAuthSending(true); supabase.auth.signInWithOtp({ email: authEmail, options: { emailRedirectTo: typeof window!=='undefined'? window.location.origin + '/holdings' : undefined } }).finally(()=>setAuthSending(false)); }}>Send magic link</button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      
 
       <div className="card mb-4">
         <div className="card-header bg-warning text-dark"><h2 className="h5 mb-0">Add Holding</h2></div>
