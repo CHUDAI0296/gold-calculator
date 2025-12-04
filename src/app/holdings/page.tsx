@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
 import JsonLd from "@/components/JsonLd";
+import { supabase } from "@/lib/supabaseClient";
 
 type Holding = {
   id: number;
@@ -90,12 +91,34 @@ export default function HoldingsPage() {
   const [search, setSearch] = useState<string>("");
   const [editingId, setEditingId] = useState<number | null>(null);
   const [edit, setEdit] = useState<Holding | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [authEmail, setAuthEmail] = useState<string>("");
+  const [authSending, setAuthSending] = useState<boolean>(false);
+
+  const loadHoldings = async (uid: string) => {
+    const { data } = await supabase.from("holdings").select("id,quantity,unit,karat,purchase_amount,currency,purchase_date,vendor,note").eq("user_id", uid).order("purchase_date", { ascending: false });
+    if (Array.isArray(data)) {
+      const arr: Holding[] = data.map((r: any) => ({ id: r.id, quantity: r.quantity || 0, unit: (r.unit === "g" ? "g" : "oz"), karat: r.karat ?? 24, purchaseAmount: r.purchase_amount || 0, currency: (r.currency || "USD").toUpperCase(), fxRateToUsd: 1, purchaseDate: r.purchase_date || new Date().toISOString().slice(0,10), vendor: r.vendor || "", note: r.note || "" }));
+      setItems(arr);
+    }
+  };
 
   useEffect(() => {
     refreshSpot().catch(()=>{});
     fetch("/api/fx?symbols=USD,CNY,GBP,EUR", { cache: "no-store" })
       .then(r => r.json()).then(d => { if (d && d.rates) { setFx(d.rates); try { localStorage.setItem("fx_cache", JSON.stringify(d.rates)); const now = new Date().toISOString(); localStorage.setItem("fx_cache_at", now); setLastFxAt(now); setFxLive(true); } catch {} } })
       .catch(() => setFx({ USD: 1 }));
+    supabase.auth.getSession().then(({ data }) => {
+      const uid = data.session?.user?.id || null;
+      setUserId(uid);
+      if (uid) loadHoldings(uid);
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      const uid = session?.user?.id || null;
+      setUserId(uid);
+      if (uid) loadHoldings(uid);
+    });
+    return () => { sub?.subscription.unsubscribe(); };
   }, []);
 
   useEffect(() => {
@@ -155,14 +178,23 @@ export default function HoldingsPage() {
   }, [items, goldPrice, goldPriceCached, fx, displayCurrency]);
 
   const addItem = () => {
-    setItems(prev => {
-      const id = Math.max(0, ...prev.map(i => i.id)) + 1;
-      return [...prev, { ...form, id }];
-    });
+    if (userId) {
+      const payload = { user_id: userId, quantity: form.quantity, unit: form.unit, karat: form.karat ?? 24, purchase_amount: form.purchaseAmount, currency: form.currency || "USD", purchase_date: form.purchaseDate, vendor: form.vendor || "", note: form.note || "" };
+      supabase.from("holdings").insert(payload).select("id").then(({ data }) => {
+        const id = data && data[0] && data[0].id ? Number(data[0].id) : Math.max(0, ...items.map(i => i.id)) + 1;
+        setItems(prev => [...prev, { ...form, id }]);
+      });
+    } else {
+      setItems(prev => {
+        const id = Math.max(0, ...prev.map(i => i.id)) + 1;
+        return [...prev, { ...form, id }];
+      });
+    }
     setForm({ id: 0, quantity: 1, unit: "oz", karat: 24, purchaseAmount: 0, currency: "USD", fxRateToUsd: 1, purchaseDate: new Date().toISOString().slice(0,10), vendor: "", note: "" });
   };
 
   const removeItem = (id: number) => {
+    if (userId) { supabase.from("holdings").delete().eq("id", id).eq("user_id", userId).then(() => {}); }
     setItems(prev => prev.filter(i => i.id !== id));
   };
 
@@ -174,6 +206,10 @@ export default function HoldingsPage() {
   const saveEdit = () => {
     if (editingId == null || !edit) return;
     setItems(items.map(i => i.id === editingId ? { ...edit, id: i.id } : i));
+    if (userId) {
+      const payload = { quantity: edit.quantity, unit: edit.unit, karat: edit.karat ?? 24, purchase_amount: edit.purchaseAmount, currency: edit.currency || "USD", purchase_date: edit.purchaseDate, vendor: edit.vendor || "", note: edit.note || "" };
+      supabase.from("holdings").update(payload).eq("id", editingId).eq("user_id", userId).then(() => {});
+    }
     setEditingId(null);
     setEdit(null);
   };
@@ -234,6 +270,27 @@ export default function HoldingsPage() {
               <div className="display-6">{displayCurrency} {formatSafe(totals.pnl)}</div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="card mb-4">
+        <div className="card-body">
+          {userId ? (
+            <div className="d-flex align-items-center justify-content-between">
+              <div>Signed in</div>
+              <button className="btn btn-outline-secondary btn-sm" onClick={()=>supabase.auth.signOut().then(()=>{ setItems([]); })}>Sign out</button>
+            </div>
+          ) : (
+            <div className="row g-2 align-items-end">
+              <div className="col-md-6">
+                <label className="form-label">Email</label>
+                <input type="email" className="form-control" placeholder="Enter email to sign in" value={authEmail} onChange={e=>setAuthEmail(e.target.value)} />
+              </div>
+              <div className="col-md-3">
+                <button type="button" className="btn btn-primary w-100" disabled={authSending || !authEmail} onClick={()=>{ setAuthSending(true); supabase.auth.signInWithOtp({ email: authEmail, options: { emailRedirectTo: typeof window!=='undefined'? window.location.origin + '/holdings' : undefined } }).finally(()=>setAuthSending(false)); }}>Send magic link</button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
