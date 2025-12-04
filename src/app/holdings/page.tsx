@@ -93,8 +93,6 @@ export default function HoldingsPage() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [edit, setEdit] = useState<Holding | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
-  const [authEmail, setAuthEmail] = useState<string>("");
-  const [authSending, setAuthSending] = useState<boolean>(false);
   const router = useRouter();
 
   const loadHoldings = async (uid: string) => {
