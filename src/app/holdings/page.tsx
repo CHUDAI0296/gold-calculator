@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
+import type { Metadata } from "next";
 import JsonLd from "@/components/JsonLd";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
@@ -454,3 +455,7 @@ export default function HoldingsPage() {
     </div>
   );
 }
+export const metadata: Metadata = {
+  title: "Gold Holdings Tracker – Real-Time Value & P&L",
+  description: "Record your gold holdings, see live spot-based valuations with FX conversion, and track profit & loss securely across devices.",
+};
