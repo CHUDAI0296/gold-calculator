@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import JsonLd from "@/components/JsonLd";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function SignUpPage() {
   const params = useSearchParams();
@@ -14,7 +14,6 @@ export default function SignUpPage() {
   const [userEmail, setUserEmail] = useState("");
   const [msg, setMsg] = useState("");
   const [err, setErr] = useState("");
-  const router = useRouter();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -88,4 +87,3 @@ export default function SignUpPage() {
     </div>
   );
 }
-
