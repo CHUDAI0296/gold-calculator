@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type PresetKey = "US90SilverFace" | "US40HalfCount" | "SterlingSilverGrams" | "FineGold1ozCount" | "GoldEagle1ozCount" | "Platinum1ozCount";
 type Metal = "gold" | "silver" | "platinum";
@@ -97,19 +97,21 @@ export default function CoinMeltCalculator() {
 
   const removeRow = (id: number) => setRows(prev => prev.filter(r => r.id !== id));
 
-  const totals = useMemo(() => {
+  const computeTotals = () => {
     const rate = fx[displayCurrency] || 1;
     let fineGold = 0, fineSilver = 0, finePlatinum = 0;
     rows.forEach(r => {
       const p = presets[r.preset];
-      const fine = p.computeFineOz(r.amount);
+      if (!p) return;
+      const amt = Number(r.amount);
+      const fine = Number.isFinite(amt) ? p.computeFineOz(amt) : 0;
       if (p.metal === "gold") fineGold += fine;
       if (p.metal === "silver") fineSilver += fine;
       if (p.metal === "platinum") finePlatinum += fine;
     });
-    const goldValUsd = (goldSpot || 0) * fineGold;
-    const silverValUsd = (silverSpot || 0) * fineSilver;
-    const platinumValUsd = (platinumSpot || 0) * finePlatinum;
+    const goldValUsd = (Number(goldSpot) || 0) * fineGold;
+    const silverValUsd = (Number(silverSpot) || 0) * fineSilver;
+    const platinumValUsd = (Number(platinumSpot) || 0) * finePlatinum;
     const totalUsd = goldValUsd + silverValUsd + platinumValUsd;
     return {
       fineGold,
@@ -118,11 +120,15 @@ export default function CoinMeltCalculator() {
       goldVal: goldValUsd * rate,
       silverVal: silverValUsd * rate,
       platinumVal: platinumValUsd * rate,
-      total: totalUsd * rate
+      total: totalUsd * rate,
     };
-  }, [rows, goldSpot, silverSpot, platinumSpot, fx, displayCurrency]);
+  };
 
   const format = (n: number) => n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const formatSafe = (n: number) => {
+    const v = Number(n);
+    return Number.isFinite(v) ? format(v) : format(0);
+  };
 
   return (
     <div className="card">
@@ -151,7 +157,8 @@ export default function CoinMeltCalculator() {
             <tbody>
               {rows.map(r => {
                 const p = presets[r.preset];
-                const fine = p.computeFineOz(r.amount);
+                const amt = Number(r.amount);
+                const fine = Number.isFinite(amt) ? p.computeFineOz(amt) : 0;
                 const rate = fx[displayCurrency] || 1;
                 const spot = p.metal === "gold" ? (goldSpot || 0) : p.metal === "silver" ? (silverSpot || 0) : (platinumSpot || 0);
                 const val = fine * spot * rate;
@@ -170,8 +177,8 @@ export default function CoinMeltCalculator() {
                         <input type="number" className="form-control" value={r.amount} onChange={e => setRows(rows.map(x => x.id===r.id ? { ...x, amount: parseFloat(e.target.value||"0") } : x))} step="0.01" />
                       </div>
                     </td>
-                    <td>{format(fine)}</td>
-                    <td>{displayCurrency} {format(val)}</td>
+                    <td>{formatSafe(fine)}</td>
+                    <td>{displayCurrency} {formatSafe(val)}</td>
                     <td>
                       <button className="btn btn-outline-danger btn-sm" onClick={() => removeRow(r.id)}>Delete</button>
                     </td>
@@ -183,15 +190,16 @@ export default function CoinMeltCalculator() {
         </div>
         <div className="d-flex justify-content-between align-items-center">
           <button type="button" className="btn btn-warning" onClick={addRow}>Add Item</button>
-          <div className="text-end">
-            <div className="mb-1">Fine Gold: {format(totals.fineGold)} oz | Value: {displayCurrency} {format(totals.goldVal)}</div>
-            <div className="mb-1">Fine Silver: {format(totals.fineSilver)} oz | Value: {displayCurrency} {format(totals.silverVal)}</div>
-            <div className="mb-1">Fine Platinum: {format(totals.finePlatinum)} oz | Value: {displayCurrency} {format(totals.platinumVal)}</div>
-            <div className="fw-bold">Total: {displayCurrency} {format(totals.total)}</div>
-          </div>
+          {(() => { const totals = computeTotals(); return (
+            <div className="text-end">
+              <div className="mb-1">Fine Gold: {formatSafe(totals.fineGold)} oz | Value: {displayCurrency} {formatSafe(totals.goldVal)}</div>
+              <div className="mb-1">Fine Silver: {formatSafe(totals.fineSilver)} oz | Value: {displayCurrency} {formatSafe(totals.silverVal)}</div>
+              <div className="mb-1">Fine Platinum: {formatSafe(totals.finePlatinum)} oz | Value: {displayCurrency} {formatSafe(totals.platinumVal)}</div>
+              <div className="fw-bold">Total: {displayCurrency} {formatSafe(totals.total)}</div>
+            </div>
+          ); })()}
         </div>
       </div>
     </div>
   );
 }
-
