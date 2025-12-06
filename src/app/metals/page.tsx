@@ -1,5 +1,6 @@
 import React from 'react'
 import JsonLd from '@/components/JsonLd'
+import MetalCalculator from '@/components/MetalCalculator'
 
 export default async function MetalsPage({ searchParams }: { searchParams?: { [key:string]: string | string[] | undefined } }){
   const mode = (typeof searchParams?.mode === 'string' ? searchParams!.mode : 'cfd') === 'spot' ? 'spot' : 'cfd'
@@ -18,7 +19,7 @@ export default async function MetalsPage({ searchParams }: { searchParams?: { [k
     <div className="container py-5">
       <JsonLd type="metals" />
       <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url: '/' }, { name:'Silver & Platinum', url: '/metals' } ] }} />
-      <h1 className="text-center mb-4">Silver & Platinum Prices</h1>
+      <h1 className="text-center mb-4">Silver & Platinum</h1>
       <div className="row">
         <div className="col-md-6 mb-4">
           <div className="card h-100">
@@ -45,6 +46,15 @@ export default async function MetalsPage({ searchParams }: { searchParams?: { [k
           <a className={`btn btn-outline-secondary${mode==='cfd'?' active':''}`} href="/metals?mode=cfd" aria-pressed={mode==='cfd'}>CFD View</a>
         </div>
       </div>
+      <div className="row g-4 mt-4">
+        <div className="col-md-6">
+          <MetalCalculator metal="silver" />
+        </div>
+        <div className="col-md-6">
+          <MetalCalculator metal="platinum" />
+        </div>
+      </div>
+      <div className="alert alert-info mt-4" role="alert">Looking for coin-specific melt values? Visit <a href="/coin-melt-values" className="alert-link">Coin Melt Values</a>.</div>
     </div>
   )
 }
