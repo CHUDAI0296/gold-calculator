@@ -33,6 +33,7 @@ export default function JsonLd({ type, data }: JsonLdProps) {
           "name": "Gold Value Calculator",
           "applicationCategory": "FinanceApplication",
           "operatingSystem": "Web Browser",
+          "keywords": ["gold calculator", "gold bars weight", "14k gold worth per gram"],
           "offers": {
             "@type": "Offer",
             "price": "0",
@@ -46,7 +47,16 @@ export default function JsonLd({ type, data }: JsonLdProps) {
           "@type": "Dataset",
           "name": "Gold Market Price Data",
           "description": "Real-time and historical gold price data with market analysis and charts.",
-          "keywords": ["gold price", "gold market", "precious metals", "gold trading", "market analysis"],
+          "keywords": [
+            "gold price",
+            "gold market",
+            "precious metals",
+            "gold trading",
+            "market analysis",
+            "last ten years gold rate",
+            "futures daily pivot point dashboard",
+            "kingston communications shares price"
+          ],
           "temporalCoverage": "2024-03-12/...",
           "spatialCoverage": "Global",
           "license": "https://www.goldcalculator.click/terms",
@@ -63,7 +73,7 @@ export default function JsonLd({ type, data }: JsonLdProps) {
           "@type": "Dataset",
           "name": "Silver & Platinum Spot Prices (USD/oz)",
           "description": "Live silver and platinum prices in USD per troy ounce with quick updates.",
-          "keywords": ["silver price", "platinum price", "precious metals"],
+          "keywords": ["silver price", "platinum price", "precious metals", "platinum patina"],
           "spatialCoverage": "Global",
           "license": "https://www.goldcalculator.click/terms"
         } as any;

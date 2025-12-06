@@ -222,7 +222,7 @@ export default function HoldingsPage() {
     <div className="container py-5">
       <JsonLd type="webpage" />
       <JsonLd type="breadcrumbs" data={{ items: [ { name:"Home", url:"/" }, { name:"Holdings", url:"/holdings" } ] }} />
-      <h1 className="text-center mb-3">Holdings Tracker</h1>
+      <h1 className="text-center mb-3">gold holding</h1>
       <h3 className="text-center text-muted mb-4">Overview of quantities, value and performance</h3>
 
       <div className="row g-3 mb-4">

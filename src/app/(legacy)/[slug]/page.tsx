@@ -31,7 +31,7 @@ const descriptions: Record<string, string> = {
   'investment-guide': 'Practical tips for buying and selling gold, from spot price to premiums and storage.',
   'refining-services': 'Learn how refining fees impact scrap payouts and how to optimize your returns.',
   'dealer-program': 'Tools and pricing for dealers and buyers who need reliable real-time quotes.',
-  'coin-melt-values': 'Check melt values for popular gold and silver coins using live market prices.',
+  'coin-melt-values': 'Check silver coin melt value and gold coin melt value using live market prices.',
   'live-karat-prices': 'See live karat-based gold prices for 10K, 14K, 18K, 22K and 24K.',
   'blog': 'News, tutorials and insights about gold pricing, calculators and precious metals.',
   'faq': 'Answers to common questions about our calculator, live prices and usage.',
@@ -59,9 +59,11 @@ export default function LegacyPage({ params }: { params: { slug: string } }){
   if (params.slug === 'coin-melt-values') {
     return (
       <div className="container py-5">
-        <JsonLd type="webpage" data={{ name: title, description, url }} />
+        <JsonLd type="webpage" data={{ name: title, description, url, keywords: ["silver coin melt value", "gold coin melt value"] }} />
         <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url:'/' }, { name: title, url:`/${params.slug}` } ] }} />
         <h1 className="text-center mb-4">Coin Melt Values</h1>
+        <p className="mb-2">Find silver coin melt value using live silver spot prices and known metal content.</p>
+        <p className="mb-4">Estimate gold coin melt value by purity and weight with real‑time gold price data.</p>
         <div className="row g-4 mb-4">
           <div className="col-md-6">
             <div className="card h-100">

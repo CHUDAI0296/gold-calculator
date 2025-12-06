@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'golden chart',
-  description: 'See today’s price, 24h high/low, MACD/RSI and moving averages with live headlines to guide decisions.',
+  description: 'See today’s price, 24h high/low, MACD/RSI and moving averages — plus last ten years gold rate and futures daily pivot points with related shares context.',
   alternates: {
     canonical: 'https://www.goldcalculator.click/market'
   },
@@ -53,6 +53,15 @@ export default function Market() {
           <li><a href="/market">Will prices hit $5000 an ounce?</a></li>
           <li><a href="/faq">See all FAQs</a></li>
         </ul>
+      </div>
+
+      <div className="mt-4">
+        <div className="bg-white rounded-lg shadow-md p-4">
+          <h2 className="h5 mb-2">Insights & Tools</h2>
+          <p className="mb-2">Explore last ten years gold rate with extended charts and comparisons.</p>
+          <p className="mb-2">Use a futures daily pivot point dashboard to view key intraday levels.</p>
+          <p className="mb-0">Track kingston communications shares price alongside metals to compare trends.</p>
+        </div>
       </div>
 
       {/* Market news is rendered inside MarketAnalysis now */}

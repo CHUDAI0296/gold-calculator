@@ -139,6 +139,15 @@ export default async function Home() {
                 </div>
               </div>
             </div>
+            <div className="col-md-6 mb-4">
+              <div className="card h-100">
+                <div className="card-body">
+                  <h2 className="mb-2">How much is a Krugerrand worth?</h2>
+                  <p>Gold Krugerrand value is based on weight and purity (22K ≈ 91.67%). Use the calculator to estimate today’s price.</p>
+                  <a href="/calculator" className="btn btn-outline-warning">Check Krugerrand Value</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -171,7 +180,8 @@ export default async function Home() {
               "mainEntity": [
                 {"@type":"Question","name":"How do I calculate value?","acceptedAnswer":{"@type":"Answer","text":"Enter weight and karat, choose unit (g/oz/dwt), and get today’s value. Adjust with premium/discount if needed."}},
                 {"@type":"Question","name":"How much is 18K worth per gram?","acceptedAnswer":{"@type":"Answer","text":"Select 18K and grams in the calculator to see a per‑gram price based on 58.5% purity and live spot."}},
-                {"@type":"Question","name":"What's the value of 1 oz right now?","acceptedAnswer":{"@type":"Answer","text":"Check real‑time price and 24h high/low on the Market page; the calculator uses the same live data for estimates."}}
+                {"@type":"Question","name":"What's the value of 1 oz right now?","acceptedAnswer":{"@type":"Answer","text":"Check real‑time price and 24h high/low on the Market page; the calculator uses the same live data for estimates."}},
+                {"@type":"Question","name":"How much is a Krugerrand worth?","acceptedAnswer":{"@type":"Answer","text":"A Gold Krugerrand is 22K (~91.67% purity). Enter weight and select 22K to estimate today’s value using live spot prices."}}
               ]
             }
           `}

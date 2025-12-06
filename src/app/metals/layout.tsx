@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Silver & Platinum Price Today – Live Spot Prices (USD/oz)',
-  description: 'Live spot prices for silver and platinum in USD/oz with quick updates and display modes.',
+  description: 'Live spot prices for silver and platinum in USD/oz with quick updates, display modes and guidance on platinum patina.',
   alternates: { canonical: 'https://www.goldcalculator.click/metals' },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } }
 }

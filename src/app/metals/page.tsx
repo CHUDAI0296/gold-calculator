@@ -54,6 +54,14 @@ export default async function MetalsPage({ searchParams }: { searchParams?: { [k
           <MetalCalculator metal="platinum" />
         </div>
       </div>
+      <div className="mt-4">
+        <div className="card">
+          <div className="card-body">
+            <h3 className="h6">Platinum patina</h3>
+            <p className="mb-0">Over time, platinum can develop a natural patina that softens high‑polish surfaces. This doesn’t change weight or purity, and many prefer the understated look.</p>
+          </div>
+        </div>
+      </div>
       <div className="alert alert-info mt-4" role="alert">Looking for coin-specific melt values? Visit <a href="/coin-melt-values" className="alert-link">Coin Melt Values</a>.</div>
     </div>
   )

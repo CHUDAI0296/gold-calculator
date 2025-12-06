@@ -1,6 +1,7 @@
 'use client';
 import JsonLd from '@/components/JsonLd';
 import CalculatorPriceDisplay from '@/components/CalculatorPriceDisplay';
+import type { Metadata } from 'next';
 
  
 
@@ -96,6 +97,7 @@ export default function Calculator() {
                       <option value="dwt">Pennyweight</option>
                     </select>
                   </div>
+                  <div className="form-text">gold bars weight examples: 1 oz, 50 g, 100 g, 1 kg</div>
                 </div>
 
                 <div className="mb-3">
@@ -108,6 +110,7 @@ export default function Calculator() {
                     <option value="10">10K (41.7%)</option>
                     <option value="9">9K (37.5%)</option>
                   </select>
+                  <div className="form-text">what is 14k gold worth per gram? select 14K and grams to see an instant per‑gram value</div>
                 </div>
 
                 <div className="mb-3">
@@ -262,3 +265,9 @@ export default function Calculator() {
     </React.Fragment>
   );
 }
+export const metadata: Metadata = {
+  title: 'Gold Calculator – gold bars weight & 14k gold worth per gram',
+  description: 'Enter gold bars weight and select 14K to see per‑gram value with live prices.',
+  alternates: { canonical: 'https://www.goldcalculator.click/calculator' },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } }
+};
