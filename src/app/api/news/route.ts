@@ -59,7 +59,7 @@ async function fetchWithTimeout(url: string, ms = 4000): Promise<string> {
   const ctrl = new AbortController()
   const id = setTimeout(() => ctrl.abort(), ms)
   try {
-    const r = await fetch(url, { signal: ctrl.signal, headers: { 'Accept': 'application/rss+xml, application/atom+xml, text/xml, text/plain' }, cache: 'no-store' })
+    const r = await fetch(url, { signal: ctrl.signal, headers: { 'Accept': 'application/rss+xml, application/atom+xml, text/xml, text/plain', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36' }, cache: 'no-store' })
     if (!r.ok) throw new Error('bad')
     return await r.text()
   } finally { clearTimeout(id) }
@@ -73,7 +73,12 @@ export async function GET(req: Request) {
     const limit = Math.min(20, Math.max(5, parseInt(searchParams.get('limit') || '12', 10)))
     const feeds = [
       { url: 'https://feeds.reuters.com/reuters/commoditiesNews', source: 'Reuters' },
-      { url: 'https://www.kitco.com/rss/kitco_news.rss', source: 'Kitco' }
+      { url: 'https://www.kitco.com/rss/kitco_news.rss', source: 'Kitco' },
+      { url: 'https://www.mining.com/feed/', source: 'Mining.com' },
+      { url: 'https://www.fxempire.com/news/feed', source: 'FXEmpire' },
+      { url: 'https://www.marketwatch.com/rss/topstories', source: 'MarketWatch' },
+      { url: 'https://news.google.com/rss/search?q=gold&hl=en-US&gl=US&ceid=US:en', source: 'Publisher' },
+      { url: 'https://news.google.com/rss/search?q=precious%20metals&hl=en-US&gl=US&ceid=US:en', source: 'Publisher' }
     ]
     const results: NewsItem[] = []
     await Promise.all(feeds.map(async f => {
@@ -94,7 +99,7 @@ export async function GET(req: Request) {
       const ctrl = new AbortController()
       const id = setTimeout(() => ctrl.abort(), ms)
       try {
-        const r = await fetch(url, { signal: ctrl.signal, headers: { 'Accept': 'text/html,application/xhtml+xml' }, cache: 'no-store' })
+        const r = await fetch(url, { signal: ctrl.signal, headers: { 'Accept': 'text/html,application/xhtml+xml', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36' }, cache: 'no-store' })
         if (!r.ok) throw new Error('bad')
         return await r.text()
       } finally { clearTimeout(id) }
@@ -129,6 +134,7 @@ export async function GET(req: Request) {
           const canonical = (/rel=['"]canonical['"][^>]*href=['"]([^'"]+)['"]/i.exec(html) || /property=['"]og:url['"]\s*content=['"]([^'"]+)['"]/i.exec(html))?.[1] || ''
           if (siteName) it.source = siteName.trim()
           else if (canonical) { try { it.source = new URL(canonical).hostname.replace(/^www\./,'') } catch {} }
+          if (canonical) it.link = canonical
           if (full) it.desc = full
         } catch {}
       }))
