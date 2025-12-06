@@ -69,6 +69,7 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url)
     const q = (searchParams.get('q') || '').trim().toLowerCase()
+    const wantFull = (searchParams.get('full') || '').trim() === '1'
     const limit = Math.min(20, Math.max(5, parseInt(searchParams.get('limit') || '12', 10)))
     const feeds = [
       { url: 'https://feeds.reuters.com/reuters/commoditiesNews', source: 'Reuters' },
@@ -96,7 +97,46 @@ export async function GET(req: Request) {
       .filter(it => { const key = it.link.split('?')[0]; if (seen.has(key)) return false; seen.add(key); return true })
       .sort((a,b)=> b.published - a.published)
       .slice(0, limit)
-    const out = dedup.map(it => ({ title: it.title, source: it.source, published: it.published, desc: it.desc }))
+    async function fetchHtmlWithTimeout(url: string, ms = 5000): Promise<string> {
+      const ctrl = new AbortController()
+      const id = setTimeout(() => ctrl.abort(), ms)
+      try {
+        const r = await fetch(url, { signal: ctrl.signal, headers: { 'Accept': 'text/html,application/xhtml+xml' }, cache: 'no-store' })
+        if (!r.ok) throw new Error('bad')
+        return await r.text()
+      } finally { clearTimeout(id) }
+    }
+
+    function extractMainContent(html: string): string {
+      if (!html) return ''
+      let s = html
+        .replace(/<!--([\s\S]*?)-->/g, '')
+        .replace(/<script[\s\S]*?<\/script>/gi, '')
+        .replace(/<style[\s\S]*?<\/style>/gi, '')
+      const artMatch = /<article[\s\S]*?>([\s\S]*?)<\/article>/i.exec(s)
+      let block = artMatch ? artMatch[1] : ''
+      if (!block) {
+        const candidates = [...s.matchAll(/<div[^>]*(id|class)=["'][^"']*(article|content|post|story|main|entry)[^"']*["'][^>]*>([\s\S]*?)<\/div>/gi)]
+        block = candidates.sort((a,b)=> (b[3]?.length||0) - (a[3]?.length||0)).map(m=>m[3])[0] || ''
+      }
+      const target = block || s
+      const ps = target.match(/<p[\s\S]*?>([\s\S]*?)<\/p>/gi) || []
+      const joined = ps.length > 0 ? ps.join('\n') : target
+      const text = stripTags(joined)
+      const decoded = decodeEntities(text)
+      return decoded.replace(/\s+/g, ' ').trim()
+    }
+
+    if (wantFull) {
+      await Promise.all(dedup.map(async it => {
+        try {
+          const html = await fetchHtmlWithTimeout(it.link)
+          const full = extractMainContent(html)
+          if (full) it.desc = full
+        } catch {}
+      }))
+    }
+    const out = dedup.map(it => ({ title: it.title, source: it.source, published: it.published, desc: it.desc, full: wantFull ? it.desc : undefined }))
     return new NextResponse(JSON.stringify(out), {
       status: 200,
       headers: {

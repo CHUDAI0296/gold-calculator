@@ -31,8 +31,8 @@ export default async function NewsPage({ searchParams }: { searchParams?: { [key
   const topic = typeof searchParams?.q === 'string' ? searchParams!.q : ''
   const base = 'gold,bullion,gold price,Comex,XAU,GLD,central bank gold'
   const query = topic ? `${base},${topic}` : base
-  const r = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/news?q=${encodeURIComponent(query)}&limit=${limit}`, { cache: 'no-store' })
-  const items: {title:string;source:string;published:number;desc?:string}[] = await r.json()
+  const r = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/news?q=${encodeURIComponent(query)}&limit=${limit}&full=1`, { cache: 'no-store' })
+  const items: {title:string;source:string;published:number;desc?:string;full?:string}[] = await r.json()
 
   return (
     <div className="container py-5">
@@ -57,7 +57,7 @@ export default async function NewsPage({ searchParams }: { searchParams?: { [key
                         ))}
                       </div>
                     )}
-                    {n.desc && (<div className="mt-2">{n.desc}</div>)}
+                    {(n.full || n.desc) && (<div className="mt-2">{n.full || n.desc}</div>)}
                     <div className="text-muted small mt-2">{n.source} • {timeAgo(n.published)}</div>
                   </div>
                 </div>
