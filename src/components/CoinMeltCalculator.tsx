@@ -63,8 +63,8 @@ export default function CoinMeltCalculator() {
 
   useEffect(() => {
     try {
-      const ds = localStorage.getItem("display_currency");
-      if (ds) setDisplayCurrency(ds);
+      setDisplayCurrency("USD");
+      try { localStorage.setItem("display_currency", "USD"); } catch {}
       ["gold","silver","platinum"].forEach(m => {
         const v = localStorage.getItem(`spot_${m}_usd`);
         const at = localStorage.getItem(`spot_${m}_usd_at`);
