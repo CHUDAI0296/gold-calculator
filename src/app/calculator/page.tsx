@@ -1,7 +1,6 @@
 'use client';
 import JsonLd from '@/components/JsonLd';
 import CalculatorPriceDisplay from '@/components/CalculatorPriceDisplay';
-import type { Metadata } from 'next';
 
  
 
@@ -265,9 +264,3 @@ export default function Calculator() {
     </React.Fragment>
   );
 }
-export const metadata: Metadata = {
-  title: 'Gold Calculator – gold bars weight & 14k gold worth per gram',
-  description: 'Enter gold bars weight and select 14K to see per‑gram value with live prices.',
-  alternates: { canonical: 'https://www.goldcalculator.click/calculator' },
-  robots: { index: true, follow: true, googleBot: { index: true, follow: true } }
-};
