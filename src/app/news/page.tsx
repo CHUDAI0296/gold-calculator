@@ -59,9 +59,24 @@ export default async function NewsPage({ searchParams }: { searchParams?: { [key
                       </div>
                     )}
                     {(n.full || n.desc) && (
-                      <div className="mt-2">
-                        {paragraphs(n.full || n.desc).map((p, k)=> (<p key={k} className="mb-2">{p}</p>))}
-                      </div>
+                      (() => {
+                        const ps = paragraphs(n.full || n.desc)
+                        const head = ps.slice(0,3)
+                        const tail = ps.slice(3)
+                        return (
+                          <div className="mt-2">
+                            {head.map((p, k)=> (<p key={k} className="mb-2">{p}</p>))}
+                            {tail.length > 0 && (
+                              <details>
+                                <summary className="text-primary" role="button">展开全文</summary>
+                                <div className="mt-2">
+                                  {tail.map((p, k)=> (<p key={`t-${k}`} className="mb-2">{p}</p>))}
+                                </div>
+                              </details>
+                            )}
+                          </div>
+                        )
+                      })()
                     )}
                     <div className="text-muted small mt-2">{n.source} • {timeAgo(n.published)}</div>
                   </div>
