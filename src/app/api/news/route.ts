@@ -36,9 +36,17 @@ function parseRss(xml: string, source: string): NewsItem[] {
     const link = (textBetween(blk, 'link') || attrValue(blk, 'link', 'href') || '').trim()
     const rawDesc = (textBetween(blk, 'description') || textBetween(blk, 'content:encoded') || '')
     const desc = stripTags(decodeEntities(rawDesc)).replace(/\s+/g, ' ').trim()
+    let resolvedLink = link
+    let resolvedSource = source
+    const srcName = stripTags(decodeEntities(textBetween(blk, 'source') || ''))
+    const srcUrl = (attrValue(blk, 'source', 'url') || '').trim()
+    const m = /<a[^>]+href=["']([^"']+)["']/i.exec(rawDesc)
+    if (m && !/news\.google\.com/i.test(m[1])) resolvedLink = m[1]
+    if (!resolvedLink && srcUrl && !/news\.google\.com/i.test(srcUrl)) resolvedLink = srcUrl
+    if (srcName) resolvedSource = srcName
     const pub = (textBetween(blk, 'pubDate') || textBetween(blk, 'published') || textBetween(blk, 'updated') || '').trim()
     const ts = pub ? Date.parse(pub) : Date.now()
-    if (title && link) items.push({ title, link, published: isNaN(ts) ? Date.now() : ts, source, desc })
+    if (title && (resolvedLink || link)) items.push({ title, link: resolvedLink || link, published: isNaN(ts) ? Date.now() : ts, source: resolvedSource, desc })
   }
   // Atom <entry>
   const entryBlocks = xml.match(/<entry[\s\S]*?<\/entry>/gi) || []

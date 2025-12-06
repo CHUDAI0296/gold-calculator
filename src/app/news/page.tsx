@@ -24,6 +24,10 @@ function extractTags(title: string){
   return tags.slice(0,4)
 }
 
+function paragraphs(text?: string){
+  const t = (text||'').split(/\n+/).map(s=>s.trim()).filter(Boolean)
+  return t
+}
 
 export default async function NewsPage({ searchParams }: { searchParams?: { [key:string]: string | string[] | undefined } }){
   const limitParam = typeof searchParams?.limit === 'string' ? parseInt(searchParams!.limit, 10) : 20
@@ -54,7 +58,11 @@ export default async function NewsPage({ searchParams }: { searchParams?: { [key
                         ))}
                       </div>
                     )}
-                    {(n.full || n.desc) && (<div className="mt-2">{n.full || n.desc}</div>)}
+                    {(n.full || n.desc) && (
+                      <div className="mt-2">
+                        {paragraphs(n.full || n.desc).map((p, k)=> (<p key={k} className="mb-2">{p}</p>))}
+                      </div>
+                    )}
                     <div className="text-muted small mt-2">{n.source} • {timeAgo(n.published)}</div>
                   </div>
                 </div>
