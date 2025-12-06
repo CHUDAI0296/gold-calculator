@@ -14,13 +14,28 @@ function attrValue(xml: string, tag: string, attr: string): string | null {
   return m ? m[1] : null
 }
 
+function decodeEntities(input: string): string {
+  if (!input) return ''
+  const map: Record<string,string> = { '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&nbsp;': ' ' }
+  let s = input.replace(/(&amp;|&lt;|&gt;|&quot;|&#39;|&nbsp;)/g, (m) => map[m] || m)
+  s = s.replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => { try { return String.fromCharCode(parseInt(hex, 16)) } catch { return '' } })
+  s = s.replace(/&#(\d+);/g, (_, num) => { try { return String.fromCharCode(parseInt(num, 10)) } catch { return '' } })
+  return s
+}
+
+function stripTags(html: string): string {
+  return html.replace(/<script[\s\S]*?<\/script>/gi, '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, '')
+}
+
 function parseRss(xml: string, source: string): NewsItem[] {
   const items: NewsItem[] = []
   const itemBlocks = xml.match(/<item[\s\S]*?<\/item>/gi) || []
   for (const blk of itemBlocks) {
-    const title = (textBetween(blk, 'title') || '').replace(/<[^>]+>/g, '').trim()
+    const rawTitle = (textBetween(blk, 'title') || '')
+    const title = stripTags(decodeEntities(rawTitle)).trim()
     const link = (textBetween(blk, 'link') || attrValue(blk, 'link', 'href') || '').trim()
-    const desc = (textBetween(blk, 'description') || textBetween(blk, 'content:encoded') || '').replace(/<[^>]+>/g, '').trim()
+    const rawDesc = (textBetween(blk, 'description') || textBetween(blk, 'content:encoded') || '')
+    const desc = stripTags(decodeEntities(rawDesc)).replace(/\s+/g, ' ').trim()
     const pub = (textBetween(blk, 'pubDate') || textBetween(blk, 'published') || textBetween(blk, 'updated') || '').trim()
     const ts = pub ? Date.parse(pub) : Date.now()
     if (title && link) items.push({ title, link, published: isNaN(ts) ? Date.now() : ts, source, desc })
@@ -28,9 +43,11 @@ function parseRss(xml: string, source: string): NewsItem[] {
   // Atom <entry>
   const entryBlocks = xml.match(/<entry[\s\S]*?<\/entry>/gi) || []
   for (const blk of entryBlocks) {
-    const title = (textBetween(blk, 'title') || '').replace(/<[^>]+>/g, '').trim()
+    const rawTitle = (textBetween(blk, 'title') || '')
+    const title = stripTags(decodeEntities(rawTitle)).trim()
     const link = (attrValue(blk, 'link', 'href') || textBetween(blk, 'link') || '').trim()
-    const desc = (textBetween(blk, 'summary') || textBetween(blk, 'content') || '').replace(/<[^>]+>/g, '').trim()
+    const rawDesc = (textBetween(blk, 'summary') || textBetween(blk, 'content') || '')
+    const desc = stripTags(decodeEntities(rawDesc)).replace(/\s+/g, ' ').trim()
     const pub = (textBetween(blk, 'updated') || textBetween(blk, 'published') || '').trim()
     const ts = pub ? Date.parse(pub) : Date.now()
     if (title && link) items.push({ title, link, published: isNaN(ts) ? Date.now() : ts, source, desc })
@@ -79,7 +96,15 @@ export async function GET(req: Request) {
       .filter(it => { const key = it.link.split('?')[0]; if (seen.has(key)) return false; seen.add(key); return true })
       .sort((a,b)=> b.published - a.published)
       .slice(0, limit)
-    return NextResponse.json(dedup)
+    const out = dedup.map(it => ({ title: it.title, source: it.source, published: it.published, desc: it.desc }))
+    return new NextResponse(JSON.stringify(out), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        // 24 小时缓存 + 24 小时并行回源
+        'Cache-Control': 's-maxage=86400, stale-while-revalidate=86400'
+      }
+    })
   } catch {
     return NextResponse.json([], { status: 200 })
   }
