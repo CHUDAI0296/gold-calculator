@@ -69,6 +69,7 @@ export default function RootLayout({
                   <li><a href="/calculator" className="link-light">Calculator</a></li>
                   <li><a href="/market" className="link-light">Market</a></li>
                   <li><a href="/metals" className="link-light">Metals</a></li>
+                  <li><a href="/blog" className="link-light">Blog</a></li>
                   <li><a href="/news" className="link-light">News</a></li>
                 </ul>
               </div>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <rect width="100%" height="100%" fill="#f8f9fa"/>
+  <g transform="translate(60,60)">
+    <rect x="0" y="0" width="680" height="260" rx="12" fill="#fff" stroke="#ddd"/>
+    <polyline fill="none" stroke="#0d6efd" stroke-width="4" points="20,220 60,210 100,200 140,190 180,195 220,180 260,175 300,160 340,170 380,155 420,145 460,150 500,140 540,135 580,120 620,125 660,110"/>
+    <text x="340" y="30" text-anchor="middle" font-family="Inter, Arial" font-size="20" fill="#333">10-year gold rate trend</text>
+    <text x="340" y="270" text-anchor="middle" font-family="Inter, Arial" font-size="16" fill="#666">Policy cycles • USD strength • Real yields • Central banks</text>
+  </g>
+</svg>
+
