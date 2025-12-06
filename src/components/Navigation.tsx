@@ -43,6 +43,7 @@ export default function Navigation() {
               <li className="nav-item"><Link href="/calculator" className="nav-link">Calculator</Link></li>
               <li className="nav-item"><Link href="/market" className="nav-link">Market</Link></li>
               <li className="nav-item"><Link href="/metals" className="nav-link">Metals</Link></li>
+              <li className="nav-item"><Link href="/coin-melt-values" className="nav-link">Melt Values</Link></li>
               <li className="nav-item"><Link href="/holdings" className="nav-link">Holdings</Link></li>
               <li className="nav-item"><Link href="/news" className="nav-link">News</Link></li>
               <li className="nav-item"><Link href="/faq" className="nav-link">FAQ</Link></li>

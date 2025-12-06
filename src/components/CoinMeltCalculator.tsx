@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-type PresetKey = "US90SilverFace" | "US40HalfCount" | "SterlingSilverGrams" | "FineGold1ozCount" | "GoldEagle1ozCount" | "Platinum1ozCount";
+type PresetKey = "US90SilverFace" | "US90DimeCount" | "US90QuarterCount" | "US90HalfDollarCount" | "US40HalfCount" | "US90DollarCount" | "SterlingSilverGrams" | "FineGold1ozCount" | "GoldEagle1ozCount" | "Platinum1ozCount";
 type Metal = "gold" | "silver" | "platinum";
 
 type Row = {
@@ -12,10 +12,14 @@ type Row = {
 
 const presets: Record<PresetKey, { label: string; metal: Metal; placeholder: string; computeFineOz: (amount: number) => number }> = {
   US90SilverFace: { label: "90% U.S. Silver (face $)", metal: "silver", placeholder: "Face value ($)", computeFineOz: (v) => v * 0.715 },
+  US90DimeCount: { label: "90% Dimes (count)", metal: "silver", placeholder: "Coins count", computeFineOz: (v) => v * 0.0715 },
+  US90QuarterCount: { label: "90% Quarters (count)", metal: "silver", placeholder: "Coins count", computeFineOz: (v) => v * 0.17875 },
+  US90HalfDollarCount: { label: "90% Half Dollars (count)", metal: "silver", placeholder: "Coins count", computeFineOz: (v) => v * 0.3575 },
   US40HalfCount: { label: "40% Half Dollars (count)", metal: "silver", placeholder: "Coins count", computeFineOz: (v) => v * 0.1479 },
+  US90DollarCount: { label: "90% Silver Dollars (count)", metal: "silver", placeholder: "Coins count", computeFineOz: (v) => v * 0.7735 },
   SterlingSilverGrams: { label: "Sterling Silver (grams)", metal: "silver", placeholder: "Weight (g)", computeFineOz: (v) => v * 0.03215 * 0.925 },
   FineGold1ozCount: { label: "Fine Gold 1 oz (count)", metal: "gold", placeholder: "Coins count", computeFineOz: (v) => v * 1 },
-  GoldEagle1ozCount: { label: "US Gold Eagle 1 oz (count)", metal: "gold", placeholder: "Coins count", computeFineOz: (v) => v * 0.9167 },
+  GoldEagle1ozCount: { label: "US Gold Eagle 1 oz (count)", metal: "gold", placeholder: "Coins count", computeFineOz: (v) => v * 1 },
   Platinum1ozCount: { label: "Platinum 1 oz (count)", metal: "platinum", placeholder: "Coins count", computeFineOz: (v) => v * 1 },
 };
 
@@ -28,6 +32,7 @@ export default function CoinMeltCalculator() {
   const [fx, setFx] = useState<Record<string, number>>({ USD: 1 });
   const [lastSpotAt, setLastSpotAt] = useState<string | null>(null);
   const [lastFxAt, setLastFxAt] = useState<string | null>(null);
+  const [deductPct, setDeductPct] = useState<number>(0);
 
   const fetchSpot = async (metal: Metal) => {
     try {
@@ -117,10 +122,10 @@ export default function CoinMeltCalculator() {
       fineGold,
       fineSilver,
       finePlatinum,
-      goldVal: goldValUsd * rate,
-      silverVal: silverValUsd * rate,
-      platinumVal: platinumValUsd * rate,
-      total: totalUsd * rate,
+      goldVal: (goldValUsd * (1 - Math.max(0, Math.min(100, Number(deductPct))) / 100)) * rate,
+      silverVal: (silverValUsd * (1 - Math.max(0, Math.min(100, Number(deductPct))) / 100)) * rate,
+      platinumVal: (platinumValUsd * (1 - Math.max(0, Math.min(100, Number(deductPct))) / 100)) * rate,
+      total: (totalUsd * (1 - Math.max(0, Math.min(100, Number(deductPct))) / 100)) * rate,
     };
   };
 
@@ -140,7 +145,13 @@ export default function CoinMeltCalculator() {
               <button key={c} className={`btn btn-outline-secondary${displayCurrency===c?' active':''}`} onClick={() => { setDisplayCurrency(c); try { localStorage.setItem('display_currency', c); } catch {} }}> {c} </button>
             ))}
           </div>
-          <div className="small text-muted">Spot updated {lastSpotAt ? new Date(lastSpotAt).toLocaleString() : '-'} | FX updated {lastFxAt ? new Date(lastFxAt).toLocaleString() : '-'}</div>
+          <div className="d-flex align-items-center gap-3">
+            <div className="small text-muted">Spot updated {lastSpotAt ? new Date(lastSpotAt).toLocaleString() : '-'} | FX updated {lastFxAt ? new Date(lastFxAt).toLocaleString() : '-'}</div>
+            <div className="input-group input-group-sm" style={{ width: 160 }}>
+              <span className="input-group-text">Deduct (%)</span>
+              <input type="number" className="form-control" value={deductPct} onChange={e=>setDeductPct(parseFloat(e.target.value||'0'))} min={0} max={100} step={0.1} />
+            </div>
+          </div>
         </div>
 
         <div className="table-responsive">
@@ -161,7 +172,7 @@ export default function CoinMeltCalculator() {
                 const fine = Number.isFinite(amt) ? p.computeFineOz(amt) : 0;
                 const rate = fx[displayCurrency] || 1;
                 const spot = p.metal === "gold" ? (goldSpot || 0) : p.metal === "silver" ? (silverSpot || 0) : (platinumSpot || 0);
-                const val = fine * spot * rate;
+                const val = fine * spot * rate * (1 - Math.max(0, Math.min(100, Number(deductPct))) / 100);
                 return (
                   <tr key={r.id}>
                     <td style={{ minWidth: 260 }}>
