@@ -24,11 +24,6 @@ function extractTags(title: string){
   return tags.slice(0,4)
 }
 
-function excerpt(text?: string, maxLen = 320){
-  const t = (text || '').replace(/\s+/g, ' ').trim()
-  if (!t) return ''
-  return t.length > maxLen ? `${t.slice(0, maxLen)}…` : t
-}
 
 export default async function NewsPage({ searchParams }: { searchParams?: { [key:string]: string | string[] | undefined } }){
   const limitParam = typeof searchParams?.limit === 'string' ? parseInt(searchParams!.limit, 10) : 20
@@ -62,7 +57,7 @@ export default async function NewsPage({ searchParams }: { searchParams?: { [key
                         ))}
                       </div>
                     )}
-                    {n.desc && (<div className="mt-2">{excerpt(n.desc)}</div>)}
+                    {n.desc && (<div className="mt-2">{n.desc}</div>)}
                     <div className="text-muted small mt-2">{n.source} • {timeAgo(n.published)}</div>
                   </div>
                 </div>
