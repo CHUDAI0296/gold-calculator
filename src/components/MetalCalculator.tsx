@@ -43,9 +43,9 @@ export default function MetalCalculator({ metal }: { metal: Metal }){
       <div className="card-header"><h2 className="h6 mb-0">{metal === 'silver' ? 'Silver Calculator' : 'Platinum Calculator'}</h2></div>
       <div className="card-body">
         <div className="d-flex align-items-center justify-content-between mb-3">
-          <div className="btn-group btn-group-sm" role="group">
+          <div className="d-flex flex-wrap gap-2" role="group">
             {['USD','CNY','GBP','EUR'].map(c => (
-              <button key={c} className={`btn btn-outline-secondary${displayCurrency===c?' active':''}`} onClick={() => { setDisplayCurrency(c); try { localStorage.setItem('display_currency', c); } catch {} }}> {c} </button>
+              <button key={c} className={`btn btn-outline-secondary btn-sm${displayCurrency===c?' active':''}`} onClick={() => { setDisplayCurrency(c); try { localStorage.setItem('display_currency', c); } catch {} }}> {c} </button>
             ))}
           </div>
           <div className="small text-muted">Spot updated {lastSpotAt ? new Date(lastSpotAt).toLocaleString() : '-'} | FX updated {lastFxAt ? new Date(lastFxAt).toLocaleString() : '-'}</div>
@@ -71,16 +71,16 @@ export default function MetalCalculator({ metal }: { metal: Metal }){
                 const val = fineOz * ((Number(spot)||0) * rate)
                 return (
                   <tr key={r.id}>
-                    <td style={{ minWidth: 160 }}>
+                    <td>
                       <input type="number" className="form-control" value={r.weight} onChange={e=> setRows(rows.map(x=> x.id===r.id ? { ...x, weight: parseFloat(e.target.value||'0') } : x))} step="0.01" />
                     </td>
-                    <td style={{ minWidth: 120 }}>
+                    <td>
                       <select className="form-select" value={r.unit} onChange={e=> setRows(rows.map(x=> x.id===r.id ? { ...x, unit: (e.target.value === 'g' ? 'g' : 'oz') } : x))}>
                         <option value="g">g</option>
                         <option value="oz">oz</option>
                       </select>
                     </td>
-                    <td style={{ minWidth: 160 }}>
+                    <td>
                       <div className="input-group">
                         <span className="input-group-text">%</span>
                         <input type="number" className="form-control" value={r.purity} onChange={e=> setRows(rows.map(x=> x.id===r.id ? { ...x, purity: parseFloat(e.target.value||'0') } : x))} step="0.1" />
@@ -108,4 +108,3 @@ export default function MetalCalculator({ metal }: { metal: Metal }){
     </div>
   )
 }
-

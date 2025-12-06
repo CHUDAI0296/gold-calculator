@@ -47,10 +47,10 @@ export default async function MetalsPage({ searchParams }: { searchParams?: { [k
         </div>
       </div>
       <div className="row g-4 mt-4">
-        <div className="col-md-6">
+        <div className="col-12 col-lg-6">
           <MetalCalculator metal="silver" />
         </div>
-        <div className="col-md-6">
+        <div className="col-12 col-lg-6">
           <MetalCalculator metal="platinum" />
         </div>
       </div>
