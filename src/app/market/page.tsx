@@ -9,7 +9,7 @@ import DisplayModeToggle from '@/components/DisplayModeToggle';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Live price chart',
+  title: 'golden chart',
   description: 'See today’s price, 24h high/low, MACD/RSI and moving averages with live headlines to guide decisions.',
   alternates: {
     canonical: 'https://www.goldcalculator.click/market'
@@ -23,7 +23,7 @@ export default function Market() {
       <JsonLd type="market" />
       <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url: '/' }, { name:'Market Charts', url: '/market' } ] }} />
       <div className="container py-5 relative">
-      <h1 className="text-center mb-4">Live price chart</h1>
+      <h1 className="text-center mb-4">golden chart</h1>
       <div className="flex justify-center mb-3"><DisplayModeToggle /></div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
