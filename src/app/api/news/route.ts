@@ -68,16 +68,12 @@ async function fetchWithTimeout(url: string, ms = 4000): Promise<string> {
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url)
-    const q = (searchParams.get('q') || '').trim().toLowerCase()
+    
     const wantFull = (searchParams.get('full') || '').trim() === '1'
     const limit = Math.min(20, Math.max(5, parseInt(searchParams.get('limit') || '12', 10)))
     const feeds = [
       { url: 'https://feeds.reuters.com/reuters/commoditiesNews', source: 'Reuters' },
-      { url: 'https://www.kitco.com/rss/kitco_news.rss', source: 'Kitco' },
-      { url: 'https://finance.yahoo.com/news/rssindex', source: 'Yahoo Finance' },
-      { url: 'https://news.google.com/rss/search?q=gold&hl=en-US&gl=US&ceid=US:en', source: 'Google News' },
-      { url: 'https://news.google.com/rss/search?q=gold%20price&hl=en-US&gl=US&ceid=US:en', source: 'Google News' },
-      { url: 'https://news.google.com/rss/search?q=precious%20metals&hl=en-US&gl=US&ceid=US:en', source: 'Google News' }
+      { url: 'https://www.kitco.com/rss/kitco_news.rss', source: 'Kitco' }
     ]
     const results: NewsItem[] = []
     await Promise.all(feeds.map(async f => {
@@ -89,10 +85,7 @@ export async function GET(req: Request) {
     // 去重与排序
     const seen = new Set<string>()
     let items = results
-    if (q) {
-      const kws = q.split(/[,|\s]+/).filter(Boolean)
-      items = items.filter(it => kws.some(k => it.title.toLowerCase().includes(k) || (it.desc||'').toLowerCase().includes(k)))
-    }
+    
     const dedup = items
       .filter(it => { const key = it.link.split('?')[0]; if (seen.has(key)) return false; seen.add(key); return true })
       .sort((a,b)=> b.published - a.published)
@@ -132,6 +125,10 @@ export async function GET(req: Request) {
         try {
           const html = await fetchHtmlWithTimeout(it.link)
           const full = extractMainContent(html)
+          const siteName = (/og:site_name"\s*content="([^"]+)"/i.exec(html) || /property=['"]og:site_name['"]\s*content=['"]([^'"]+)['"]/i.exec(html))?.[1] || ''
+          const canonical = (/rel=['"]canonical['"][^>]*href=['"]([^'"]+)['"]/i.exec(html) || /property=['"]og:url['"]\s*content=['"]([^'"]+)['"]/i.exec(html))?.[1] || ''
+          if (siteName) it.source = siteName.trim()
+          else if (canonical) { try { it.source = new URL(canonical).hostname.replace(/^www\./,'') } catch {} }
           if (full) it.desc = full
         } catch {}
       }))

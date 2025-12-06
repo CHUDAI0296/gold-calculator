@@ -28,10 +28,7 @@ function extractTags(title: string){
 export default async function NewsPage({ searchParams }: { searchParams?: { [key:string]: string | string[] | undefined } }){
   const limitParam = typeof searchParams?.limit === 'string' ? parseInt(searchParams!.limit, 10) : 20
   const limit = Math.min(30, Math.max(5, Number.isFinite(limitParam) ? limitParam : 20))
-  const topic = typeof searchParams?.q === 'string' ? searchParams!.q : ''
-  const base = 'gold,bullion,gold price,Comex,XAU,GLD,central bank gold'
-  const query = topic ? `${base},${topic}` : base
-  const r = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/news?q=${encodeURIComponent(query)}&limit=${limit}&full=1`, { cache: 'no-store' })
+  const r = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/news?limit=${limit}&full=1`, { cache: 'no-store' })
   const items: {title:string;source:string;published:number;desc?:string;full?:string}[] = await r.json()
 
   return (
