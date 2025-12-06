@@ -99,11 +99,65 @@ export default function BlogPage(){
         </div>
       </div>
 
+      <div className="row g-4 mt-4">
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">Krugerrand vs. 1 oz bar: which to buy?</h2>
+              <img src="/images/blog/krug-vs-bar.svg" alt="Krugerrand versus 1 oz bar" className="img-fluid rounded mb-3" />
+              <p className="mb-2">Coins offer strong liquidity and brand recognition with typical premiums over melt; bars often carry lower premiums but may have tighter resale spreads. Your choice depends on budget, exit plan and preferred dealers.</p>
+              <p className="mb-3">Start with melt math using live spot, then compare premiums and buyback policies. For frequent trading, coins can be simpler; for long‑term stacking, bars may maximize ounces.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Compare with Calculator</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">How to read MACD/RSI with pivots</h2>
+              <img src="/images/blog/macd-rsi-pivots.svg" alt="MACD RSI with pivot levels" className="img-fluid rounded mb-3" />
+              <p className="mb-2">Use RSI to gauge momentum extremes and MACD for trend confirmation. Align entries around daily pivots to avoid chasing moves; watch divergences and moving averages for risk cues.</p>
+              <p className="mb-3">Combine indicator signals with macro context from the market page. Backtest levels and keep stops disciplined; indicators guide probabilities, not certainties.</p>
+              <a className="btn btn-outline-secondary btn-sm" href="/market">Open Market Charts</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">How to value scrap 18K chains quickly</h2>
+              <img src="/images/blog/18k-scrap.svg" alt="Scrap 18K chain quick valuation" className="img-fluid rounded mb-3" />
+              <p className="mb-2">Set units to grams and choose 18K (75.0%) to estimate melt per gram. Multiply total grams by 0.75 to get fine content, then apply live spot price.</p>
+              <p className="mb-3">For selling, buyers may deduct refining fees or spreads. Enter a negative premium (e.g., -10% to -15%) to approximate local quotes and compare fairly.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Fast 18K Estimate</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">Dollar strength and real yields: why gold moves</h2>
+              <img src="/images/blog/usd-real-yields.svg" alt="USD strength and real yields impact" className="img-fluid rounded mb-3" />
+              <p className="mb-2">A stronger dollar and higher real yields often pressure gold; easing yields and weaker USD tend to support rallies. Central bank demand can offset cycles.</p>
+              <p className="mb-3">Track DXY, CPI trends and 10‑year real yields to frame expectations. Combine macro view with market charts and news for better timing.</p>
+              <a className="btn btn-outline-secondary btn-sm" href="/market">View Macro Context</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'Understanding gold bars weight', image: 'https://www.goldcalculator.click/images/blog/gold-bars.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog' }} />
       <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'How much is 14K gold worth per gram?', image: 'https://www.goldcalculator.click/images/blog/14k-per-gram.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog' }} />
       <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'Last ten years gold rate explained', image: 'https://www.goldcalculator.click/images/blog/ten-year-rate.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog' }} />
       <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'How much is a Krugerrand worth?', image: 'https://www.goldcalculator.click/images/blog/krugerrand.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog' }} />
       <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'Futures daily pivot point dashboard', image: 'https://www.goldcalculator.click/images/blog/pivot-dashboard.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog' }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'Krugerrand vs. 1 oz bar: which to buy?', image: 'https://www.goldcalculator.click/images/blog/krug-vs-bar.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog' }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'How to read MACD/RSI with pivots', image: 'https://www.goldcalculator.click/images/blog/macd-rsi-pivots.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog' }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'How to value scrap 18K chains quickly', image: 'https://www.goldcalculator.click/images/blog/18k-scrap.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog' }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'Dollar strength and real yields: why gold moves', image: 'https://www.goldcalculator.click/images/blog/usd-real-yields.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog' }} />
     </div>
   )
 }

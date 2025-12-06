@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <rect width="100%" height="100%" fill="#f8f9fa"/>
+  <g transform="translate(60,40)">
+    <rect x="0" y="0" width="680" height="140" rx="12" fill="#fff" stroke="#ddd"/>
+    <polyline fill="none" stroke="#0d6efd" stroke-width="4" points="20,110 80,70 140,90 200,60 260,80 320,55 380,70 440,50 500,65 560,40 620,55"/>
+    <text x="340" y="20" text-anchor="middle" font-family="Inter, Arial" font-size="18" fill="#333">MACD trend</text>
+  </g>
+  <g transform="translate(60,200)">
+    <rect x="0" y="0" width="680" height="140" rx="12" fill="#fff" stroke="#ddd"/>
+    <polyline fill="none" stroke="#6610f2" stroke-width="4" points="20,80 80,60 140,90 200,40 260,100 320,50 380,90 440,45 500,95 560,60 620,85"/>
+    <line x1="40" y1="90" x2="640" y2="90" stroke="#6c757d" stroke-width="2"/>
+    <text x="340" y="20" text-anchor="middle" font-family="Inter, Arial" font-size="18" fill="#333">RSI with pivot</text>
+  </g>
+</svg>
+
