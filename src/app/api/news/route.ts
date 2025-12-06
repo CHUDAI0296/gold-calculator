@@ -35,12 +35,13 @@ function parseRss(xml: string, source: string): NewsItem[] {
     const title = stripTags(decodeEntities(rawTitle)).trim()
     const link = (textBetween(blk, 'link') || attrValue(blk, 'link', 'href') || '').trim()
     const rawDesc = (textBetween(blk, 'description') || textBetween(blk, 'content:encoded') || '')
-    const desc = stripTags(decodeEntities(rawDesc)).replace(/\s+/g, ' ').trim()
+    const decodedRawDesc = decodeEntities(rawDesc)
+    const desc = stripTags(decodedRawDesc).replace(/\s+/g, ' ').trim()
     let resolvedLink = link
     let resolvedSource = source
     const srcName = stripTags(decodeEntities(textBetween(blk, 'source') || ''))
     const srcUrl = (attrValue(blk, 'source', 'url') || '').trim()
-    const m = /<a[^>]+href=["']([^"']+)["']/i.exec(rawDesc)
+    const m = /<a[^>]+href=["']([^"']+)["']/i.exec(decodedRawDesc)
     if (m && !/news\.google\.com/i.test(m[1])) resolvedLink = m[1]
     if (!resolvedLink && srcUrl && !/news\.google\.com/i.test(srcUrl)) resolvedLink = srcUrl
     if (srcName) resolvedSource = srcName
@@ -137,12 +138,25 @@ export async function GET(req: Request) {
       await Promise.all(dedup.map(async it => {
         try {
           const html = await fetchHtmlWithTimeout(it.link)
-          const full = extractMainContent(html)
-          const siteName = (/og:site_name"\s*content="([^"]+)"/i.exec(html) || /property=['"]og:site_name['"]\s*content=['"]([^'"]+)['"]/i.exec(html))?.[1] || ''
-          const canonical = (/rel=['"]canonical['"][^>]*href=['"]([^'"]+)['"]/i.exec(html) || /property=['"]og:url['"]\s*content=['"]([^'"]+)['"]/i.exec(html))?.[1] || ''
+          let full = extractMainContent(html)
+          const siteName = (/og:site_name"\s*content="([^\"]+)"/i.exec(html) || /property=['"]og:site_name['"]\s*content=['"]([^'\"]+)['"]/i.exec(html))?.[1] || ''
+          const canonical = (/rel=['"]canonical['"][^>]*href=['"]([^'\"]+)['"]/i.exec(html) || /property=['"]og:url['"]\s*content=['"]([^'\"]+)['"]/i.exec(html))?.[1] || ''
           if (siteName) it.source = siteName.trim()
           else if (canonical) { try { it.source = new URL(canonical).hostname.replace(/^www\./,'') } catch {} }
-          if (canonical) it.link = canonical
+          const isGoogle = /news\.google\.com/i.test(it.link)
+          const shouldFollow = (!!canonical && !/news\.google\.com/i.test(canonical)) && (!full || full.length < 400 || isGoogle)
+          if (shouldFollow) {
+            try {
+              const html2 = await fetchHtmlWithTimeout(canonical)
+              const full2 = extractMainContent(html2)
+              const site2 = (/og:site_name"\s*content="([^\"]+)"/i.exec(html2) || /property=['"]og:site_name['"]\s*content=['"]([^'\"]+)['"]/i.exec(html2))?.[1] || ''
+              if (site2) it.source = site2.trim()
+              if (full2 && full2.length > (full?.length || 0)) full = full2
+              it.link = canonical
+            } catch {}
+          } else if (canonical) {
+            it.link = canonical
+          }
           if (full) it.desc = full
         } catch {}
       }))
