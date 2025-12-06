@@ -2,6 +2,7 @@ import React from 'react'
 import JsonLd from '@/components/JsonLd'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import CoinMeltCalculator from '@/components/CoinMeltCalculator'
 
 const titles: Record<string, string> = {
   'about': 'About Us',
@@ -45,7 +46,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title,
     description,
     alternates: { canonical: `https://www.goldcalculator.click/${encodeURIComponent(slug)}` },
-    robots: { index: false, follow: true, googleBot: { index: false, follow: true } }
+    robots: slug==='coin-melt-values' ? { index: true, follow: true, googleBot: { index: true, follow: true } } : { index: false, follow: true, googleBot: { index: false, follow: true } }
   }
 }
 
@@ -55,6 +56,50 @@ export default function LegacyPage({ params }: { params: { slug: string } }){
   const title = titles[params.slug] || 'Page'
   const description = descriptions[params.slug] || 'Gold pricing tools, calculators and market resources.'
   const url = `https://www.goldcalculator.click/${encodeURIComponent(params.slug)}`
+  if (params.slug === 'coin-melt-values') {
+    return (
+      <div className="container py-5">
+        <JsonLd type="webpage" data={{ name: title, description, url }} />
+        <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url:'/' }, { name: title, url:`/${params.slug}` } ] }} />
+        <h1 className="text-center mb-4">Coin Melt Values</h1>
+        <div className="row g-4 mb-4">
+          <div className="col-md-6">
+            <div className="card h-100">
+              <div className="card-body">
+                <h2 className="h6">Common Metal Content</h2>
+                <ul className="mb-0">
+                  <li><strong>90% U.S. Silver Coins</strong>: 0.715 troy oz silver per $1 face</li>
+                  <li><strong>40% U.S. Half Dollars</strong> (1965–1970): 0.1479 troy oz silver each</li>
+                  <li><strong>U.S. Gold Coins</strong> (common types): purity varies (90% / .9167 / .9999)</li>
+                  <li><strong>Sterling Silver</strong>: 92.5% pure silver</li>
+                </ul>
+                <div className="small text-muted mt-2">Data is indicative; always confirm specific series, mint, and year details.</div>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="card h-100">
+              <div className="card-body">
+                <h2 className="h6">Calculate Melt Value</h2>
+                <ol className="mb-0">
+                  <li>Find the coin's metal content and purity</li>
+                  <li>Convert weight to troy ounces</li>
+                  <li>Multiply by current spot price</li>
+                  <li>Optionally deduct refining fees for scrap scenarios</li>
+                </ol>
+                <div className="mt-3">
+                  <a href="/calculator" className="btn btn-primary btn-sm me-2">Gold Calculator</a>
+                  <a href="/metals" className="btn btn-outline-primary btn-sm">Silver & Platinum Calculator</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <CoinMeltCalculator />
+        <div className="alert alert-info mt-4" role="alert">For multiple items, try our <a href="/multi-calculator.html" className="alert-link">Batch Calculator</a>.</div>
+      </div>
+    )
+  }
   return (
     <div className="container py-5">
       <JsonLd type="webpage" data={{ name: title, description, url }} />
@@ -62,13 +107,13 @@ export default function LegacyPage({ params }: { params: { slug: string } }){
       <h1 className="text-center mb-4">{title}</h1>
       <div className="card">
         <div className="card-body">
-          <p className="text-muted mb-3">This page has been rebuilt using the new site style. Content will be updated continuously.</p>
+          <div className="text-muted mb-3">This page has been rebuilt using the new site style. Content will be updated continuously.</div>
           <ul>
             <li>Real-time prices powered by `/api/spot` and `/api/timeseries`</li>
             <li>Unified display mode toggle across pages (Spot/CFD)</li>
             <li>Consistent layout and styling with the new theme</li>
           </ul>
-          <p className="mt-3">Looking for calculations? Try the <a href="/calculator">Gold Calculator</a> or <a href="/karat-kalculator">Karat Kalculator</a>.</p>
+          <div className="mt-3">Looking for calculations? Try the <a href="/calculator">Gold Calculator</a> or <a href="/karat-kalculator">Karat Kalculator</a>.</div>
         </div>
       </div>
     </div>
