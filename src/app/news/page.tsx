@@ -38,9 +38,10 @@ export default async function NewsPage({ searchParams }: { searchParams?: { [key
   return (
     <div className="container py-5">
       <JsonLd type="news" />
-      <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url: '/' }, { name:'Market News', url: '/news' } ] }} />
-      <h1 className="text-center mb-4">Gold Market News</h1>
-      <p className="text-muted text-center mb-4">Latest headlines related to bullion and precious metals, displayed directly on this page.</p>
+      <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url: '/' }, { name:'Market Headlines', url: '/news' } ] }} />
+      <h1 className="text-center mb-3">Gold Market Headlines</h1>
+      <h3 className="text-center text-muted mb-2">Direct updates on bullion and precious metals</h3>
+      <div className="text-muted text-center mb-4">Content is shown directly here with cleaned formatting and daily refresh.</div>
       <div className="row g-3">
         {(!items || items.length===0) ? (
           <div className="text-center">No recent gold-related headlines.</div>
@@ -78,7 +79,7 @@ export default async function NewsPage({ searchParams }: { searchParams?: { [key
                         )
                       })()
                     )}
-                    <div className="text-muted small mt-2">{n.source} • {timeAgo(n.published)}</div>
+                    <div className="text-muted small mt-2">{(/google/i.test(n.source||'')) ? 'Publisher' : n.source} • {timeAgo(n.published)}</div>
                   </div>
                 </div>
               </div>
@@ -90,16 +91,16 @@ export default async function NewsPage({ searchParams }: { searchParams?: { [key
   )
 }
 export const metadata: Metadata = {
-  title: 'Gold Market News – What’s moving prices today? | Gold Calculator',
-  description: 'Latest gold news covering Fed policy, USD strength, real yields and central bank demand.',
+  title: 'Gold Market Headlines – What’s moving prices today? | Gold Calculator',
+  description: 'Latest updates covering policy, USD strength, real yields and central bank demand.',
   alternates: { canonical: 'https://www.goldcalculator.click/news' },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   openGraph: {
-    title: 'Gold Market News – What’s moving prices today?',
-    description: 'Track headlines impacting gold: Fed, USD, real yields, central banks.',
+    title: 'Gold Market Headlines – What’s moving prices today?',
+    description: 'Track updates impacting gold: Fed, USD, real yields, central banks.',
     url: 'https://www.goldcalculator.click/news',
     siteName: 'Gold Calculator',
     type: 'website'
   },
-  twitter: { card: 'summary', title: 'Gold Market News', description: 'What’s moving gold prices today: Fed, USD, yields, central banks.' }
+  twitter: { card: 'summary', title: 'Gold Market Headlines', description: 'What’s moving gold prices today: Fed, USD, yields, central banks.' }
 }

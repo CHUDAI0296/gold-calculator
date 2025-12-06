@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import { ReactNode } from "react";
+import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Gold Holdings Tracker – Real-Time Value & P&L",
-  description: "Record your gold holdings, see live spot-based valuations with FX conversion, and track profit & loss securely across devices.",
-};
-
-export default function HoldingsLayout({ children }: { children: ReactNode }) {
-  return children;
+  title: 'Holdings Tracker',
+  description: 'Track item quantities, purity, cost, real-time value and P&L with currency switching.',
+  alternates: { canonical: 'https://www.goldcalculator.click/holdings' },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true } }
 }
 
+export default function HoldingsLayout({ children }: { children: React.ReactNode }){
+  return (<>{children}</>)
+}

@@ -61,7 +61,7 @@ export default async function Home() {
             <div className="col-md-6 mb-4">
               <div className="card h-100">
                 <div className="card-body">
-                  <h2 className="mb-2">How do I calculate my gold price?</h2>
+                  <h2 className="mb-2">How do I calculate value?</h2>
                   <p>Enter weight and karat, then see today’s value using live prices.</p>
                   <a href="/calculator" className="btn btn-warning">Calculate Now</a>
                 </div>
@@ -70,7 +70,7 @@ export default async function Home() {
             <div className="col-md-6 mb-4">
               <div className="card h-100">
                 <div className="card-body">
-                  <h2 className="mb-2">How much is 18K gold worth per gram?</h2>
+                  <h2 className="mb-2">How much is 18K worth per gram?</h2>
                   <p>Select 18K and grams to get a per‑gram price in seconds.</p>
                   <a href="/calculator" className="btn btn-outline-warning">Get 18K Price</a>
                 </div>
@@ -79,7 +79,7 @@ export default async function Home() {
             <div className="col-md-6 mb-4">
               <div className="card h-100">
                 <div className="card-body">
-                  <h2 className="mb-2">How much is 1 oz of gold worth right now?</h2>
+                  <h2 className="mb-2">What's the value of 1 oz right now?</h2>
                   <p>Check real‑time charts with 24h high/low and key indicators.</p>
                   <a href="/market" className="btn btn-primary">View 1 oz Price</a>
                 </div>
@@ -97,7 +97,7 @@ export default async function Home() {
             <div className="col-md-6 mb-4">
               <div className="card h-100">
                 <div className="card-body">
-                  <h2 className="mb-2">How much can I sell 1 oz of gold for?</h2>
+                  <h2 className="mb-2">How much can I sell 1 oz for?</h2>
                   <p>Use the calculator with a discount to estimate real sell quotes.</p>
                   <a href="/calculator" className="btn btn-outline-warning">Estimate Sell Value</a>
                 </div>
@@ -106,7 +106,7 @@ export default async function Home() {
             <div className="col-md-6 mb-4">
               <div className="card h-100">
                 <div className="card-body">
-                  <h2 className="mb-2">Will gold hit $5000 an ounce?</h2>
+                  <h2 className="mb-2">Will prices hit $5000 an ounce?</h2>
                   <p>Explore long‑term trends, drivers and technicals on Market.</p>
                   <a href="/market" className="btn btn-primary">Explore Trends</a>
                 </div>
@@ -115,7 +115,7 @@ export default async function Home() {
             <div className="col-md-6 mb-4">
               <div className="card h-100">
                 <div className="card-body">
-                  <h2 className="mb-2">How much is 14K gold worth per gram?</h2>
+                  <h2 className="mb-2">How much is 14K worth per gram?</h2>
                   <p>Select 14K in the calculator to see per‑gram pricing.</p>
                   <a href="/calculator" className="btn btn-outline-warning">Get 14K Price</a>
                 </div>
@@ -124,7 +124,7 @@ export default async function Home() {
             <div className="col-md-6 mb-4">
               <div className="card h-100">
                 <div className="card-body">
-                  <h2 className="mb-2">If I invested $1000 in gold 10 years ago, what’s it worth?</h2>
+                  <h2 className="mb-2">If I invested $1000 10 years ago, what’s it worth?</h2>
                   <p>Review historical charts and estimate using past spot and today’s price.</p>
                   <a href="/market" className="btn btn-primary">Check History</a>
                 </div>
@@ -133,7 +133,7 @@ export default async function Home() {
             <div className="col-md-6 mb-4">
               <div className="card h-100">
                 <div className="card-body">
-                  <h2 className="mb-2">Is a Costco gold bar worth it?</h2>
+                  <h2 className="mb-2">Is a Costco bar worth it?</h2>
                   <p>Compare premiums vs spot and resale spreads before buying.</p>
                   <a href="/investment-guide" className="btn btn-outline-secondary">Compare Premiums</a>
                 </div>
@@ -149,15 +149,15 @@ export default async function Home() {
             <div className="card-body">
               <h2 className="mb-4">Quick answers</h2>
               <div className="mb-3">
-                <h2 className="h5">How do I calculate my gold price?</h2>
+                <h2 className="h5">How do I calculate value?</h2>
                 <p>Enter weight and karat, choose unit (g/oz/dwt), and get today’s value. Adjust with premium/discount if needed.</p>
               </div>
               <div className="mb-3">
-                <h2 className="h5">How much is 18K gold worth per gram?</h2>
+                <h2 className="h5">How much is 18K worth per gram?</h2>
                 <p>Select 18K and grams in the calculator to see a per‑gram price based on 58.5% purity and live spot.</p>
               </div>
               <div className="mb-2">
-                <h2 className="h5">How much is 1 oz of gold worth right now?</h2>
+                <h2 className="h5">What's the value of 1 oz right now?</h2>
                 <p>Check real‑time price and 24h high/low on the Market page; the calculator uses the same live data for estimates.</p>
               </div>
             </div>
@@ -169,9 +169,9 @@ export default async function Home() {
               "@context": "https://schema.org",
               "@type": "FAQPage",
               "mainEntity": [
-                {"@type":"Question","name":"How do I calculate my gold price?","acceptedAnswer":{"@type":"Answer","text":"Enter weight and karat, choose unit (g/oz/dwt), and get today’s value. Adjust with premium/discount if needed."}},
-                {"@type":"Question","name":"How much is 18K gold worth per gram?","acceptedAnswer":{"@type":"Answer","text":"Select 18K and grams in the calculator to see a per‑gram price based on 58.5% purity and live spot."}},
-                {"@type":"Question","name":"How much is 1 oz of gold worth right now?","acceptedAnswer":{"@type":"Answer","text":"Check real‑time price and 24h high/low on the Market page; the calculator uses the same live data for estimates."}}
+                {"@type":"Question","name":"How do I calculate value?","acceptedAnswer":{"@type":"Answer","text":"Enter weight and karat, choose unit (g/oz/dwt), and get today’s value. Adjust with premium/discount if needed."}},
+                {"@type":"Question","name":"How much is 18K worth per gram?","acceptedAnswer":{"@type":"Answer","text":"Select 18K and grams in the calculator to see a per‑gram price based on 58.5% purity and live spot."}},
+                {"@type":"Question","name":"What's the value of 1 oz right now?","acceptedAnswer":{"@type":"Answer","text":"Check real‑time price and 24h high/low on the Market page; the calculator uses the same live data for estimates."}}
               ]
             }
           `}
@@ -181,20 +181,20 @@ export default async function Home() {
       {/* Features Section */}
       <section className="features-section py-5 bg-light">
         <div className="container">
-          <h2 className="text-center mb-5">How do I calculate my gold price?</h2>
+          <h2 className="text-center mb-5">How do I calculate item value?</h2>
           <div className="row">
             <div className="col-md-4 mb-4">
               <div className="feature-box text-center p-4">
                 <i className="fas fa-tachometer-alt feature-icon mb-3" aria-hidden="true"></i>
                 <h3>Real-Time Prices</h3>
-                <p>Our calculator uses up-to-date gold prices to provide accurate valuations.</p>
+                <p>Our calculator uses up-to-date spot prices to provide accurate valuations.</p>
               </div>
             </div>
             <div className="col-md-4 mb-4">
               <div className="feature-box text-center p-4">
                 <i className="fas fa-balance-scale feature-icon mb-3" aria-hidden="true"></i>
                 <h3>Multiple Karat Options</h3>
-                <p>Calculate values for all gold purities from 8K to 24K.</p>
+                <p>Calculate values for 8K–24K purities.</p>
               </div>
             </div>
             <div className="col-md-4 mb-4">
@@ -211,7 +211,7 @@ export default async function Home() {
       {/* Calculators Section */}
       <section className="calculators-section py-5">
         <div className="container">
-          <h2 className="text-center mb-5">How much is 18K gold worth per gram?</h2>
+          <h2 className="text-center mb-5">How much is 18K worth per gram?</h2>
           <div className="row">
             <div className="col-md-4 mb-4">
               <div className="card h-100">
@@ -276,8 +276,8 @@ export default async function Home() {
         <div className="container">
           <div className="row align-items-center">
             <div className="col-md-6">
-              <h2>How much is 1 oz of gold worth right now?</h2>
-              <p>Stay informed with our interactive market charts. Monitor gold, silver, and platinum price trends over time to make informed decisions.</p>
+              <h2>What's the value of 1 oz right now?</h2>
+              <p>Stay informed with our interactive market charts. Monitor price trends for precious metals over time to make informed decisions.</p>
               <ul>
                 <li>Historical price charts</li>
                 <li>Multiple time ranges (7 days to 1 year)</li>

@@ -221,14 +221,15 @@ export default function HoldingsPage() {
   return (
     <div className="container py-5">
       <JsonLd type="webpage" />
-      <JsonLd type="breadcrumbs" data={{ items: [ { name:"Home", url:"/" }, { name:"My Gold Holdings", url:"/holdings" } ] }} />
-      <h1 className="text-center mb-4">My Gold Holdings</h1>
+      <JsonLd type="breadcrumbs" data={{ items: [ { name:"Home", url:"/" }, { name:"Holdings", url:"/holdings" } ] }} />
+      <h1 className="text-center mb-3">Holdings Tracker</h1>
+      <h3 className="text-center text-muted mb-4">Overview of quantities, value and performance</h3>
 
       <div className="row g-3 mb-4">
         <div className="col-md-3">
           <div className="card h-100">
             <div className="card-body">
-              <div className="text-muted">Fine Gold (oz)</div>
+              <div className="text-muted">Fine oz</div>
               <div className="display-6">{format(totals.fineOz)}</div>
             </div>
           </div>
@@ -275,6 +276,7 @@ export default function HoldingsPage() {
 
       <div className="card mb-4">
         <div className="card-header bg-warning text-dark"><h2 className="h5 mb-0">Add Holding</h2></div>
+        <div className="px-3 pt-2"><h3 className="h6 text-muted">Input quantity, purity, purchase and notes</h3></div>
         <div className="card-body">
           <div className="row g-3">
             <div className="col-md-3">
@@ -334,6 +336,7 @@ export default function HoldingsPage() {
 
       <div className="card">
         <div className="card-header"><h2 className="h5 mb-0">Holdings</h2></div>
+        <div className="px-3 pt-2"><h3 className="h6 text-muted">Search, edit and track P&L in selected currency</h3></div>
         <div className="card-body">
           <div className="mb-3">
             <input type="text" className="form-control" placeholder="Search vendor/note/date/currency" value={search} onChange={e=>setSearch(e.target.value)} />
@@ -346,7 +349,7 @@ export default function HoldingsPage() {
                   <th>Quantity</th>
                   <th>Karat</th>
                   <th>Fine oz</th>
-                  <th>Cost (USD)</th>
+                  <th>Cost</th>
                   <th>Current Value</th>
                   <th>P&L</th>
                   <th></th>
