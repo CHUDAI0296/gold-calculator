@@ -8,8 +8,14 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.goldcalculator.click/blog' },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   keywords: [
-    'gold calculator','gold price','spot gold','karat purity','gold bar weight','coin melt value','Krugerrand value','MACD RSI','pivot points','ten year gold rate','DXY','real yields',
-    '14 karat gold price','21k gold price per gram','how much is one pound of gold worth'
+    'gold calculator',
+    'gold bars weight',
+    '14K gold value',
+    'melt value calculator',
+    'gold coin value',
+    'Krugerrand worth',
+    'gold market trends',
+    'silver coin melt value'
   ]
 }
 
@@ -17,8 +23,14 @@ export default function BlogPage(){
   return (
     <div className="container py-5">
       <JsonLd type="webpage" data={{ "@type":"Blog", name: 'Gold Calculator Blog', description: 'Gold market insights, pricing tips, and calculator updates.', url: 'https://www.goldcalculator.click/blog', keywords: [
-        'gold calculator','gold price','spot gold','karat purity','gold bar weight','coin melt value','Krugerrand value','MACD RSI','pivot points','ten year gold rate','DXY','real yields',
-        '14 karat gold price','21k gold price per gram','how much is one pound of gold worth'
+        'gold calculator',
+        'gold bars weight',
+        '14K gold value',
+        'melt value calculator',
+        'gold coin value',
+        'Krugerrand worth',
+        'gold market trends',
+        'silver coin melt value'
       ] }} />
       <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url:'/' }, { name:'Blog', url:'/blog' } ] }} />
       <h1 className="text-center mb-4">Blog</h1>
