@@ -3,8 +3,8 @@ import type { Metadata } from 'next'
 import JsonLd from '@/components/JsonLd'
 
 export const metadata: Metadata = {
-  title: 'Blog – Gold Calculator',
-  description: 'Gold market insights, pricing tips, and calculator updates.',
+  title: 'Gold Calculator Blog: Value Estimations & Trends',
+  description: 'how much is 10k gold per gram',
   alternates: { canonical: 'https://www.goldcalculator.click/blog' },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   keywords: [
@@ -15,14 +15,15 @@ export const metadata: Metadata = {
     'gold coin value',
     'Krugerrand worth',
     'gold market trends',
-    'silver coin melt value'
+    'silver coin melt value',
+    'how much is 10k gold per gram'
   ]
 }
 
 export default function BlogPage(){
   return (
     <div className="container py-5">
-      <JsonLd type="webpage" data={{ "@type":"Blog", name: 'Gold Calculator Blog', description: 'Gold market insights, pricing tips, and calculator updates.', url: 'https://www.goldcalculator.click/blog', keywords: [
+      <JsonLd type="webpage" data={{ "@type":"Blog", name: 'Gold Calculator Blog', description: 'how much is 10k gold per gram', url: 'https://www.goldcalculator.click/blog', keywords: [
         'gold calculator',
         'gold bars weight',
         '14K gold value',
@@ -30,10 +31,11 @@ export default function BlogPage(){
         'gold coin value',
         'Krugerrand worth',
         'gold market trends',
-        'silver coin melt value'
+        'silver coin melt value',
+        'how much is 10k gold per gram'
       ] }} />
       <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url:'/' }, { name:'Blog', url:'/blog' } ] }} />
-      <h1 className="text-center mb-4">Blog</h1>
+      <h1 className="text-center mb-4">Gold Calculator Blog: Value Estimations & Trends</h1>
       <div className="row g-4">
         <div className="col-md-4">
           <div className="card h-100">
@@ -65,6 +67,19 @@ export default function BlogPage(){
               <p className="mb-2">Over ten years, gold reacts to policy cycles, USD strength and real yields. The interaction between inflation expectations and central bank activity often drives multi‑year trends.</p>
               <p className="mb-3">Use extended charts to inspect drawdowns and breakouts, then align purchase plans with moving averages and macro signals. For short‑term views, monitor futures daily pivot points and news flow.</p>
               <a className="btn btn-outline-secondary btn-sm" href="/market">Open Market Charts</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 10k gold per gram</h2>
+              <p className="mb-2">10K purity is 41.7%, meaning each gram contains 0.417 g of pure gold. Set the calculator to grams, select 10K, and you’ll get an instant per‑gram estimate using live spot prices.</p>
+              <p className="mb-3">For selling small lots, local buyers may deduct refining fees or apply spreads. Enter a negative premium (e.g., −12% to −18%) to approximate a buy quote and compare fairly.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Check 10K Per‑Gram</a>
             </div>
           </div>
         </div>
@@ -177,6 +192,7 @@ export default function BlogPage(){
       <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'How to read MACD/RSI with pivots', image: 'https://www.goldcalculator.click/images/blog/macd-rsi-pivots.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['MACD RSI','technical analysis','divergence'] }} />
       <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'How to value scrap 18K chains quickly', image: 'https://www.goldcalculator.click/images/blog/18k-scrap.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['18k gold value','scrap gold','grams'] }} />
       <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'Dollar strength and real yields: why gold moves', image: 'https://www.goldcalculator.click/images/blog/usd-real-yields.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['DXY','real yields 10y','gold macro drivers'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'How much is 10K gold per gram?', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['10k gold per gram','karat 41.7','10K value'] }} />
     </div>
   )
 }
