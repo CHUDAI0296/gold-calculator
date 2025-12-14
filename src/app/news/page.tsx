@@ -34,7 +34,6 @@ function paragraphs(text?: string){
   return t
 }
 
-function has(term: RegExp, s?: string){ return !!(s && term.test(s.toLowerCase())) }
 function isGoldItem(n: {title:string;desc?:string;full?:string}){ const T = (n.title||'').toLowerCase(); return /(gold|xau|gld)/.test(T) }
 function isSilverItem(n: {title:string;desc?:string;full?:string}){ const T = (n.title||'').toLowerCase(); return /(silver|xag|slv)/.test(T) }
 function isPlatinumItem(n: {title:string;desc?:string;full?:string}){ const T = (n.title||'').toLowerCase(); return /(platinum|xpt)/.test(T) }
