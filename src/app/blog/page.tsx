@@ -36,6 +36,7 @@ export default function BlogPage(){
       ] }} />
       <JsonLd type="breadcrumbs" data={{ items: [ { name:'Home', url:'/' }, { name:'Blog', url:'/blog' } ] }} />
       <h1 className="text-center mb-4">Gold Calculator Blog: Value Estimations & Trends</h1>
+      <div className="alert alert-info text-center" role="alert">Set units to grams, choose 10K, use premium to approximate quotes.</div>
       <div className="row g-4">
         <div className="col-md-4">
           <div className="card h-100">
@@ -73,13 +74,179 @@ export default function BlogPage(){
       </div>
 
       <div className="row g-4 mt-4">
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">US Google Searches – Gold</h2>
+              <ul className="mb-3">
+                <li>gold price today</li>
+                <li>gold spot price</li>
+                <li>XAUUSD</li>
+                <li>gold price per gram</li>
+                <li>24k gold price</li>
+                <li>GLD</li>
+                <li>buy gold near me</li>
+                <li>krugerrand price</li>
+              </ul>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate with Calculator</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">US Google Searches – Silver</h2>
+              <ul className="mb-3">
+                <li>silver price today</li>
+                <li>silver spot price</li>
+                <li>XAGUSD</li>
+                <li>silver price per ounce</li>
+                <li>SLV</li>
+                <li>silver coins melt value</li>
+                <li>gold silver ratio</li>
+                <li>comex silver</li>
+              </ul>
+              <a className="btn btn-outline-primary btn-sm" href="/market">View Market Charts</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">US Google Searches – Platinum</h2>
+              <ul className="mb-3">
+                <li>platinum price today</li>
+                <li>platinum spot price</li>
+                <li>XPTUSD</li>
+                <li>platinum price per ounce</li>
+                <li>PPLT</li>
+                <li>platinum vs palladium</li>
+                <li>platinum autocatalyst</li>
+                <li>platinum price forecast</li>
+              </ul>
+              <a className="btn btn-outline-secondary btn-sm" href="/market">View Market Charts</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">21K gold price per gram</h2>
+              <p className="mb-2">21K purity is 87.5%, so each gram contains 0.875 g of fine gold. Set units to grams, choose 21K, and the calculator returns an instant per‑gram estimate using live spot.</p>
+              <p className="mb-3">When selling, small lots may include discounts or fees. Use a negative premium to simulate local quotes and compare offers fairly across dealers.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Check 21K Per‑Gram</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">How much is one pound of gold worth?</h2>
+              <p className="mb-2">Most people mean an avoirdupois pound (~453.592 g). Convert grams to troy ounces (31.1035 g/oz): 453.592 ÷ 31.1035 ≈ 14.583 oz. Multiply by spot × purity to estimate value.</p>
+              <p className="mb-3">A “troy pound” isn’t standard for bullion; pricing is per troy ounce. Use grams or ounces in the calculator and apply premiums/discounts to reflect buy/sell conditions.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate One‑Pound Value</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">22K gold price per gram</h2>
+              <p className="mb-2">22K purity is ~91.67%, so each gram contains about 0.9167 g of fine gold. Set units to grams, choose 22K, and get an instant per‑gram estimate using live spot.</p>
+              <p className="mb-3">For selling small lots, local buyers may apply spreads or fees. Enter a negative premium (e.g., −6% to −12%) to approximate quotes and compare fairly.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Check 22K Per‑Gram</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">24K gold price per gram</h2>
+              <p className="mb-2">24K is pure gold, so each gram equals 1.0 g of fine gold. Select grams and 24K in the calculator to see the per‑gram value directly from live spot prices.</p>
+              <p className="mb-3">Retail purchases often include positive premiums; wholesale or sell‑side quotes may include discounts. Use the premium field to normalize offers.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Check 24K Per‑Gram</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-12">
+          <div className="card">
+            <div className="card-body">
+              <h2 className="h5 mb-3">FAQ</h2>
+              <div className="row g-4">
+                <div className="col-md-6">
+                  <div className="card h-100">
+                    <div className="card-body">
+                      <h3 className="h6 mb-2">What is a gold cost calculator?</h3>
+                      <p className="mb-2">It estimates real purchase or sell costs by combining spot price, purity and weight with premiums/discounts, refining fees, treatment charges, shipping/insurance and FX conversion.</p>
+                      <p className="mb-0">Use the premium field to simulate scenarios: positive values for buy‑side costs, negative values for sell‑side quotes.</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="card h-100">
+                    <div className="card-body">
+                      <h3 className="h6 mb-2">How do I calculate 10K gold per gram?</h3>
+                      <p className="mb-2">Set units to grams, choose 10K (41.7%) and multiply grams × spot × 0.417 to get an instant estimate.</p>
+                      <p className="mb-0">For sell quotes, add a negative premium (e.g., −12% to −18%) to approximate local buy prices.</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="card h-100">
+                    <div className="card-body">
+                      <h3 className="h6 mb-2">How do I compare dealer quotes fairly?</h3>
+                      <p className="mb-2">Use the same units (grams or oz), the same karat/purity and live spot. Include premiums/discounts, refining fees and treatment charges to compare net proceeds rather than headline prices.</p>
+                      <p className="mb-0">Run scenarios in the calculator’s premium field (e.g., +8% buy cost vs −12% sell quote) to normalize offers.</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="card h-100">
+                    <div className="card-body">
+                      <h3 className="h6 mb-2">How do I convert ounces and grams?</h3>
+                      <p className="mb-2">Use 1 troy ounce = 31.1035 grams. Divide grams by 31.1035 to get troy ounces, or multiply ounces by 31.1035 to get grams.</p>
+                      <p className="mb-0">The calculator supports both units. Select grams or ounces, enter karat, and apply premiums/discounts for real‑world quotes.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
         <div className="col-md-6">
           <div className="card h-100">
             <div className="card-body">
               <h2 className="h5 mb-2">how much is 10k gold per gram</h2>
+              <img src="/images/blog/10k-per-gram.svg" alt="10K gold worth per gram" className="img-fluid rounded mb-3" />
               <p className="mb-2">10K purity is 41.7%, meaning each gram contains 0.417 g of pure gold. Set the calculator to grams, select 10K, and you’ll get an instant per‑gram estimate using live spot prices.</p>
               <p className="mb-3">For selling small lots, local buyers may deduct refining fees or apply spreads. Enter a negative premium (e.g., −12% to −18%) to approximate a buy quote and compare fairly.</p>
               <a className="btn btn-outline-warning btn-sm" href="/calculator">Check 10K Per‑Gram</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">Gold cost calculator: estimate real purchase and sell costs</h2>
+              <img src="/images/blog/gold-cost-calculator.svg" alt="Gold cost calculator costs and scenarios" className="img-fluid rounded mb-3" />
+              <p className="mb-2">Use live spot, purity and weight to get base value, then layer in real‑world costs: dealer premiums or discounts, refining fees, treatment charges, shipping/insurance, and FX conversion when applicable.</p>
+              <p className="mb-3">Set units to grams or troy ounces, choose karat, and use the premium field for quick scenarios: positive premium for buy‑side costs, negative premium for sell‑side quotes. Compare dealers using the same inputs to make decisions confidently.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Use Gold Cost Calculator</a>
             </div>
           </div>
         </div>
@@ -192,7 +359,16 @@ export default function BlogPage(){
       <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'How to read MACD/RSI with pivots', image: 'https://www.goldcalculator.click/images/blog/macd-rsi-pivots.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['MACD RSI','technical analysis','divergence'] }} />
       <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'How to value scrap 18K chains quickly', image: 'https://www.goldcalculator.click/images/blog/18k-scrap.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['18k gold value','scrap gold','grams'] }} />
       <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'Dollar strength and real yields: why gold moves', image: 'https://www.goldcalculator.click/images/blog/usd-real-yields.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['DXY','real yields 10y','gold macro drivers'] }} />
-      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'How much is 10K gold per gram?', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['10k gold per gram','karat 41.7','10K value'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'How much is 10K gold per gram?', image: 'https://www.goldcalculator.click/images/blog/10k-per-gram.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['10k gold per gram','karat 41.7','10K value'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'Gold cost calculator: estimate real purchase and sell costs', image: 'https://www.goldcalculator.click/images/blog/gold-cost-calculator.svg', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['gold cost calculator','calculate gold cost','refining fees','premiums','treatment charges'] }} />
+      <JsonLd type="webpage" data={{ "@type":"FAQPage", "mainEntity": [ { "@type":"Question", "name":"What is a gold cost calculator?", "acceptedAnswer": { "@type":"Answer", "text":"It estimates real purchase or sell costs by combining spot price, purity and weight with premiums/discounts, refining fees, treatment charges, shipping/insurance and FX conversion. Use the premium field for quick scenarios." } }, { "@type":"Question", "name":"How do I calculate 10K gold per gram?", "acceptedAnswer": { "@type":"Answer", "text":"Set units to grams, choose 10K (41.7%) and multiply grams × spot × 0.417 for an instant estimate. For sell quotes, add a negative premium (e.g., −12% to −18%)." } }, { "@type":"Question", "name":"How do I compare dealer quotes fairly?", "acceptedAnswer": { "@type":"Answer", "text":"Use the same units, purity and live spot price across quotes. Include premiums or discounts and all fees (refining, treatment, shipping) to compare net proceeds rather than headline prices. Simulate in the calculator using the premium field." } }, { "@type":"Question", "name":"How do I convert ounces and grams?", "acceptedAnswer": { "@type":"Answer", "text":"Use 1 troy ounce = 31.1035 grams. Divide grams by 31.1035 to get troy ounces, or multiply ounces by 31.1035 to get grams. The calculator supports both units with premium/discount scenarios." } } ] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: '21K gold price per gram', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['21k gold price per gram','karat 87.5','21K value'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'How much is one pound of gold worth?', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['one pound of gold worth','troy ounce conversion','gold pound value'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: '22K gold price per gram', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['22k gold per gram','karat 91.67','22K value'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: '24K gold price per gram', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['24k gold per gram','pure gold','24K value'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'US Google Searches – Gold', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['gold price today','gold spot price','XAUUSD','gold price per gram','24k gold price','GLD','buy gold near me','krugerrand price'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'US Google Searches – Silver', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['silver price today','silver spot price','XAGUSD','silver price per ounce','SLV','silver coins melt value','gold silver ratio','comex silver'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'US Google Searches – Platinum', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['platinum price today','platinum spot price','XPTUSD','platinum price per ounce','PPLT','platinum vs palladium','platinum autocatalyst','platinum price forecast'] }} />
     </div>
   )
 }
