@@ -87,6 +87,12 @@ export default async function NewsPage({ searchParams }: { searchParams?: { [key
   const topTags = Object.entries(tagCounts).sort((a,b)=>b[1]-a[1]).slice(0,6)
   const textAll = items.map(i=>((i.title||'')+' '+(i.full||i.desc||''))).join('\n').toLowerCase()
   const countAll = (re: RegExp) => (textAll.match(new RegExp(re.source, 'g'))||[]).length
+  const top5Items = items.slice().sort((a,b)=>b.published - a.published).slice(0,5)
+  const summarize = (n: {title:string;source:string;published:number;desc?:string;full?:string}) => {
+    const ps = paragraphs(n.full || n.desc || '')
+    const s = ps[0] || ''
+    return s.length > 180 ? (s.slice(0,180) + '…') : s
+  }
 
   return (
     <div className="container py-5">
@@ -210,6 +216,43 @@ export default async function NewsPage({ searchParams }: { searchParams?: { [key
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="row g-3 mb-3">
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h6 mb-2">Daily Brief</h2>
+              <ul className="mb-2">
+                <li>Central banks mentions: {countAll(/central bank|reserves|pboc/)}</li>
+                <li>ETF mentions: {countAll(/etf|gld|slv/)}</li>
+                <li>USD/DXY mentions: {countAll(/usd|dxy|dollar/)}</li>
+                <li>Real yields/Treasury mentions: {countAll(/real yield|treasury|10-year|10 year/)}</li>
+                <li>Geopolitics mentions: {countAll(/geopolitic|war|conflict|middle east/)}</li>
+              </ul>
+              <div className="small text-muted">Auto-generated from today’s headlines.</div>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h6 mb-2">Top 5 summary</h2>
+              {top5Items.length === 0 ? (
+                <div className="text-muted small">No items available.</div>
+              ) : (
+                <ul className="mb-0">
+                  {top5Items.map((n,i)=> (
+                    <li key={i} className="mb-2">
+                      <div className="fw-semibold">{n.title}</div>
+                      <div className="text-muted small">{summarize(n)}</div>
+                      <div className="text-muted small">{(/google/i.test(n.source||'')) ? 'Publisher' : n.source} • {timeAgo(n.published)}</div>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
         </div>

@@ -77,6 +77,338 @@ export default function BlogPage(){
         <div className="col-md-4">
           <div className="card h-100">
             <div className="card-body">
+              <h2 className="h5 mb-2">how much is 12 grams of 18k gold worth</h2>
+              <p className="mb-2">18K purity is 75%, so fine grams = 12 × 0.75 = 9 g. Convert to troy ounces: 9 ÷ 31.1035 ≈ 0.289 oz. Value ≈ 0.289 × spot (USD/oz).</p>
+              <p className="mb-3">Select grams and 18K to get an instant estimate. Use the premium/discount field to reflect local buy quotes or retail markups.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 12 g (18K)</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 75 grams of gold worth</h2>
+              <p className="mb-2">Convert grams to troy ounces: 75 ÷ 31.1035 ≈ 2.411 oz. For 24K, value ≈ 2.411 × spot. For karat gold, multiply grams by purity first.</p>
+              <p className="mb-3">Enter 75 g and select the karat to estimate. Adjust premium/discount to mirror real purchase or sell conditions.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 75 g</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 1 tola of 24k gold worth</h2>
+              <p className="mb-2">1 tola ≈ 11.66 g. Convert to troy ounces: 11.66 ÷ 31.1035 ≈ 0.375 oz. For 24K, value ≈ 0.375 × spot (USD/oz).</p>
+              <p className="mb-3">For 22K tola items, apply 0.9167 purity before converting. Use premium/discount to represent local retail or buyback spreads.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 1 tola (24K)</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 6 tolas of gold worth</h2>
+              <p className="mb-2">6 tolas ≈ 6 × 11.66 g = 69.96 g; convert to troy ounces: 69.96 ÷ 31.1035 ≈ 2.249 oz. For 22K, apply ~0.9167 purity before converting.</p>
+              <p className="mb-3">Select grams and the correct karat, then estimate with live spot. Use premium/discount to reflect market pricing.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 6 tolas</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 200 grams of gold worth</h2>
+              <p className="mb-2">Convert grams to troy ounces: 200 ÷ 31.1035 ≈ 6.430 oz. For 24K, value ≈ 6.430 × spot. For karat gold, multiply grams by purity first.</p>
+              <p className="mb-3">Enter 200 g and set karat to estimate. Adjust with premium/discount to simulate retail or buy‑side spreads.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 200 g</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 3 ounces of gold worth</h2>
+              <p className="mb-2">For 24K bullion, melt ≈ 3.0 × spot (USD/oz). For jewelry, convert ounces to grams (1 oz = 31.1035 g) and apply karat purity before valuing.</p>
+              <p className="mb-3">Switch units to ounces for a direct estimate, or grams for karat items. Add premium/discount to model market conditions.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 3 oz</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 12 grams of 22k gold worth</h2>
+              <p className="mb-2">22K purity is ~91.67%, so fine grams ≈ 12 × 0.9167 = 11.00 g. Convert to troy ounces: 11.00 ÷ 31.1035 ≈ 0.354 oz. Value ≈ 0.354 × spot (USD/oz).</p>
+              <p className="mb-3">Select grams and 22K in the calculator for an instant estimate. Use premium/discount to reflect local retail or buy quotes.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 12 g (22K)</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 50 grams of 24k gold worth</h2>
+              <p className="mb-2">24K is pure gold. Convert grams to troy ounces: 50 ÷ 31.1035 ≈ 1.607 oz. Value ≈ 1.607 × spot (USD/oz).</p>
+              <p className="mb-3">Enter 50 g and select 24K to get a direct estimate using live spot. Add premium for retail markups if needed.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 50 g (24K)</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is quarter ounce of gold worth</h2>
+              <p className="mb-2">A quarter‑ounce is 0.25 oz. For 24K bullion, melt ≈ 0.25 × spot. For jewelry, convert to grams and multiply by karat purity before applying spot.</p>
+              <p className="mb-3">Switch units to ounces in the calculator for a direct per‑ounce estimate, or use grams for karat items.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 0.25 oz</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 2 ounces of gold worth</h2>
+              <p className="mb-2">For 24K bullion, melt ≈ 2.0 × spot (USD/oz). For karat items, convert to grams and multiply by purity first, then apply spot per gram.</p>
+              <p className="mb-3">Set units to ounces for a quick 2 oz estimate, or grams for karat jewelry. Adjust with premium/discount to model market spreads.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 2 oz</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 500 grams of gold worth</h2>
+              <p className="mb-2">Convert grams to troy ounces: 500 ÷ 31.1035 ≈ 16.075 oz. For 24K, value ≈ 16.075 × spot. For karat gold, multiply grams by purity first.</p>
+              <p className="mb-3">Enter 500 g and the correct karat to estimate. Use premium/discount to simulate real purchase or sell conditions.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 500 g</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 3 tolas of gold worth</h2>
+              <p className="mb-2">1 tola ≈ 11.66 g. 3 tolas ≈ 34.98 g; convert to troy ounces: 34.98 ÷ 31.1035 ≈ 1.124 oz. For 22K, apply ~0.9167 purity before converting.</p>
+              <p className="mb-3">Choose grams and karat, then estimate with live spot. Add premium for local retail pricing or subtract for buy quotes.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 3 tolas</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 15 grams of 22k gold worth</h2>
+              <p className="mb-2">22K purity is ~91.67%, so fine grams = 15 × 0.9167 ≈ 13.75 g. Convert to troy ounces: 13.75 ÷ 31.1035 ≈ 0.442 oz. Value ≈ 0.442 × spot (USD/oz).</p>
+              <p className="mb-3">Set units to grams and choose 22K. Use premium/discount to reflect retail markups or local buy quotes.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 15 g (22K)</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 8 grams of 14k gold worth</h2>
+              <p className="mb-2">14K purity is 58.5%, so fine grams = 8 × 0.585 = 4.68 g. Convert to troy ounces: 4.68 ÷ 31.1035 ≈ 0.150 oz. Value ≈ 0.150 × spot.</p>
+              <p className="mb-3">Select grams and 14K to get a quick estimate. Apply a negative premium to approximate local buyback spreads.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 8 g (14K)</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 1 ounce of gold worth today</h2>
+              <p className="mb-2">For 24K bullion, value ≈ 1.0 oz × spot (USD/oz). For jewelry, convert to grams and multiply by karat purity before applying spot.</p>
+              <p className="mb-3">Switch units to ounces in the calculator for a direct per‑ounce estimate, or use grams for karat items.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 1 oz</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 100 grams of gold worth</h2>
+              <p className="mb-2">Convert to troy ounces: 100 ÷ 31.1035 ≈ 3.215 oz. For 24K, value ≈ 3.215 × spot. For karat gold, multiply grams by purity first.</p>
+              <p className="mb-3">Enter 100 g and select the correct karat. Use premium/discount to model real‑world buy/sell conditions.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 100 g</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is half ounce of gold worth</h2>
+              <p className="mb-2">0.5 oz × spot gives the melt for 24K. For karat jewelry, convert 0.5 oz to grams (≈ 15.5518 g) and multiply by purity before valuing.</p>
+              <p className="mb-3">Set units to ounces for a direct estimate, or grams for karat items, then adjust with premium/discount.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 0.5 oz</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 5 tolas of gold worth</h2>
+              <p className="mb-2">1 tola ≈ 11.66 g. 5 tolas ≈ 58.3 g; convert to troy ounces: 58.3 ÷ 31.1035 ≈ 1.875 oz. For 22K, apply 0.9167 purity before converting.</p>
+              <p className="mb-3">Choose grams and karat, then estimate with live spot. Add premium to reflect local market pricing.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 5 tolas</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 30 grams of 18k gold worth</h2>
+              <p className="mb-2">18K purity is 75%, so fine gold grams = 30 × 0.75 = 22.5 g. Convert to troy ounces: 22.5 ÷ 31.1035 ≈ 0.723 oz. Value ≈ 0.723 × spot (USD/oz).</p>
+              <p className="mb-3">Select grams and 18K in the calculator for an instant estimate. Use the premium/discount field to reflect retail markups or local buy quotes.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 30 g (18K)</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">gold price per tola today</h2>
+              <p className="mb-2">One tola ≈ 11.66 g. For 24K, convert to troy ounces: 11.66 ÷ 31.1035 ≈ 0.375 oz, then multiply by spot. For 22K, apply purity first: grams × 0.9167.</p>
+              <p className="mb-3">Choose grams and the correct karat, then estimate. Adjust premium to reflect local retail or sell‑side spreads.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 1 tola</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 1 kilogram of gold worth</h2>
+              <p className="mb-2">1 kg = 1,000 g. Convert to troy ounces: 1,000 ÷ 31.1035 ≈ 32.1507 oz. For 24K, value ≈ 32.1507 × spot. For karat gold, multiply grams by purity first.</p>
+              <p className="mb-3">Large bars carry varying premiums; simulate purchase or sell conditions using the premium/discount field.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 1 kg</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">18k vs 22k: per‑gram price difference</h2>
+              <p className="mb-2">Per‑gram value ≈ (spot ÷ 31.1035) × purity. 18K uses 0.75; 22K uses ~0.9167. Example: if spot is $2,400/oz, per‑gram 18K ≈ (2400 ÷ 31.1035) × 0.75; 22K ≈ × 0.9167.</p>
+              <p className="mb-3">Set grams and switch karat to compare instantly. Add retail markups or sell‑side discounts via the premium field.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Compare 18K vs 22K</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how to include making charges in jewelry pricing</h2>
+              <p className="mb-2">Making charges cover labor, brand and finishing. Model them as a positive premium when estimating purchase prices; for resale, use a negative premium to reflect typical buyback spreads.</p>
+              <p className="mb-3">Enter weight and karat, then adjust the premium/discount field to represent making charges or fees and compare quotes on a unified basis.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Model making charges</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much does 44g of raw gold cost</h2>
+              <p className="mb-2">For 24K, convert grams to troy ounces: 44 ÷ 31.1035 ≈ 1.415 oz. Value ≈ 1.415 × spot (USD/oz). For karat gold, apply purity first: fine grams = 44 × karat%. Example (18K): 44 × 0.75 = 33 g fine → 33 ÷ 31.1035 ≈ 1.061 oz × spot.</p>
+              <p className="mb-3">Set units to grams and choose the karat. Results use live spot. Use the premium/discount field to reflect retail markups or local buy quotes.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 44 g</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 20 pounds of gold worth</h2>
+              <p className="mb-2">Use avoirdupois pounds: 1 lb = 453.592 g. 20 lb ≈ 9,071.84 g; convert to troy ounces: 9,071.84 ÷ 31.1035 ≈ 291.66 oz. Total value ≈ 291.66 × spot × karat% (24K = 100%).</p>
+              <p className="mb-3">In the calculator select grams or ounces, set karat and weight, then use premium/discount to mirror real purchase/sell conditions.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Calculate 20 lb</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">how much is 2.5 grams of gold worth</h2>
+              <p className="mb-2">Select grams and enter 2.5 g. For 24K, value ≈ 2.5 × price per gram. For karat gold, multiply by purity first (e.g., 14K: 2.5 × 0.585), then apply price per gram (spot ÷ 31.1035).</p>
+              <p className="mb-3">Selling quotes often include discounts; enter a negative premium (e.g., −5% to −12%) to approximate local buyback spreads.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 2.5 g</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">price of 10k gold per gram: today</h2>
+              <p className="mb-2">10K purity is 41.7%. Per‑gram value ≈ (spot ÷ 31.1035) × 0.417. Select grams and 10K to get today’s estimate instantly.</p>
+              <p className="mb-3">Small lots often see −12% to −18% discounts; use a negative premium to compare dealers on a unified basis.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Check 10K Per‑Gram</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">price of gold and white gold</h2>
+              <p className="mb-2">White gold is an alloy (often with nickel/palladium). Its value depends on karat (14K: 58.5%, 18K: 75%). Rhodium plating does not change gold content; melt value depends on gold grams and purity.</p>
+              <p className="mb-3">Weigh the item and subtract stones, select grams and the correct karat, then estimate. Represent brand/craft markups with a positive premium; sell‑side discounts with a negative premium.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Value Gold & White Gold</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row g-4 mt-4">
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">10k gold price gram today</h2>
+              <p className="mb-2">Choose 10K and grams to see today’s per‑gram price based on 41.7% purity and live spot: per‑gram ≈ (spot ÷ 31.1035) × 0.417.</p>
+              <p className="mb-3">Enter a positive premium to simulate retail markup; use a negative premium to reflect local buyback spreads and refining fees.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Get 10K Gram Price</a>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-6">
+          <div className="card h-100">
+            <div className="card-body">
+              <h2 className="h5 mb-2">14k gold ring how much is it worth</h2>
+              <p className="mb-2">Weigh the ring and subtract stones. 14K contains 58.5% gold, so fine gold grams ≈ net grams × 0.585; melt value ≈ fine grams × price per gram (spot ÷ 31.1035).</p>
+              <p className="mb-3">Resale quotes depend on condition and fees; enter a negative premium (e.g., −8% to −15%) to model offers, then compare with unified units/karat.</p>
+              <a className="btn btn-outline-warning btn-sm" href="/calculator">Estimate 14K Ring</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="row g-4 mt-4">
+        <div className="col-md-4">
+          <div className="card h-100">
+            <div className="card-body">
               <h2 className="h5 mb-2">US Google Searches – Gold</h2>
               <ul className="mb-3">
                 <li>gold price today</li>
@@ -369,6 +701,36 @@ export default function BlogPage(){
       <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'US Google Searches – Gold', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['gold price today','gold spot price','XAUUSD','gold price per gram','24k gold price','GLD','buy gold near me','krugerrand price'] }} />
       <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'US Google Searches – Silver', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['silver price today','silver spot price','XAGUSD','silver price per ounce','SLV','silver coins melt value','gold silver ratio','comex silver'] }} />
       <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'US Google Searches – Platinum', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['platinum price today','platinum spot price','XPTUSD','platinum price per ounce','PPLT','platinum vs palladium','platinum autocatalyst','platinum price forecast'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much does 44g of raw gold cost', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['44g gold cost','grams to troy ounces','24k gold value','gold price per gram'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 20 pounds of gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['20 pounds of gold','pound to gram','troy ounce conversion','gold pound value'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 2.5 grams of gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['2.5 grams gold','gold value per gram','karat purity','sell price premium'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'price of 10k gold per gram: today', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['10k gold price per gram','karat 41.7','today gold price','10k value'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'price of gold and white gold', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['white gold price','14k white gold','18k white gold','gold alloy value'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: '10k gold price gram today', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['10k gram price','today 10k gold','gold price per gram','sell 10k gold'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: '14k gold ring how much is it worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['14k ring worth','ring melt value','14k gold per gram','remove stone weight'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 30 grams of 18k gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['30 grams 18k','18k per gram','fine gold grams','troy ounce conversion'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'gold price per tola today', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['tola gold price','tola grams','22k tola value','24k tola'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 1 kilogram of gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['1 kg gold value','kilogram to troy ounces','gold bar price'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: '18k vs 22k: per‑gram price difference', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['18k vs 22k','per gram price','karat comparison'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how to include making charges in jewelry pricing', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['making charges','jewelry pricing','premium modeling','sell side discount'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 15 grams of 22k gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['15 grams 22k','22k purity 91.67','grams to troy ounces'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 8 grams of 14k gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['8 grams 14k','14k purity 58.5','price per gram'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 1 ounce of gold worth today', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['1 oz gold value','spot price today','ounce to grams'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 100 grams of gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['100 grams gold','grams to ounces','24k value'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is half ounce of gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['0.5 oz gold','half ounce value','karat purity'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 5 tolas of gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['5 tolas gold','tola grams','troy ounce conversion'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 12 grams of 22k gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['12 grams 22k','22k purity','grams to troy ounces'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 50 grams of 24k gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['50 grams 24k','pure gold','grams to ounces'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is quarter ounce of gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['quarter ounce gold','0.25 oz value','spot price'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 2 ounces of gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['2 ounces gold','per ounce value','spot price'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 500 grams of gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['500 grams gold','grams to troy ounces','24k vs karat'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 3 tolas of gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['3 tolas gold','tola grams','22k tola value'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 12 grams of 18k gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['12 grams 18k','18k purity 75','grams to troy ounces'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 75 grams of gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['75 grams gold','grams to ounces','24k vs karat'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 1 tola of 24k gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['1 tola 24k','tola grams','troy ounce conversion'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 6 tolas of gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['6 tolas gold','tola grams','22k purity'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 200 grams of gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['200 grams gold','grams to troy ounces','24k value'] }} />
+      <JsonLd type="webpage" data={{ "@type":"BlogPosting", headline: 'how much is 3 ounces of gold worth', datePublished: new Date().toISOString(), author: { "@type":"Organization", name: 'Gold Calculator' }, mainEntityOfPage: 'https://www.goldcalculator.click/blog', keywords: ['3 ounces gold','per ounce value','spot price'] }} />
     </div>
   )
 }
