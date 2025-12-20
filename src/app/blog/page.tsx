@@ -1,6 +1,7 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import JsonLd from '@/components/JsonLd'
+import AdBanner from '@/components/AdBanner'
 
 export const metadata: Metadata = {
   title: 'Gold Calculator Blog: Value Estimations & Trends',
