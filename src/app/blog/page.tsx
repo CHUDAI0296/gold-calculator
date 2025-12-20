@@ -73,6 +73,8 @@ export default function BlogPage(){
         </div>
       </div>
 
+      <AdBanner />
+
       <div className="row g-4 mt-4">
         <div className="col-md-4">
           <div className="card h-100">
